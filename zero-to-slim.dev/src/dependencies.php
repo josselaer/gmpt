@@ -38,6 +38,19 @@ $container['Recommender'] = function ($c){
     $db = new PDO($connString, $settings['username'], $settings['password']);
     
     return $db;
-    
-    
+     
 };
+
+$container['GMPT'] = function ($c){
+    $settings = $c->get('settings')['Recommender'];
+    
+    $connString = $settings['db'] . ':host=' . $settings['host'];
+    $connString .= ';dbname=' .$settings['dbname'] . ';charset=utf8mb4';
+    
+    $db = new PDO($connString, $settings['username'], $settings['password']);
+    
+    return $db;
+     
+};
+
+
