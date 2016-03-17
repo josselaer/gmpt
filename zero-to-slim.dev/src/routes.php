@@ -16,36 +16,24 @@ $app->get('/goodbye',
 	}
 );
 
-$app->get('/lists/1/1',
-	function($request,$response,$args) {
-		$db = $this->ToDoList;
-		$query = $db->query('select * from List');
-		$strToReturn = '';
 
-		foreach ($query as $row) {
-			$strToReturn .= $row['ListName'] . ', ' . $row['ListID'] . '<br/>';
-		}
-		return $response->write($strToReturn);
+$app->get('/groups',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$query=$db->query('select * from Groups');
+
 	}
+
 );
 
-
-$app->get('/recommendations/{userId}/{itemId}',
+$app-post('/groups',
 	function($request,$response,$args) {
-		$db = $this->Recommender;
-		//$name = $request->getAttribute('name');
-		$userId=$request->getAttribute('userId');
-		$itemId = $request->getAttribute('itemId');
-		$query = $db->query("CALL getRecommendation ('$itemId',$userId)");
-		$strToReturn = '';
-
-		$returnArray=array();
-		foreach ($query as $row) {
-			$strToReturn .= $row['ProductName'] . ', ' . $row['COUNT(*)'] . '<br/>';
-			$returnArray[$row['ProductName']] = $row['COUNT(*)'];
-		}
-		return $response->write(json_encode($returnArray));
-	}
-
+		$db=$this->GMPT;
+		$groupID = $request->getAttribute('groupID');
+		$groupName = $request->getAttribute('groupName');
+		$description = $request->getAttribute('description');
+		$meetingID = $request->getAttribute('meetingID');
+		$query=$db->query('INSERT INTO Groups (groupName,description, meetingID) VALUES($groupName, $description, $meetingID);');
 		
+	}
 );
