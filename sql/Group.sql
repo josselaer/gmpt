@@ -1,0 +1,11 @@
+USE GMPT;
+
+DROP TABLE IF EXISTS Group;
+CREATE TABLE IF NOT EXISTS Group(
+	group_id INT NOT NULL AUTO_INCREMENT,
+	groupName VARCHAR(150),
+	description VARCHAR(750),
+	meeting_id INT,
+	PRIMARY KEY(group_id),
+);
+
