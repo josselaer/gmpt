@@ -47,4 +47,24 @@ angular.module('starter.services', [])
       return null;
     }
   };
+})
+
+.factory("Groups", function() {
+  var groups = [{
+    id: 1,
+    name: "GMPT",
+    nextMeeting: "Sunday 12:00 PM",
+    notifications: 9
+  }, {
+    id: 2,
+    name: "Software Engineering",
+    nextMeeting: "Thursday 12:00 PM",
+    notifications: 2
+  }];
+
+  return {
+    all: function() {
+      return groups;
+    }
+  };
 });

@@ -1,0 +1,17 @@
+<ion-view view-title="Groups">
+  <ion-content class="padding">
+    <ion-list>
+      <ion-item class="item" ng-repeat="group in groups" type="item-text-wrap" href="#/tab/dash/{{group.id}}">
+        <h2>{{group.name}}</h2>
+        <h4 class=" item-text-right">Upcoming meeting: {{group.nextMeeting}}</h4>
+        <span class="badge badge-assertive"><h2>{{group.notifications}}</h2></span>
+      </ion-item>
+      
+      <ion-item class="item item-icon-left" type="item-text-wrap" href="#">
+        <h2>Create a new group</h2>
+        <i class="icon ion-plus"></i>
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+</ion-view>
