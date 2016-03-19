@@ -1,16 +1,17 @@
-<ion-view view-title="Login">
-  <ion-content>
-    <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>dog goes woof</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
+<ion-view view-title="GMPT">
+    <ion-content class="padding">
+        
+        <img src="img/logo.png" class ="center" id="logo">
+        <div class="list list-inset">
+            <label class="item item-input">
+                <input type="text" placeholder="Username" ng-model="data.username">
+            </label>
+            <label class="item item-input">
+                <input type="password" placeholder="Password" ng-model="data.password">
+            </label>
+        </div>
+        <button class="button button-block button-positive" ng-click="login(data)">Login</button>
 
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+        Register
+    </ion-content>
 </ion-view>
