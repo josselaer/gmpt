@@ -49,8 +49,9 @@ angular.module('starter.services', [])
   };
 })
 
-.factory("Groups", function() {
-  var groups = [{
+.factory("Groups", function($http) {
+
+  groups = [{
     id: 1,
     name: "GMPT",
     nextMeeting: "Sunday 12:00 PM",
@@ -64,7 +65,33 @@ angular.module('starter.services', [])
 
   return {
     all: function() {
+
       return groups;
+    },
+    set: function(g) {
+      groups = g;
+
+      console.log("Set()" + groups);
     }
   };
+})
+
+.factory("Debug", function() {
+
+  debug = true;
+
+  apiaryURL = "http://private-anon-af0e45a81-gmpt.apiary-mock.com";
+
+  prodURL = null;
+
+  return {
+    getURL: function(endpoint) {
+
+      if (debug == true)
+        return apiaryURL + endpoint;
+      else 
+        return prodURL + endpoint;
+    }
+  }
+
 });

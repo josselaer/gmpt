@@ -27,6 +27,34 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller ('GroupsCtrl', function($scope, Groups) {
+.controller ('GroupsCtrl', function($scope, $http, Groups, Debug) {
+
+  $http({
+
+        method: "GET",
+        url: Debug.getURL("/groups"),
+        responseType: "json"
+      }).then(function successCallback(response) {
+
+        console.log(Debug.getURL("/groups"));
+        console.log(response);
+        groups = response.data;
+        console.log(groups);
+
+        Groups.set(groups);
+        $scope.groups = groups;
+    
+      }, function errorCallback(response) {
+
+        console.log(Debug.getURL("/groups"));
+        console.log(response);
+
+        alert("Failed to load groups, please try again.");
+
+        return null;
+
+      });
+
+
   $scope.groups = Groups.all();
 });
