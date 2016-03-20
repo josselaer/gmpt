@@ -37,6 +37,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'GroupsCtrl'
   })
 
+  .state('addgroup', {
+    url: '/addgroup',
+    templateUrl: 'templates/add-group.html',
+    controller: 'AddGroupCtrl'
+  })
+
   // setup an abstract state for the tabs directive
     .state('tab', {
     url: '/tab',

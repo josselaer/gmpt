@@ -3,13 +3,13 @@
     <label>Group Name</label>
     <p></p>
     <label class="item item-input">
-      <input type="text">
+      <input ng-model="groupName" type="text">
     </label>
     <p></p>
     <label>Description</label>
     <div class="card">
     <div class="item item-text-wrap">
-      <input type="text">
+      <input ng-model="groupDesc" type="text">
     </div>
     </div>
     <p></p>
@@ -72,7 +72,7 @@
       <p></p>
     </div>
     <div class="row">
-        <button class="button button-full button-positive" href="#/tab/dash">
+        <button class="button button-full button-positive" ng-click="addGroup()" href="#/tab/dash">
         Create Group
         <ion-nav-view name="tab-dash"></ion-nav-view>
         </button>

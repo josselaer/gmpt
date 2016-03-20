@@ -57,4 +57,28 @@ angular.module('starter.controllers', [])
 
 
   $scope.groups = Groups.all();
+})
+
+.controller('AddGroupCtrl', function($scope, $state, $http, Debug) {
+
+
+  $scope.addGroup = function() {
+
+    var group = {
+      groupName: $scope.groupName,
+      description: $scope.groupDesc
+    }
+
+    $http({
+      method:"POST",
+      url: Debug.getURL("/groups"),
+      data: group
+    }).then(function successCallback(response) {
+      $state.go("groups");
+    }, function errorCallback(response) {
+      alert.log("Failed to add group");
+    });
+  }
+  
+
 });
