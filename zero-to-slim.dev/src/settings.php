@@ -30,5 +30,12 @@ return [
             'db' => 'mysql',
         
         ],
+		'GMPT' => [
+			'username' => 'testuser',
+			'password' => 'test',
+			'host' => 'localhost',
+			'dbname' => 'GMPT',
+			'db' => 'mysql' 
+		]
     ],
 ];
