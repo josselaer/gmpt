@@ -4,63 +4,69 @@ USE GMPT;
 
 DROP TABLE IF EXISTS Users;
 CREATE TABLE IF NOT EXISTS Users(
-	userID INT NOT NULL auto_increment,
-	userName VARCHAR(255) NOT NULL,
-	password VARCHAR(255) NOT NULL,
-	salt VARCHAR(255) NOT NULL,
-	firstName VARCHAR(255) NOT NULL,
-	lastName VARCHAR(255) NOT NULL,
-	email VARCHAR(255) NOT NULL,
-	moderator TINYINT(1),
-	PRIMARY KEY(userID)
+	UserID INT NOT NULL auto_increment,
+	UserName VARCHAR(255) NOT NULL,
+	Password VARCHAR(255) NOT NULL,
+	Salt VARCHAR(255) NOT NULL,
+	FirstName VARCHAR(255) NOT NULL,
+	LastName VARCHAR(255) NOT NULL,
+	Email VARCHAR(255) NOT NULL,
+	PRIMARY KEY(UserID)
 );
 
 DROP TABLE IF EXISTS Groups;
 CREATE TABLE IF NOT EXISTS Groups(
-	groupID INT NOT NULL auto_increment,
-	groupName VARCHAR(100) NOT NULL,
-	description VARCHAR(200),
-	userID INT NOT NULL,
-	moderator INT NOT NULL,
-	PRIMARY KEY (groupID),
-	FOREIGN KEY (userID) REFERENCES Users(userID)
+	GroupID INT NOT NULL auto_increment,
+	GroupName VARCHAR(100) NOT NULL,
+	Description VARCHAR(200),
+	PRIMARY KEY (GroupID)
+);
+
+DROP TABLE IF EXISTS UserToGroup;
+CREATE TABLE IF NOT EXISTS UserToGroup(
+	GroupID INT NOT NULL,
+	UserID INT NOT NULL,
+	Moderator TINYINT(1),
+	PRIMARY KEY (GroupID,UserID),
+	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID),
+	FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
 
 DROP TABLE IF EXISTS Meetings;
 CREATE TABLE IF NOT EXISTS Meetings(
-	meetingID INT NOT NULL auto_increment,
-	topic VARCHAR(1000),
-	date DATE,
-	description VARCHAR(5000),
-	location VARCHAR(200),
-	startTime TIME,
-	endTime TIME,
-	groupID INT,
-	PRIMARY KEY (meetingID),
-	FOREIGN KEY (groupID) REFERENCES Groups(groupID)
+	MeetingID INT NOT NULL auto_increment,
+	Topic VARCHAR(1000),
+	Date DATE,
+	Description VARCHAR(5000),
+	Location VARCHAR(200),
+	StartTime TIME,
+	EndTime TIME,
+	GroupID INT,
+	PRIMARY KEY (MeetingID),
+	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID)
 );
 
 DROP TABLE IF EXISTS Attendance;
 CREATE TABLE IF NOT EXISTS Attendance(
-	attendanceID INT NOT NULL auto_increment,
-	meetingID INT NOT NULL,
-	userID INT NOT NULL,
-	attended TINYINT(1),
-	PRIMARY KEY (attendanceID),
-	FOREIGN KEY (meetingID) REFERENCES Meetings(meetingID),
+	AttendanceID INT NOT NULL auto_increment,
+	MeetingID INT NOT NULL,
+	UserID INT NOT NULL,
+	Attended TINYINT(1),
+	PRIMARY KEY (AttendanceID),
+	FOREIGN KEY (MeetingID) REFERENCES Meetings(MeetingID),
 	FOREIGN KEY (userID) REFERENCES Users(userID)
 );
 
 DROP TABLE IF EXISTS Messages;
 CREATE TABLE IF NOT EXISTS Messages(
-	messageID INT NOT NULL auto_increment,
-	userID INT NOT NULL,
-	groupID INT NOT NULL,
-	text VARCHAR(2000) NOT NULL,
-	anonymous TINYINT(1),
-	timeDate DATETIME,
-	flag TINYINT(1),
-	PRIMARY KEY (messageID),
-	FOREIGN KEY (userID) REFERENCES Users(userID),
-	FOREIGN KEY (groupID) REFERENCES Groups(groupID)
+	MessageID INT NOT NULL auto_increment,
+	UserID INT NOT NULL,
+	GroupID INT NOT NULL,
+	Text VARCHAR(2000) NOT NULL,
+	Anonymous TINYINT(1),
+	TimeDate DATETIME,
+	Flag TINYINT(1),
+	PRIMARY KEY (MessageID),
+	FOREIGN KEY (UserID) REFERENCES Users(UserID),
+	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID)
 );
