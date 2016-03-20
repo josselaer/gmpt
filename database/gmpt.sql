@@ -2,7 +2,8 @@ CREATE DATABASE IF NOT EXISTS GMPT;
 
 USE GMPT;
 
-CREATE TABLE Users(
+DROP TABLE IF EXISTS Users;
+CREATE TABLE IF NOT EXISTS Users(
 	userID INT NOT NULL auto_increment,
 	userName VARCHAR(255) NOT NULL,
 	password VARCHAR(255) NOT NULL,
@@ -14,16 +15,19 @@ CREATE TABLE Users(
 	PRIMARY KEY(userID)
 );
 
-CREATE TABLE Groups(
+DROP TABLE IF EXISTS Groups;
+CREATE TABLE IF NOT EXISTS Groups(
 	groupID INT NOT NULL auto_increment,
 	groupName VARCHAR(100) NOT NULL,
 	description VARCHAR(200),
 	userID INT NOT NULL,
+	moderator INT NOT NULL,
 	PRIMARY KEY (groupID),
 	FOREIGN KEY (userID) REFERENCES Users(userID)
 );
 
-CREATE TABLE Meetings(
+DROP TABLE IF EXISTS Meetings;
+CREATE TABLE IF NOT EXISTS Meetings(
 	meetingID INT NOT NULL auto_increment,
 	topic VARCHAR(1000),
 	date DATE,
@@ -36,7 +40,8 @@ CREATE TABLE Meetings(
 	FOREIGN KEY (groupID) REFERENCES Groups(groupID)
 );
 
-CREATE TABLE Attendance(
+DROP TABLE IF EXISTS Attendance;
+CREATE TABLE IF NOT EXISTS Attendance(
 	attendanceID INT NOT NULL auto_increment,
 	meetingID INT NOT NULL,
 	userID INT NOT NULL,
@@ -46,7 +51,8 @@ CREATE TABLE Attendance(
 	FOREIGN KEY (userID) REFERENCES Users(userID)
 );
 
-CREATE TABLE Messages(
+DROP TABLE IF EXISTS Messages;
+CREATE TABLE IF NOT EXISTS Messages(
 	messageID INT NOT NULL auto_increment,
 	userID INT NOT NULL,
 	groupID INT NOT NULL,
