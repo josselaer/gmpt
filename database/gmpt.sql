@@ -1,0 +1,70 @@
+DROP DATABASE IF EXISTS GMPT;
+
+CREATE DATABASE IF NOT EXISTS GMPT;
+
+USE GMPT; 
+
+
+CREATE TABLE IF NOT EXISTS Users(
+	UserID INT NOT NULL auto_increment,
+	UserName VARCHAR(255) NOT NULL,
+	Password VARCHAR(255) NOT NULL,
+	Salt VARCHAR(255) NOT NULL,
+	FirstName VARCHAR(255) NOT NULL,
+	LastName VARCHAR(255) NOT NULL,
+	Email VARCHAR(255) NOT NULL,
+	PRIMARY KEY(UserID)
+);
+
+CREATE TABLE IF NOT EXISTS Groups(
+	GroupID INT NOT NULL auto_increment,
+	GroupName VARCHAR(100) NOT NULL,
+	Description VARCHAR(200),
+	PRIMARY KEY (GroupID)
+);
+
+CREATE TABLE IF NOT EXISTS UserToGroup(
+	GroupID INT NOT NULL,
+	UserID INT NOT NULL,
+	Moderator TINYINT(1),
+	PRIMARY KEY (GroupID,UserID),
+	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID),
+	FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE IF NOT EXISTS Meetings(
+	MeetingID INT NOT NULL auto_increment,
+	Topic VARCHAR(1000),
+	Date DATE,
+	Description VARCHAR(5000),
+	Location VARCHAR(200),
+	StartTime TIME,
+	EndTime TIME,
+	GroupID INT,
+	PRIMARY KEY (MeetingID),
+	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID)
+);
+
+CREATE TABLE IF NOT EXISTS Attendance(
+	AttendanceID INT NOT NULL auto_increment,
+	MeetingID INT NOT NULL,
+	UserID INT NOT NULL,
+	Attended TINYINT(1),
+	PRIMARY KEY (AttendanceID),
+	FOREIGN KEY (MeetingID) REFERENCES Meetings(MeetingID),
+	FOREIGN KEY (userID) REFERENCES Users(userID)
+);
+
+
+CREATE TABLE IF NOT EXISTS Messages(
+	MessageID INT NOT NULL auto_increment,
+	UserID INT NOT NULL,
+	GroupID INT NOT NULL,
+	Text VARCHAR(2000) NOT NULL,
+	Anonymous TINYINT(1),
+	TimeDate DATETIME,
+	Flag TINYINT(1),
+	PRIMARY KEY (MessageID),
+	FOREIGN KEY (UserID) REFERENCES Users(UserID),
+	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID)
+);
