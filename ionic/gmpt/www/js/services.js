@@ -46,5 +46,27 @@ angular.module('starter.services', [])
       }
       return null;
     }
-  };
+  }
+})
+
+.factory("Debug", function() {
+
+  debug = true;
+
+  apiaryURL = "http://private-anon-af0e45a81-gmpt.apiary-mock.com";
+
+  prodURL = null;
+
+  return {
+    getURL: function(endpoint) {
+
+      if (debug == true)
+        return apiaryURL + endpoint;
+      else 
+        return prodURL + endpoint;
+    }
+  }
+
 });
+
+
