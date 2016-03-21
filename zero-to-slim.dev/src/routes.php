@@ -26,7 +26,7 @@ $app->get('/groups',
 
 );
 
-$app-post('/groups',
+$app->post('/groups',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$groupID = $request->getAttribute('groupID');
@@ -37,3 +37,24 @@ $app-post('/groups',
 		
 	}
 );
+
+$app->get('/groups/{groupID}',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$groupID = $request->getAttribute('groupID');
+		$query=$db->query("SELECT * FROM Groups WHERE groupID = '$groupID' ");
+	}
+);
+
+$app->put('/groups/{groupID}',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$groupID = $request->getAttribute('groupID');
+		$groupName = $request->getAttribute('groupName');
+		$description = $request->getAttribute('description');
+		$meetingID = $request->getAttribute('meetingID');
+		$query=$db->query('INSERT INTO Groups (groupName,description, meetingID) VALUES($groupName, $description, $meetingID);');
+		
+	}
+);
+
