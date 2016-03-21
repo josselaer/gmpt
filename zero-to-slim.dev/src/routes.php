@@ -58,3 +58,13 @@ $app->put('/groups/{groupID}',
 	}
 );
 
+$app->get('/chat/{groupID}',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$groupID = $request->getAttribute('groupID');
+		$query=$db->query("SELECT * FROM Messages WHERE groupID = '$groupID' limit 100");
+	}
+);
+
+
+
