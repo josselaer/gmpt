@@ -3,13 +3,13 @@
     <label>Group Name</label>
     <p></p>
     <label class="item item-input">
-      <input ng-model="groupName" type="text">
+      <input ng-model="group.groupName" type="text">
     </label>
     <p></p>
     <label>Description</label>
     <div class="card">
     <div class="item item-text-wrap">
-      <input ng-model="groupDesc" type="text">
+      <input ng-model="group.groupDesc" type="text">
     </div>
     </div>
     <p></p>
@@ -24,7 +24,7 @@
         <input type="email">
       </label>
     <p></p>
-    <button class="button button-assertive" href="#/tab/dash">
+    <button class="button button-assertive" ng-click="" href="#/tab/dash">
     + Add
     <ion-nav-view name="tab-dash"></ion-nav-view>
     <p></p>

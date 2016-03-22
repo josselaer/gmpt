@@ -61,12 +61,14 @@ angular.module('starter.controllers', [])
 
 .controller('AddGroupCtrl', function($scope, $state, $http, Debug) {
 
+  $scope.group = {};
 
   $scope.addGroup = function() {
 
+    console.log($scope.group.groupName);
     var group = {
-      groupName: $scope.groupName,
-      description: $scope.groupDesc
+      groupName: $scope.group.groupName,
+      description: $scope.group.groupDesc
     }
 
     $http({
