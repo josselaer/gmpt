@@ -60,7 +60,33 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AddGroupCtrl', function($scope, $state, $http, Debug) {
-
+    $scope.search = '';
+    $scope.orderByAttribute = '';
+    $scope.members = [
+    {"_username":"henrysdev","_email":"henrysdev@gmail.com","done":false,"remove":false}
+    ];
+    $scope.addMember = function()
+    {
+      console.log("Clicked");
+      console.log("username: ", this._username, "email: ", this._email);
+      if(this._username !=' ' && this._email !=' ')
+      {
+        $scope.members.push({'_username':this._username,'_email':this._email,'done':false, 'remove':false});
+        this._username = ' ';
+        this._email = ' ';
+      }
+    }
+    
+    $scope.removeItem = function(index)
+    {
+      $scope.members.splice(index,1);
+      console.log("delete member");
+      $scope.members = $scope.members.filter(function(item)
+      {
+        return !item.done;
+      })
+    }
+    
 
   $scope.addGroup = function() {
 
