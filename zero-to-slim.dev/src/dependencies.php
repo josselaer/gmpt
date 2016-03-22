@@ -38,8 +38,7 @@ $container['Recommender'] = function ($c){
     $db = new PDO($connString, $settings['username'], $settings['password']);
     
     return $db;
-    
-    
+     
 };
 
 $container['GMPT'] = function ($c) {
@@ -52,3 +51,5 @@ $container['GMPT'] = function ($c) {
 
 	return $db;
 };
+
+

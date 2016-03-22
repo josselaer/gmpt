@@ -16,21 +16,29 @@ $app->get('/goodbye',
 	}
 );
 
-$app->get('/lists/1/1',
-	function($request,$response,$args) {
-		$db = $this->ToDoList;
-		$query = $db->query('select * from List');
-		$strToReturn = '';
 
-		foreach ($query as $row) {
-			$strToReturn .= $row['ListName'] . ', ' . $row['ListID'] . '<br/>';
-		}
-		return $response->write($strToReturn);
+$app->get('/groups',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$query=$db->query('select * from Groups;');
+
+	}
+
+);
+
+$app->post('/groups',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$groupID = $request->getAttribute('groupID');
+		$groupName = $request->getAttribute('groupName');
+		$description = $request->getAttribute('description');
+		$meetingID = $request->getAttribute('meetingID');
+		$query=$db->query('INSERT INTO Groups (groupName,description, meetingID) VALUES($groupName, $description, $meetingID);');
+		
 	}
 );
 
-
-$app->get('/recommendations/{userId}/{itemId}',
+$app->get('/groups/{groupID}',
 	function($request,$response,$args) {
 		$db = $this->Recommender;
 		//$name = $request->getAttribute('name');
@@ -109,4 +117,24 @@ $app->post('/user',
 		$registerQuery->execute(array($username,hash('sha256',$password.$salt),$fName,$lName,$salt,$email));
 	}
 );	
-	
+
+$app->put('/groups/{groupID}',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$groupID = $request->getAttribute('groupID');
+		$groupName = $request->getAttribute('groupName');
+		$description = $request->getAttribute('description');
+		$meetingID = $request->getAttribute('meetingID');
+		$query=$db->query('INSERT INTO Groups (groupName,description, meetingID) VALUES($groupName, $description, $meetingID);');
+		
+	}
+);
+
+$app->get('/chat/{groupID}',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$groupID = $request->getAttribute('groupID');
+		$query=$db->query("SELECT * FROM Messages WHERE groupID = '$groupID' limit 100;");
+	}
+);
+
