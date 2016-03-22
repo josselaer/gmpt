@@ -31,10 +31,11 @@ angular.module('starter.controllers', [])
 
         $http({
             method: "POST",
-            url: Debug.getURL("/Login"),
-            data: $scope.login
+            url: Debug.getURL("/login"),
+            data: $scope.logInfo
         }).then(function successCallback(response) {
-            $state.go("groups");
+            console.log("You logged in!")
+            $state.go("tab.dash");
         }, function errorCallback(response) {
             alert.log("Can't Login");
         });
