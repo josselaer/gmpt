@@ -45,7 +45,38 @@ $app->get('/recommendations/{userId}/{itemId}',
 			$returnArray[$row['ProductName']] = $row['COUNT(*)'];
 		}
 		return $response->write(json_encode($returnArray));
-	}
-
-		
+	}		
 );
+
+$app->get('/meetings/',
+	function($request,$response,$args) {
+		$response=getMeetings();
+
+	}	
+);
+
+$app->get('/meetings/{groupID}',
+	function($request,$response,$args) {
+
+		$groupID=$request->getAttribute('groupID');
+		$response=getMeetingsByGroup($groupID);
+
+	}		
+);
+
+$app->get('/meetings/{meetingID}',
+	function($request,$response,$args) {
+
+		$meetingID=$request->getAttribute('meetingID');
+		$response=getMeetingByMeetingID($meetingID);
+
+	}		
+);
+
+$app->post('/meetings/',
+	function($request,$response,$args) {
+		$response=createMeeting();
+
+	}	
+);
+

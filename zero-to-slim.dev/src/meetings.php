@@ -10,5 +10,13 @@
 
 	}
 
+	function getMeetingByMeetingID($meetingID) {
+		$db = $this->GMPT;
+		return $query = $db->query("SELECT * FROM Meetings WHERE meetingID = '$meetingID'");
+	}
+
+	function createMeeting() {
+		
+	}
 
 ?>
