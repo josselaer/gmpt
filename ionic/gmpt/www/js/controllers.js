@@ -77,16 +77,10 @@ angular.module('starter.controllers', [])
       }
     }
     
-    $scope.clearCompleted = function()
+    $scope.removeItem = function(index)
     {
-      /*
-      console.log("member", $scope.members);
-      while($scope.members[i] != null)
-      {
-        $scope.members[i]._username
-      }
-      $scope.done = true;
-      */
+      $scope.members.splice(index,1);
+      console.log("delete member");
       $scope.members = $scope.members.filter(function(item)
       {
         return !item.done;
