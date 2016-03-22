@@ -15,8 +15,10 @@
 		return $query = $db->query("SELECT * FROM Meetings WHERE meetingID = '$meetingID'");
 	}
 
-	function createMeeting() {
-		
+	function createMeeting($topic,$groupName,$date,$description,$location,$startTime,$endTime) {
+		$db = $this->GMPT;
+		return $query=$db->query("INSERT INTO Meetings (topic,groupName,date,description,location,startTime,endTime) VALUES('$topic','$groupName','$date','$description','$location','$startTime','$endTime');");
+
 	}
 
 ?>

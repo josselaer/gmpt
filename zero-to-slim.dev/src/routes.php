@@ -75,7 +75,17 @@ $app->get('/meetings/{meetingID}',
 
 $app->post('/meetings/',
 	function($request,$response,$args) {
-		$response=createMeeting();
+
+		$topic = $request->getAttribute('topic');
+		$groupName = $request->getAttribute('groupName');
+		$date = $request->getAttribute('date');
+		$description = $request->getAttribute('description');
+		$location = $request->getAttribute('location');
+		$startTime = $request->getAttribute('startTime');
+		$endTime = $request->getAttribute('endTime');
+
+
+		$response=createMeeting($topic,$groupName,$date,$description,$location,$startTime,$endTime);		
 
 	}	
 );
