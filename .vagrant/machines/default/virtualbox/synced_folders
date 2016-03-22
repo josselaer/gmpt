@@ -1,0 +1,1 @@
+{"virtualbox":{"web-root":{"id":"web-root","owner":"vagrant","group":"www-data","mount_options":["dmode=775,fmode=664"],"guestpath":"/var/www/zero-to-slim.dev","hostpath":"/Users/Jake/Desktop/gmpt/zero-to-slim.dev","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/Jake/Desktop/gmpt","disabled":false}}}
