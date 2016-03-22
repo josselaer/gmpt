@@ -90,3 +90,23 @@ $app->post('/meetings/',
 	}	
 );
 
+
+//Register:  POST @ /user endpoint
+$app->post('/user', 
+	function($request, $response,$args){
+		$db = $this->GMPT;
+		$username= $request->getAttribute('userName');
+		$password = $request->getAttribute('password');
+		$fName =$request->getAttribute('firstName');
+		$lName =$request->getAttribute('lastName');
+		$email= $request->getAttribute('email');
+		
+		$salt = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
+
+		//prepare query
+		$registerQuery=$db->prepare("CALL Register (?,?,?,?,?)");
+		
+		$registerQuery->execute(array($username,hash('sha256',$password.$salt),$fName,$lName,$salt,$email));
+	}
+);	
+	
