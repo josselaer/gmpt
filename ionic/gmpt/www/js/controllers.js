@@ -35,7 +35,7 @@ angular.module('starter.controllers', [])
             data: $scope.logInfo
         }).then(function successCallback(response) {
             console.log("You logged in!")
-            $state.go("tab.dash");
+            $state.go("groups");
         }, function errorCallback(response) {
             alert.log("Can't Login");
         });
