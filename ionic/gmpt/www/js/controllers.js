@@ -60,6 +60,9 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AddGroupCtrl', function($scope, $state, $http, Debug) {
+
+    $scope.group = {};
+
     $scope.search = '';
     $scope.orderByAttribute = '';
     $scope.members = [
@@ -86,13 +89,14 @@ angular.module('starter.controllers', [])
         return !item.done;
       })
     }
-    
 
   $scope.addGroup = function() {
 
+    console.log($scope.group.groupName);
+    
     var group = {
-      groupName: $scope.groupName,
-      description: $scope.groupDesc
+      groupName: $scope.group.groupName,
+      description: $scope.group.groupDesc
     }
 
     $http({
