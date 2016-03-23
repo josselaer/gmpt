@@ -22,11 +22,11 @@ return [
             'db' => 'mysql'
         ],
 
-        'Recommender' => [
+        'GMPT' => [
             'username' =>'testuser',
             'password' => 'test',
             'host' => 'localhost',
-            'dbname' => 'Recommender',
+            'dbname' => 'GMPT',
             'db' => 'mysql',
         
         ],

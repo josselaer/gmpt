@@ -81,4 +81,14 @@ CREATE TABLE IF NOT EXISTS ReadReceipt(
 	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID)
 
 );
-
+DELIMITER // 
+	CREATE PROCEDURE 	`Register` (IN uName VARCHAR(255), pass VARCHAR(255), fName VARCHAR(255), lName VARCHAR(255), salt VARCHAR(255), mail VARCHAR(255))
+	LANGUAGE SQL
+	DETERMINISTIC
+	SQL 				SECURITY DEFINER
+	COMMENT 			'This procedure Registers a User and puts all his data in the Users table, hashing the password with salt added'
+BEGIN
+	INSERT INTO Users (UserName, Password, Salt, FirstName, LastName, Email, RegisterDate, LastLogin) VALUES (uName, pass, salt, fName,lName,mail, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+END//
+DELIMITER ;
