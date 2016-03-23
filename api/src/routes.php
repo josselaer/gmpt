@@ -1,5 +1,7 @@
 <?php
 // Routes
+include 'groups.php'
+include 'meetings.php'
 
 $app->get('/hello', function ($request, $response, $args) {
     // Sample log message
@@ -78,8 +80,7 @@ $app->post('/logout', function ($request, $response, $args) {
 //test json_encode
 $app->get('/groups',
 	function($request,$response,$args) {
-		$db=$this->GMPT;
-		$query=$db->query('select * from Groups;');
+		return getGroups();
 	}
 
 );
