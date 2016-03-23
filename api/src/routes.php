@@ -50,7 +50,7 @@ $app->post('/login', function ($request, $response, $args) {
 	}
 
 	
-	return json_encode($returnArray);
+	return $response->body(json_encode($returnArray));
 });
 
 $app->post('/logout', function ($request, $response, $args) {
@@ -73,79 +73,72 @@ $app->post('/logout', function ($request, $response, $args) {
 	}
 
 	
-	return json_encode($returnArray);
+	return $response->body(json_encode($returnArray));
 });
 
 /*
+
 //test json_encode
+//Returns all groups for the currently authenticated user
 $app->get('/groups',
 	function($request,$response,$args) {
-		return getGroups();
+		return $response->body(json_encode(getGroups()));
 	}
 
 );
 
 //test
+//Creates a new group
 $app->post('/groups',
 	function($request,$response,$args) {
-		$db=$this->GMPT;
-		$groupID = $request->getAttribute('groupID');
 		$groupName = $request->getAttribute('groupName');
 		$description = $request->getAttribute('description');
-		$meetingID = $request->getAttribute('meetingID');
-		$query=$db->query('INSERT INTO Groups (groupName,description, meetingID) VALUES($groupName, $description, $meetingID);');
-		
+		$users= $request->getAttribute('users');
+		postGroups($groupID,$groupName,$users);
 	}
 );
 
 //test
+//Gets all information about a group by groupID
 $app->get('/groups/{groupID}',
 	function($request,$response,$args) {
-		$db = $this->Recommender;
-		//$name = $request->getAttribute('name');
-		$userId=$request->getAttribute('userId');
-		$itemId = $request->getAttribute('itemId');
-		$query = $db->query("CALL getRecommendation ('$itemId',$userId)");
-		$strToReturn = '';
-
-		$returnArray=array();
-		foreach ($query as $row) {
-			$strToReturn .= $row['ProductName'] . ', ' . $row['COUNT(*)'] . '<br/>';
-			$returnArray[$row['ProductName']] = $row['COUNT(*)'];
-		}
-		return $response->write(json_encode($returnArray));
+		//
 	}		
 );
 
 //test
+//Gets all meetings for currently authenticated user
 $app->get('/meetings/',
 	function($request,$response,$args) {
-		$response=getMeetings();
+		return $response->body(json_encode(getMeetings()));
 
 	}	
 );
 
 //test
+//Gets all meetings by GroupID
 $app->get('/meetings/{groupID}',
 	function($request,$response,$args) {
 
 		$groupID=$request->getAttribute('groupID');
-		$response=getMeetingsByGroup($groupID);
+		return $response->body(json_encode(getMeetingsByGroup($groupID)));
 
 	}		
 );
 
 //test
+//Gets meeting by meetingID
 $app->get('/meetings/{meetingID}',
 	function($request,$response,$args) {
 
 		$meetingID=$request->getAttribute('meetingID');
-		$response=getMeetingByMeetingID($meetingID);
+		return $response->body(json_encode(getMeetingByMeetingID($meetingID)));
 
 	}		
 );
 
 //test
+//Creates a meeting
 $app->post('/meetings/',
 	function($request,$response,$args) {
 
@@ -158,7 +151,7 @@ $app->post('/meetings/',
 		$endTime = $request->getAttribute('endTime');
 
 
-		$response=createMeeting($topic,$groupName,$date,$description,$location,$startTime,$endTime);		
+		createMeeting($topic,$groupName,$date,$description,$location,$startTime,$endTime);		
 
 	}	
 );
@@ -177,7 +170,7 @@ $app->post('/user',
 		$salt = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
 
 		//prepare query
-		$registerQuery=$db->prepare("CALL Register (?,?,?,?,?)");
+		$registerQuery=$db->prepare("CALL Register (?,?,?,?,?,?)");
 		
 		$registerQuery->execute(array($username,hash('sha256',$password.$salt),$fName,$lName,$salt,$email));
 	}

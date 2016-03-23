@@ -8,4 +8,11 @@
 		}
 		return $returnArray;
 	}
+	
+	
+	//TBD
+	function postGroups($groupName,$description, $users){
+		$db=this->GMPT;
+		
+	}
 ?>
