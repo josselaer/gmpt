@@ -1,6 +1,6 @@
 # GMPT
 
-##GitHub Tasks
+##GitHub Issues
 
 ###GUI
 
