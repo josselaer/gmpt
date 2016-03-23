@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Groups(
 CREATE TABLE IF NOT EXISTS UserGroup(
 	GroupID INT NOT NULL,
 	UserID INT NOT NULL,
-	Moderator TINYINT(1),
+	Moderator Bool,
 	PRIMARY KEY (GroupID,UserID),
 	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID),
 	FOREIGN KEY (UserID) REFERENCES Users(UserID)
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS Attendance(
 	AttendanceID INT NOT NULL auto_increment,
 	MeetingID INT NOT NULL,
 	UserID INT NOT NULL,
-	Attended TINYINT(1),
+	Attended Bool,
 	PRIMARY KEY (AttendanceID),
 	FOREIGN KEY (MeetingID) REFERENCES Meetings(MeetingID),
 	FOREIGN KEY (userID) REFERENCES Users(userID)
@@ -64,9 +64,9 @@ CREATE TABLE IF NOT EXISTS Messages(
 	UserID INT NOT NULL,
 	GroupID INT NOT NULL,
 	Text VARCHAR(255) NOT NULL,
-	Anonymous TINYINT(1),
+	Anonymous Bool,
 	TimeSent TIMESTAMP,
-	Flag TINYINT(1),
+	Flag Bool,
 	PRIMARY KEY (MessageID),
 	FOREIGN KEY (UserID) REFERENCES Users(UserID),
 	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID)
