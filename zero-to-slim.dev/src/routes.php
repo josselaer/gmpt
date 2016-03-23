@@ -1,4 +1,6 @@
 <?php
+include 'meetings.php';
+
 // Routes
 
 //$app->get('/[{name}]', function ($request, $response, $args) {
@@ -16,16 +18,75 @@ $app->get('/goodbye',
 	}
 );
 
+$app->get('/login/[{username}]', function ($request, $response, $args) {
+    // Sample log message
+    $this->logger->info("Slim-Skeleton '/' route");
 
+    // Render index view
+    return "Hello {$args['username']}";
+});
+
+$app->post('/login', function ($request, $response, $args) {
+    //Get credentials from request body
+	$credentials = $request->getParsedBody();
+	
+	//Authenticate against the Database
+	$db = $this->dbConn;
+	$sql = 'CALL Login(\''. $credentials['username'] .'\',\''. $credentials['password'] . '\');';
+	$query = $db->query($sql);
+	$row = $query->fetchAll();
+	//$result = $query->execute();
+	$returnArray = array();
+	//If username and password exists in database
+	if (sizeof($row) == 1) {
+		$returnArray['success'] = 'True';
+		//print_r($query->fetchAll());		
+		//retrieve name and add it to final return array
+		$data = $row[0];
+		$returnArray['userID'] = $data['userID'];
+		$returnArray['token'] = $data['token'];	
+	}
+	else {
+		$returnArray['success'] = 'False';
+	}
+
+	
+	return json_encode($returnArray);
+});
+
+$app->post('/logout', function ($request, $response, $args) {
+    //Get credentials from request body
+	$credentials = $request->getParsedBody();
+	
+	//Authenticate against the Database
+	$db = $this->dbConn;
+	$sql = 'CALL Logout(\''. $credentials['Authorization'] .'\');';
+	$query = $db->query($sql);
+	$row = $query->fetchAll();
+	//$result = $query->execute();
+	$returnArray = array();
+	//If username and password exists in database
+	if (sizeof($row) == 1) {
+		$returnArray['success'] = 'True';
+	}
+	else {
+		$returnArray['success'] = 'False';
+	}
+
+	
+	return json_encode($returnArray);
+});
+
+//test json_encode
 $app->get('/groups',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$query=$db->query('select * from Groups;');
-
 	}
 
 );
 
+//test
 $app->post('/groups',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
@@ -38,6 +99,7 @@ $app->post('/groups',
 	}
 );
 
+//test
 $app->get('/groups/{groupID}',
 	function($request,$response,$args) {
 		$db = $this->Recommender;
@@ -56,6 +118,7 @@ $app->get('/groups/{groupID}',
 	}		
 );
 
+//test
 $app->get('/meetings/',
 	function($request,$response,$args) {
 		$response=getMeetings();
@@ -63,6 +126,7 @@ $app->get('/meetings/',
 	}	
 );
 
+//test
 $app->get('/meetings/{groupID}',
 	function($request,$response,$args) {
 
@@ -72,6 +136,7 @@ $app->get('/meetings/{groupID}',
 	}		
 );
 
+//test
 $app->get('/meetings/{meetingID}',
 	function($request,$response,$args) {
 
@@ -81,6 +146,7 @@ $app->get('/meetings/{meetingID}',
 	}		
 );
 
+//test
 $app->post('/meetings/',
 	function($request,$response,$args) {
 
@@ -98,7 +164,7 @@ $app->post('/meetings/',
 	}	
 );
 
-
+//test
 //Register:  POST @ /user endpoint
 $app->post('/user', 
 	function($request, $response,$args){
@@ -118,6 +184,7 @@ $app->post('/user',
 	}
 );	
 
+//test
 $app->put('/groups/{groupID}',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
@@ -130,6 +197,7 @@ $app->put('/groups/{groupID}',
 	}
 );
 
+//test
 $app->get('/chat/{groupID}',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
