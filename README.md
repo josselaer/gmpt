@@ -1,7 +1,6 @@
 # GMPT
 
 ##GitHub Tasks
----
 
 ###GUI
 
