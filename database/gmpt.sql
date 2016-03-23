@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS RolePermissions(
 	FOREIGN KEY (PermissionID) REFERENCES Permssions(PermissionID)
 );
 
-CREATE TABLE IF NOT EXISTS Permssions(
+CREATE TABLE IF NOT EXISTS Permissions(
 	PermissionID INT NOT NULL,
 	Name VARCHAR(50),
 	PRIMARY KEY (PermissionID)
