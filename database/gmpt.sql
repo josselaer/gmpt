@@ -26,13 +26,14 @@ CREATE TABLE IF NOT EXISTS Groups(
 	PRIMARY KEY (GroupID)
 );
 
-CREATE TABLE IF NOT EXISTS UserGroup(
+CREATE TABLE IF NOT EXISTS UserRole(
 	GroupID INT NOT NULL,
 	UserID INT NOT NULL,
-	Moderator Bool,
+	RoleID INT NOT NULL,
 	PRIMARY KEY (GroupID,UserID),
 	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID),
-	FOREIGN KEY (UserID) REFERENCES Users(UserID)
+	FOREIGN KEY (UserID) REFERENCES Users(UserID),
+	FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
 );
 
 CREATE TABLE IF NOT EXISTS Meetings(
@@ -81,6 +82,37 @@ CREATE TABLE IF NOT EXISTS ReadReceipt(
 	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID)
 
 );
+
+CREATE TABLE IF NOT EXISTS Sessions(
+	SessionID INT NOT NULL auto_increment,
+	UserID INT NOT NULL,
+	Experation DateTime,
+	LoginDateTime DateTime,
+	LogoutDateTime,
+	PRIMARY KEY (SessionID),
+	FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE IF NOT EXISTS Roles(
+	RoleID INT NOT NULL,
+	Name VARCHAR(25),
+	PRIMARY KEY (RoleID)
+);
+
+CREATE TABLE IF NOT EXISTS RolePermissions(
+	RoleID INT NOT NULL,
+	PermissionID INT NOT NULL,
+	PRIMARY KEY (RoleID, PermissionID),
+	FOREIGN KEY (RoleID) REFERENCES Roles(RoleID),
+	FOREIGN KEY (PermissionID) REFERENCES Permssions(PermissionID)
+);
+
+CREATE TABLE IF NOT EXISTS Permssions(
+	PermissionID INT NOT NULL,
+	Name VARCHAR(50),
+	PRIMARY KEY (PermissionID)
+);
+
 DELIMITER // 
 	CREATE PROCEDURE 	`Register` (IN uName VARCHAR(255), pass VARCHAR(255), fName VARCHAR(255), lName VARCHAR(255), salt VARCHAR(255), mail VARCHAR(255))
 	LANGUAGE SQL
