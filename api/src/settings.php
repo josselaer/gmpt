@@ -13,5 +13,13 @@ return [
             'name' => 'slim-app',
             'path' => __DIR__ . '/../logs/app.log',
         ],
+        'GMPT' => [
+            'username' =>'testuser',
+            'password' => 'test',
+            'host' => 'localhost',
+            'dbname' => 'GMPT',
+            'db' => 'mysql',
+        
+        ],
     ],
 ];
