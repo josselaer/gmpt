@@ -7,7 +7,7 @@
 ####GUI task titles should be formatted with the following syntax:
 
 ``` html
-<PageName> <TaskType> 
+[GUI] - <ElementName> <TaskType> 
 ```
 ####Task Types include:
 + Mockup
@@ -28,7 +28,7 @@
 ####DB task titles should be formatted with the following syntax:
 
 ``` html
-<FeatureName> <TaskType> 
+[DB] - <FeatureName> <TaskType> 
 ```
 ####FeatureNames include:
 + Users
