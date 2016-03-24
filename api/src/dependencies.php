@@ -17,3 +17,25 @@ $container['logger'] = function ($c) {
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], Monolog\Logger::DEBUG));
     return $logger;
 };
+
+$container['GMPT'] = function ($c) {
+	$settings = $c->get('settings')['GMPT'];
+
+	$connString = $settings['db'] . ':host=' . $settings['host'];
+	$connString .= ';dbname=' . $settings['dbname'] . ';charset=utf8mb4';
+
+	$db = new PDO($connString, $settings['username'], $settings['password']);
+
+	return $db;
+};
+
+$container['GMPTdb'] = function ($c) {
+    $settings = $c->get('settings')['GMPTdb'];
+
+    $connString = $settings['db'] . ':host=' . $settings['host'];
+    $connString .= ';dbname=' . $settings['dbname'] . ';charset=utf8mb4';
+
+    $db = new PDO($connString, $settings['username'], $settings['password']);
+
+    return $db;
+};
