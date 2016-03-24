@@ -47,6 +47,11 @@ angular.module('starter.controllers', [])
 
 
 .controller('MeetingsCtrl', function($scope) {
+  $scope.meetings = [
+  {"date":"12/3/12","time":"6:30PM","topic":"Mock Ups"},
+  {"date":"12/4/12","time":"4:30PM","topic":"Progress Check In"},
+  {"date":"12/6/12","time":"8:15AM","topic":"Front End Integration"},
+  ];
   $scope.settings = {
     enableFriends: true
   }
