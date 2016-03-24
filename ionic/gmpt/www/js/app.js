@@ -86,7 +86,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
+  .state('addmeeting', {
+    url: '/addmeeting',
+    templateUrl: 'templates/meeting-details.html',
+    controller: 'MeetingsCtrl'
 
+  })
   .state('group.meetings', {
     url: '/meetings',
     views: {

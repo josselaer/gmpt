@@ -46,15 +46,37 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('MeetingsCtrl', function($scope) {
+.controller('MeetingsCtrl', function($scope, $state, $http, Debug) {
+
   $scope.meetings = [
-  {"date":"12/3/12","time":"6:30PM","topic":"Mock Ups"},
-  {"date":"12/4/12","time":"4:30PM","topic":"Progress Check In"},
-  {"date":"12/6/12","time":"8:15AM","topic":"Front End Integration"},
+  {"date":"12/3/12","time_":"6:30PM","topic":"Mock Ups","desc":"asdfasdasdf"},
+  {"date":"12/4/12","time_":"4:30PM","topic":"Progress Check In","desc":"as32sdf"},
+  {"date":"12/6/12","time_":"8:15AM","topic":"Front End Integration","desc":"asdfasdwaefaasdf"},
   ];
+
+  console.log($scope.meetings);
+
   $scope.settings = {
     enableFriends: true
   }
+  $scope.confirmMeeting = function()
+  {  
+    /*
+    var meeting = {
+      topic: $scope.topic,
+      desc: $scope.desc,
+      date: $scope.date,
+      time: $scope.time_
+    }
+    */
+    $scope.meetings.push({'date':this.date,'time_':this.time_,'topic':this.topic,'desc':this.desc});
+    console.log($scope.meetings);
+  }
+})
+
+.controller('AddMeetingCtrl', function($scope, $state, $http, Debug) 
+{
+
 })
 
 .controller ('GroupsCtrl', function($scope, $http, Groups, Debug) {
