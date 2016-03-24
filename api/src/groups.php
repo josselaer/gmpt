@@ -13,6 +13,15 @@
 	//TBD
 	function postGroups($groupName,$description, $users){
 		$db=this->GMPT;
-		
+		//call apropriate query
+		//$createGroupQuery=$db->prepare("CALL ----");
+		//$createGroupQuery->execute($groupName,$description,$users);
+	}
+	
+	function editGroupByGroupID($groupID, $groupName, $description, $users){
+		$db=$this->GMPT;
+		//call apropriate query
+		//$editGroupByGroupIDQuery=$db->prepare("CALL ----");
+		//$editGroupByGroupIDQuery->execute($groupID, $groupName, $description, $users);
 	}
 ?>

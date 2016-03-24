@@ -3,6 +3,7 @@
 include 'groups.php'
 include 'meetings.php'
 include 'user.php'
+include 'chat.php'
 
 $app->get('/hello', function ($request, $response, $args) {
     // Sample log message
@@ -139,6 +140,26 @@ $app->get('/meetings/{meetingID}',
 );
 
 //test
+//Edit meeting by meeting ID : PUT @ /meetings/{meetingID}
+$app->put('/meetings/{meetingID}',
+	function($request,$response,$args) {
+
+		$topic = $request->getAttribute('topic');
+		$groupName = $request->getAttribute('groupName');
+		$date = $request->getAttribute('date');
+		$description = $request->getAttribute('description');
+		$location = $request->getAttribute('location');
+		$startTime = $request->getAttribute('startTime');
+		$endTime = $request->getAttribute('endTime');
+		$meetingID=$request->getAttribute('meetingID');
+		
+		return $response->body(json_encode(editMeetingByMeetingID($topic,$groupName,$date,$description,$location,$startTime,$endTime,$meetingID)));
+		
+	}		
+);
+
+
+//test
 //Creates a meeting
 $app->post('/meetings/',
 	function($request,$response,$args) {
@@ -175,29 +196,35 @@ $app->post('/user',
 //Edit a user: PUT @ /user endpoint
 $app->post('/user', 
 	function($request, $response,$args){
-	
+		$username= $request->getAttribute('userName');
+		$password = $request->getAttribute('password');
+		$fName =$request->getAttribute('firstName');
+		$lName =$request->getAttribute('lastName');
+		$email= $request->getAttribute('email');
+		updateUser($username,$password,$fName,$lName,$email);
 	}
 );
 
 //test
+//Edit group by GroupID : PUT @  /groups/{groupID} endpoint 
 $app->put('/groups/{groupID}',
 	function($request,$response,$args) {
-		$db=$this->GMPT;
 		$groupID = $request->getAttribute('groupID');
 		$groupName = $request->getAttribute('groupName');
 		$description = $request->getAttribute('description');
-		$meetingID = $request->getAttribute('meetingID');
-		$query=$db->query('INSERT INTO Groups (groupName,description, meetingID) VALUES($groupName, $description, $meetingID);');
+		$users= $request->getAttribute('users');
+		
+		editGroupByGroupID($groupID, $groupName, $description, $users);
 		
 	}
 );
 
 //test
+//Get chat by GroupID : GET @ /chat/{groupID} endpoint
 $app->get('/chat/{groupID}',
 	function($request,$response,$args) {
-		$db=$this->GMPT;
 		$groupID = $request->getAttribute('groupID');
-		$query=$db->query("SELECT * FROM Messages WHERE groupID = '$groupID' limit 100;");
+		return $request->body(json_encode($getChatByGroupID($groupID)));
 	}
 );
 

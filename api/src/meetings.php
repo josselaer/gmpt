@@ -20,5 +20,11 @@
 		return $query=$db->query("INSERT INTO Meetings (topic,groupName,date,description,location,startTime,endTime) VALUES('$topic','$groupName','$date','$description','$location','$startTime','$endTime');");
 
 	}
-
+	
+	function editMeetingByMeetingID($topic,$groupName,$date,$description,$location,$startTime,$endTime, $meetingID){
+		$db = $this->GMPT;
+		//call apropriate routine (not written yet)
+		//$editMeetingQuery= $db->query("CALL ----");
+		
+	}
 ?>
