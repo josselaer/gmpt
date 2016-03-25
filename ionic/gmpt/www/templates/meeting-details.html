@@ -1,35 +1,13 @@
-<ion-view view-title="Meeting">
-
-<ion-content class="padding">
-<label>Meeting Topic</label>
-<p></p>
-<label class="item item-input">
-  <input ng-model="topic" type="text">
-</label>
-<p></p>
-<label>Description</label>
-<div class="card">
-  <div class="item item-text-wrap">
-    <input ng-model="desc" type="text">
-  </div>
-</div>
-<p></p>
-<label>Date</label>
-<div class="item item-input">
-  <input ng-model="date" type="text">
-</div>
-<p></p>
-<label>Time</label>
-<div class="item item-input">
-  <input ng-model="time_" type="text">
-</div>
-
-<div class="row">
-  <a class="button button-full button-positive" ng-click="confirmMeeting()" href="#/group/meetings">
-    Confirm Meeting
-    <ion-nav-view name="tab-dash"></ion-nav-view>
-  </a>
-</div>
-</ion-content>
-
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="Meeting Details">
+  <ion-content class="padding">
+    <label>{{meeting.topic}}
+    <p>
+    </p>
+  </ion-content>
 </ion-view>
