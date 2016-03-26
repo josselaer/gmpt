@@ -14,11 +14,15 @@ $mw = (function ($request, $response, $next) {
 	//}
 	//$response->getBody()->write($auth);
 	//echo $auth;
-	$headers=$request->getHeaders();
-	foreach($headers as $name => $values ){
+	//$headers=$request->getHeaderLine('Authorization');
+	//$response->getBody()->write( $headers);
+	//foreach($headers as $name =>$values ){
 		
-		echo $name. ": " . implode(", ",$values) . "</br>";
-	}
+	//	echo $name. ": " . implode(", ",$values) . "</br>";
+//	}
+
+	$token = $request->getHeader("Authorization")[0];
+	echo $token;
 	$response = $next($request, $response);
 	$response= $response->withHeader('Authorization','test');
            

@@ -16,7 +16,16 @@ $app->get('/hello', function ($request, $response, $args) {
 $app->get('/goodbye', 
 	function($request,$response,$args) {
 	    return $response->write("Time to go. Goodbye!");
+		$db=$this->GMPT;
+		$getQuery=$db->query("SELECT * FROM User");
+		$returnArray=array();
+		foreach($getQuery as $row){
+			$returnArray[$row['GroupName']]=$row['Description'];
+		}
+		$response->getBody()->write(json_encode($returnArray));
 	}
+	
+	
 )->add($mw);
 
 $app->get('/login/[{username}]', function ($request, $response, $args) {
