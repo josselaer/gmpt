@@ -1,6 +1,6 @@
 <?php
 	function getGroups(){
-		$db=this->GMPT;
+		$db=$this->GMPT;
 		$getGroupsQuery=$db->query("SELECT GroupName, Description FROM GROUPS");
 		$returnArray=array();
 		foreach($getGroupsQuery as $row){
@@ -12,7 +12,7 @@
 	
 	//TBD
 	function postGroups($groupName,$description, $users){
-		$db=this->GMPT;
+		$db=$this->GMPT;
 		//call apropriate query
 		//$createGroupQuery=$db->prepare("CALL ----");
 		//$createGroupQuery->execute($groupName,$description,$users);

@@ -1,9 +1,9 @@
 <?php
 // Routes
-include 'groups.php'
-include 'meetings.php'
-include 'user.php'
-include 'chat.php'
+include 'groups.php';
+include 'meetings.php';
+include 'user.php';
+include 'chat.php';
 
 $app->get('/hello', function ($request, $response, $args) {
     // Sample log message
@@ -17,7 +17,7 @@ $app->get('/goodbye',
 	function($request,$response,$args) {
 	    return $response->write("Time to go. Goodbye!");
 	}
-);
+)->add($mw);
 
 $app->get('/login/[{username}]', function ($request, $response, $args) {
     // Sample log message
@@ -79,16 +79,14 @@ $app->post('/logout', function ($request, $response, $args) {
 });
 
 /*
-
 //test json_encode
 //Returns all groups for the currently authenticated user
 $app->get('/groups',
 	function($request,$response,$args) {
-		return $response->body(json_encode(getGroups()));
+		return $response->getBody()->write(json_encode(getGroups()));
 	}
 
 );
-
 //test
 //Creates a new group
 $app->post('/groups',
