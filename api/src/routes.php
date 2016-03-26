@@ -56,10 +56,13 @@ $app->post('/login', function ($request, $response, $args) {
 	
 });
 
+
+//close session
 $app->post('/logout', function ($request, $response, $args) {
+	$token = $request->getHeader("Authorization")[0];
+	closeSessionQuery($token);
 	
-	
-});
+})->add($validateSession);
 
 /*
 //test json_encode

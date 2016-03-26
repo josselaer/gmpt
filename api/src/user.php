@@ -37,7 +37,7 @@
 			
 		//validate user
 		$validateUserQuery= $db->prepare("CALL ValidateUser(?,?)");
-		$validateUserQuery->execute($username,$hashedPass);
+		$validateUserQuery->execute(array($username,$hashedPass));
 		
 		//get token 
 		$returnArray=array();
@@ -48,6 +48,13 @@
 		
 		//return the token
 		return $returnArray[0];
+	}
+	
+	//close session
+	function closeSession($token){
+		$db=$this->GMPT;
+		$closeSessionQuery= $db->prepare("CALL CloseSession(?)");
+		$closeSessionQuery->execute($token);
 		
 	}
 ?>
