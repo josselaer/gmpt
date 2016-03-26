@@ -1,0 +1,43 @@
+<ion-view view-title="Register A New User">
+    <ion-content class="padding">
+
+
+        <div class="list list-inset">
+
+
+            <label class="item item-input">
+                <span class="input-label">UserName</span>
+                <input type="text" ng-model="regInfo.userName">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">First Name</span>
+                <input type="text" ng-model="regInfo.firstName">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Last Name</span>
+                <input type="text" ng-model="regInfo.lastName">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Password</span>
+                <input type="password" placeholder="2-30 Characters" ng-model="regInfo.password">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Confirm Password</span>
+                <input type="password" placeholder="2-30 Characters" ng-model="regInfo.passwordCopy">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Email</span>
+                <input type="email" placeholder="email@blah.whatever" ng-model="regInfo.email">
+            </label>
+
+        </div>
+
+        <button class="button button-block button-positive" ng-click="register()">Register</button>
+
+    </ion-content>
+</ion-view>
