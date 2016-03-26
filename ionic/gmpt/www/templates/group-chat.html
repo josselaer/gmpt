@@ -1,16 +1,29 @@
-<ion-view view-title="Chats">
+<ion-view view-title="Chat">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/group/chat/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
+      <ion-item class="item-remove-animate item-icon-right item-text-wrap" ng-repeat="message in chat" ng-click="report({{message.id}})">
+        <div ng-switch on="message.anonymous">
+          <div ng-switch-when="true">
+            <h2>Anonymous Message:</h2> {{message.body}}
+            <i class="icon ion-flag icon-accessory"></i>
+          </div>
+          <div ng-switch-default>
+            <h2>{{message.sender}}:</h2> {{message.body}}
+            <i class="icon ion-flag icon-accessory"></i>
+          </div>
+        </div>
       </ion-item>
     </ion-list>
+
+
   </ion-content>
+
+  <div class="bar bar-footer">
+    <label id="message-input" class="item-input-inset">
+      <input type="text" placeholder="Message">
+    </label>
+    <button class="button button-small pull-right">
+      Send
+    </button>
+  </div>
 </ion-view>

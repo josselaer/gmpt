@@ -6,37 +6,39 @@ angular.module('starter.services', [])
   // Some fake testing data
   var chats = [{
     id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
+    sender: 'Ben Sparrow',
+    body: 'You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?',
+    face: 'img/ben.png',
+    anonymous: true
   }, {
     id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
+    sender: 'Max Lynx',
+    body: 'Hey, it\'s me',
+    face: 'img/max.png',
+    anonymous: false
   }, {
     id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
+    sender: 'Adam Bradleyson',
+    body: 'I should buy a boat',
+    face: 'img/adam.jpg',
+    anonymous: false
   }, {
     id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
+    sender: 'Perry Governor',
+    body: 'Look at my mukluks!',
+    face: 'img/perry.png',
+    anonymous: false
   }, {
     id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
+    sender: 'Mike Harrington',
+    body: 'This is wicked good ice cream.',
+    face: 'img/mike.png',
+    anonymous: false
   }];
 
   return {
-    all: function() {
+    getGroupMessages: function(groupID) {
       return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
     },
     get: function(chatId) {
       for (var i = 0; i < chats.length; i++) {
@@ -80,7 +82,7 @@ angular.module('starter.services', [])
 
   debug = true;
 
-  apiaryURL = "http://private-anon-af0e45a81-gmpt.apiary-mock.com";
+  apiaryURL = "http://private-f963fa-gmpt.apiary-mock.com";
 
   prodURL = null;
 

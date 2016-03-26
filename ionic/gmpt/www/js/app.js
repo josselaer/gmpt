@@ -69,20 +69,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   .state('group.chat', {
-      url: '/chat/',
+      url: '/chat/:groupID',
       views: {
         'group-chat': {
           templateUrl: 'templates/group-chat.html',
           controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('group.message', {
-      url: '/message/:messageId',
-      views: {
-        'group-message': {
-          templateUrl: 'templates/message-detail.html',
-          controller: 'MessageCtrl'
         }
       }
     })
