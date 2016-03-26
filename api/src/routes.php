@@ -13,16 +13,18 @@ $app->get('/hello', function ($request, $response, $args) {
     return $this->renderer->render($response, 'index.phtml', $args);
 });
 
+//test stuff
 $app->get('/goodbye', 
 	function($request,$response,$args) {
-	    return $response->write("Time to go. Goodbye!");
+	    $response->getBody()->write("Time to go. Goodbye!");
 		$db=$this->GMPT;
 		$getQuery=$db->query("SELECT * FROM User");
 		$returnArray=array();
 		foreach($getQuery as $row){
-			$returnArray[$row['GroupName']]=$row['Description'];
+			$returnArray[$row['UserID']]=$row['PasswordHash'];
 		}
 		$response->getBody()->write(json_encode($returnArray));
+		return $response;
 	}
 	
 	
@@ -36,55 +38,27 @@ $app->get('/login/[{username}]', function ($request, $response, $args) {
     return "Hello {$args['username']}";
 });
 
-$app->post('/login', function ($request, $response, $args) {
-    //Get credentials from request body
-	$credentials = $request->getParsedBody();
-	
-	//Authenticate against the Database
-	$db = $this->dbConn;
-	$sql = 'CALL Login(\''. $credentials['username'] .'\',\''. $credentials['password'] . '\');';
-	$query = $db->query($sql);
-	$row = $query->fetchAll();
-	//$result = $query->execute();
-	$returnArray = array();
-	//If username and password exists in database
-	if (sizeof($row) == 1) {
-		$returnArray['success'] = 'True';
-		//print_r($query->fetchAll());		
-		//retrieve name and add it to final return array
-		$data = $row[0];
-		$returnArray['userID'] = $data['userID'];
-		$returnArray['token'] = $data['token'];	
-	}
-	else {
-		$returnArray['success'] = 'False';
-	}
 
+//validate if user is correct
+$app->post('/login', function ($request, $response, $args) {
+    
+	$username = $request->getAttribute('userName');
+	$password = $request->getAttribute('password');
 	
-	return $response->body(json_encode($returnArray));
+	//set token
+	$token=validateUser($username,$password);
+	
+	//set Authorization header to token
+	$response= $response->withHeader('Authorization',$token);
+
+	//return the response
+	return $response;
+	
 });
 
 $app->post('/logout', function ($request, $response, $args) {
-    //Get credentials from request body
-	$credentials = $request->getParsedBody();
 	
-	//Authenticate against the Database
-	$db = $this->dbConn;
-	$sql = 'CALL Logout(\''. $credentials['Authorization'] .'\');';
-	$query = $db->query($sql);
-	$row = $query->fetchAll();
-	//$result = $query->execute();
-	$returnArray = array();
-	//If username and password exists in database
-	if (sizeof($row) == 1) {
-		$returnArray['success'] = 'True';
-	}
-	else {
-		$returnArray['success'] = 'False';
-	}
-
 	
-	return $response->body(json_encode($returnArray));
 });
 
 /*
