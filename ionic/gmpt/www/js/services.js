@@ -4,35 +4,42 @@ angular.module('starter.services', [])
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
+  d = new Date();
+  d.setTime(Date.now());
   var chats = [{
     id: 0,
     sender: 'Ben Sparrow',
     body: 'You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?',
     face: 'img/ben.png',
+    timeDate: d.toLocaleString(),
     anonymous: true
   }, {
     id: 1,
     sender: 'Max Lynx',
     body: 'Hey, it\'s me',
     face: 'img/max.png',
+    timeDate: d.toLocaleString(),
     anonymous: false
   }, {
     id: 2,
     sender: 'Adam Bradleyson',
     body: 'I should buy a boat',
     face: 'img/adam.jpg',
+    timeDate: d.toLocaleString(),
     anonymous: false
   }, {
     id: 3,
     sender: 'Perry Governor',
     body: 'Look at my mukluks!',
     face: 'img/perry.png',
+    timeDate: d.toLocaleString(),
     anonymous: false
   }, {
     id: 4,
     sender: 'Mike Harrington',
     body: 'This is wicked good ice cream.',
     face: 'img/mike.png',
+    timeDate: d.toLocaleString(),
     anonymous: false
   }];
 
