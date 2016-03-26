@@ -151,7 +151,7 @@ $scope.register = function () {
 
     console.log("UserName: " + $scope.regInfo.userName
                 + " First Name: "  + $scope.regInfo.firstName
-                + " Last Name: " + $scope.regnfo.lastName
+                + " Last Name: " + $scope.regInfo.lastName
                 + " Password: " + $scope.regInfo.password
                 + " E-mail: " + $scope.regInfo.email);
     $http({
