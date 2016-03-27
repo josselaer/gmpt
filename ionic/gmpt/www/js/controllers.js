@@ -2,28 +2,64 @@ angular.module('starter.controllers', [])
 
 .controller('StatsCtrl', function ($scope) {})
 
-.controller('ChatsCtrl', function ($scope, $stateParams, Chats) {
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
+.controller('ChatsCtrl', function ($scope, $http, $stateParams, UserInfo, Chats, Debug) {
+  
 
-    $scope.chat = Chats.getGroupMessages($stateParams.groupID);
-    console.log($scope.chat)
+    $http({
+
+        method: "GET",
+        url: Debug.getURL("/chat/" + $stateParams.groupID),
+        responseType: "json",
+        headers: {
+          'Content-Type': "json"
+        }
+      }).then(function successCallback(response) {
+
+        console.log(response.data.messages);
+        $scope.messages = response.data.messages;
+    
+      }, function errorCallback(response) {
+
+        console.log(Debug.getURL("/chat/" + $stateParams.groupID));
+        console.log(response);
+
+        alert("Failed to get chat messages, please try again. " + response);
+
+      });
+
     $scope.remove = function (chat) {
         Chats.remove(chat);
     };
 
     $scope.report = function(messageID) {
         console.log("Reported message " + messageID);
-    }
+    };
+
+    $scope.send = function() {
+
+        messageData = { 
+          sender: UserInfo.get().user.userName,
+          text: $scope.message.text,
+          anonymous: $scope.message.anonymous,
+          flag: false,
+          timeDate: Date.now()
+        }
+
+        $http({
+            method: "POST",
+            url: Debug.getURL("/chat/1"),
+            data: messageData,
+            contentType:"json"
+        }).then(function successCallback(response) {
+            console.log("You sent a message!")
+        }, function errorCallback(response) {
+            alert.log("Message failed. " + response);
+        });
+    };
 })
 
 
-.controller('LoginCtrl', function ($scope, $state, $http, Debug) {
+.controller('LoginCtrl', function ($scope, $state, $http, UserInfo, Debug) {
 
     $scope.logInfo = {};
 

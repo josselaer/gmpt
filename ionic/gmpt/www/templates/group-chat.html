@@ -1,17 +1,17 @@
 <ion-view view-title="Chat">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-icon-right item-text-wrap" ng-repeat="message in chat" ng-click="report({{message.id}})">
+      <ion-item class="item-remove-animate item-icon-right item-text-wrap" ng-repeat="message in messages">
         <div ng-switch on="message.anonymous">
           <div ng-switch-when="true">
-            <h2>Anonymous Message:</h2> {{message.body}}
+            <h2>Anonymous Message:</h2> {{message.text}}
             <p class="timestamp">{{message.timeDate}}</p>
-            <i class="icon ion-flag icon-accessory"></i>
+            <i class="icon ion-flag icon-accessory"  ng-click="report({{message.id}})"></i>
           </div>
           <div ng-switch-default>
-            <h2>{{message.sender}}:</h2> {{message.body}}
+            <h2>{{message.sender}}:</h2> {{message.text}}
             <p class="timestamp">{{message.timeDate}}</p>
-            <i class="icon ion-flag icon-accessory"></i>
+            <i class="icon ion-flag icon-accessory"  ng-click="report({{message.id}})"></i>
           </div>
         </div>
       </ion-item>
@@ -20,12 +20,14 @@
 
   </ion-content>
 
-  <div class="bar bar-footer">
-    <label id="message-input" class="item-input-inset">
-      <input type="text" placeholder="Message">
+  <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
+    <label class="item-input-wrapper">
+        <textarea ng-model="message.text" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic></textarea>
     </label>
-    <button class="button button-small pull-right">
-      Send
-    </button>
-  </div>
+    <div class="footer-btn-wrap">
+      <button class="button button-icon icon ion-android-send footer-btn" ng-click="send()">
+      </button>
+    </div>
+  </ion-footer-bar>
+
 </ion-view>

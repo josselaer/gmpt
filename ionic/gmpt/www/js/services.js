@@ -1,5 +1,37 @@
 angular.module('starter.services', [])
 
+.factory("UserInfo", function() {
+
+  user = {
+    "userName": "aakashpatel1",
+    "email": "helloworld@gmail.com",
+    "firstName": "Aakash",
+    "lastName": "Patel",
+    "auth": 0
+  }
+
+  return {
+    get: function() {
+      return user;
+    },
+    set: function(userData) {
+      user.userName = userData.userName;
+      user.email = userData.email;
+      user.firstName = userData.firstName;
+      user.lastName = userData.lastName;
+    },
+    setAuthToken: function(authToken) {
+      user.auth = authToken;
+    },
+    getAuthToken: function() {
+      return user.auth;
+    }
+
+  }
+
+})
+
+
 .factory('Chats', function($http, Debug) {
   // Might use a resource here that returns a JSON array
 
@@ -9,35 +41,35 @@ angular.module('starter.services', [])
   var chats = [{
     id: 0,
     sender: 'Ben Sparrow',
-    body: 'You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?',
+    text: 'You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?',
     face: 'img/ben.png',
     timeDate: d.toLocaleString(),
     anonymous: true
   }, {
     id: 1,
     sender: 'Max Lynx',
-    body: 'Hey, it\'s me',
+    text: 'Hey, it\'s me',
     face: 'img/max.png',
     timeDate: d.toLocaleString(),
     anonymous: false
   }, {
     id: 2,
     sender: 'Adam Bradleyson',
-    body: 'I should buy a boat',
+    text: 'I should buy a boat',
     face: 'img/adam.jpg',
     timeDate: d.toLocaleString(),
     anonymous: false
   }, {
     id: 3,
     sender: 'Perry Governor',
-    body: 'Look at my mukluks!',
+    text: 'Look at my mukluks!',
     face: 'img/perry.png',
     timeDate: d.toLocaleString(),
     anonymous: false
   }, {
     id: 4,
     sender: 'Mike Harrington',
-    body: 'This is wicked good ice cream.',
+    text: 'This is wicked good ice cream.',
     face: 'img/mike.png',
     timeDate: d.toLocaleString(),
     anonymous: false
@@ -50,11 +82,14 @@ angular.module('starter.services', [])
 
         method: "GET",
         url: Debug.getURL("/chat/" + groupID),
-        responseType: "json"
+        responseType: "json",
+        headers: {
+          'Content-Type': "json"
+        }
       }).then(function successCallback(response) {
 
-        console.log(response);
-        return response.data;
+        console.log(response.data.messages);
+        return response.data.messages;
     
       }, function errorCallback(response) {
 
@@ -67,13 +102,8 @@ angular.module('starter.services', [])
 
       });
     },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
+    getDefaultMessages: function() {
+      return chats;
     }
   };
 })
