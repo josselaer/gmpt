@@ -9,7 +9,7 @@
   		</div>
 	</div>
 	<ion-list>
-	<ion-item ng-repeat="meeting in meetings" href="#/meeting-details">
+	<ion-item ng-repeat="meeting in meetings" href="#/meeting-details" ng-click="meetingDetails($index)">
 		<div class="row">
     	<div class="col col-30">
     		<p>{{meeting.date}}</p>

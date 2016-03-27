@@ -55,10 +55,20 @@ angular.module('starter.controllers', [])
   ];
 
   console.log($scope.meetings);
-
   $scope.settings = {
     enableFriends: true
   }
+
+  $scope.currentMeeting = $scope.meetings[0];
+
+  $scope.meetingDetails = function(index)
+  {
+    //console.log("INDEX: ", index);
+    $scope.currentMeeting = $scope.meetings[index];
+    console.log("current meeting: ", $scope.currentMeeting);
+    return $scope.currentMeeting;
+  }
+
   $scope.confirmMeeting = function()
   {  
     /*
