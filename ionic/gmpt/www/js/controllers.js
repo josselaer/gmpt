@@ -46,40 +46,57 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('MeetingsCtrl', function($scope, $state, $http, Debug) {
+.controller('MeetingsCtrl', function($scope, $state, $http, Meetings, Debug) {
 
-  $scope.meetings = [
-  {"date":"12/3/12","time_":"6:30PM","topic":"Mock Ups","desc":"asdfasdasdf"},
-  {"date":"12/4/12","time_":"4:30PM","topic":"Progress Check In","desc":"as32sdf"},
-  {"date":"12/6/12","time_":"8:15AM","topic":"Front End Integration","desc":"asdfasdwaefaasdf"},
-  ];
+/*
+  $http({
 
-  console.log($scope.meetings);
-  $scope.settings = {
-    enableFriends: true
-  }
+        method: "GET",
+        url: Debug.getURL("/meetings"),
+        responseType: "json"
+      }).then(function successCallback(response) {
+
+        console.log(Debug.getURL("/meetings"));
+        console.log(response);
+        meetings = response.data;
+        console.log(meetings);
+
+        Meetings.set(meetings);
+        $scope.meetings = meetings;
+    
+      }, function errorCallback(response) {
+
+        console.log(Debug.getURL("/meetings"));
+        console.log(response);
+
+        alert("Failed to load groups, please try again.");
+
+        return null;
+
+      });
+*/
+  $scope.meetings = Meetings.all();
 
   $scope.currentMeeting = $scope.meetings[0];
 
   $scope.meetingDetails = function(index)
   {
     //console.log("INDEX: ", index);
-    $scope.currentMeeting = $scope.meetings[index];
-    console.log("current meeting: ", $scope.currentMeeting);
+    $scope.currentMeeting = Meetings.get(index);
+    //console.log("current meeting: ", $scope.currentMeeting);
     return $scope.currentMeeting;
   }
 
   $scope.confirmMeeting = function()
   {  
-    /*
-    var meeting = {
-      topic: $scope.topic,
-      desc: $scope.desc,
-      date: $scope.date,
-      time: $scope.time_
+    if(this.date != "" && this.time_ != "" && this.topic != "" && this.desc != "")
+    {
+      $scope.meetings.push({'date':this.date,'time_':this.time_,'topic':this.topic,'desc':this.desc});
+      this.date = "";
+      this.time_ = "";
+      this.topic = "";
+      this.desc = "";
     }
-    */
-    $scope.meetings.push({'date':this.date,'time_':this.time_,'topic':this.topic,'desc':this.desc});
     console.log($scope.meetings);
   }
 })

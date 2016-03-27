@@ -76,6 +76,38 @@ angular.module('starter.services', [])
   };
 })
 
+.factory("Meetings", function($http) {
+
+  meetings = [{
+    date: "12/3/12",
+    time_: "6:30PM",
+    topic: "Mock Ups",
+    desc: "lorum ipsum random description"
+  }, {
+    date: "12/7/9",
+    time_: "8:30PM",
+    topic: "Front End Design",
+    desc: "lorum ipsum random description"
+  }];
+
+  return {
+    all: function() {
+
+      return meetings;
+    },
+    set: function(g) {
+      meetings = g;
+
+      console.log("Set()" + meetings);
+    },
+    get: function(index)
+    {
+      currentIndex = index;
+      meetings[index];
+    }
+  };
+})
+
 .factory("Debug", function() {
 
   debug = true;
