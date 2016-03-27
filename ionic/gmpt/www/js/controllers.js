@@ -162,7 +162,7 @@ angular.module('starter.controllers', [])
             data: $scope.logInfo
         }).then(function successCallback(response) {
             console.log("Successful Registration. Welcome to gmpt!")
-            $state.go("groups");
+            $state.go("login");
         }, function errorCallback(response) {
             alert.log("Couldn't Register");
         });
