@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
+.factory('Chats', function($http, Debug) {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
@@ -45,7 +45,27 @@ angular.module('starter.services', [])
 
   return {
     getGroupMessages: function(groupID) {
-      return chats;
+
+      $http({
+
+        method: "GET",
+        url: Debug.getURL("/chat/" + groupID),
+        responseType: "json"
+      }).then(function successCallback(response) {
+
+        console.log(response);
+        return response.data;
+    
+      }, function errorCallback(response) {
+
+        console.log(Debug.getURL("/chat/" + groupID));
+        console.log(response);
+
+        alert("Failed to get chat messages, please try again. " + response);
+
+        return null;
+
+      });
     },
     get: function(chatId) {
       for (var i = 0; i < chats.length; i++) {
