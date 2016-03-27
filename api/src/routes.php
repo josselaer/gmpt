@@ -49,13 +49,29 @@ $app->post('/login', function ($request, $response, $args) {
 	$token=validateUser($username,$password);
 	
 	//set Authorization header to token
-	$response= $response->withHeader('Authorization',$token);
+	$returnArray=array();
+	$returnArray['Authorization']=$token;
+	
+	$response= $response->getBody()->write(json_encode($returnArray));
 
 	//return the response
 	return $response;
 	
 });
 
+//test
+//Register:  POST @ /user endpoint
+$app->post('/user', 
+	function($request, $response,$args){
+		$username= $request->getAttribute('userName');
+		$password = $request->getAttribute('password');
+		$fName =$request->getAttribute('firstName');
+		$lName =$request->getAttribute('lastName');
+		$email= $request->getAttribute('email');
+		
+		registerUser($username,$password,$fName,$lName,$email);
+	}
+);	
 
 //close session
 $app->post('/logout', function ($request, $response, $args) {
@@ -162,19 +178,6 @@ $app->post('/meetings/',
 	}	
 );
 
-//test
-//Register:  POST @ /user endpoint
-$app->post('/user', 
-	function($request, $response,$args){
-		$username= $request->getAttribute('userName');
-		$password = $request->getAttribute('password');
-		$fName =$request->getAttribute('firstName');
-		$lName =$request->getAttribute('lastName');
-		$email= $request->getAttribute('email');
-		
-		registerUser($username,$password,$fName,$lName,$email);
-	}
-);	
 
 //test 
 //Edit a user: PUT @ /user endpoint
