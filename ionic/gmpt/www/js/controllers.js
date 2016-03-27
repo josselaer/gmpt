@@ -158,6 +158,9 @@ $scope.register = function () {
                 + " Last Name: " + $scope.regInfo.lastName
                 + " Password: " + $scope.regInfo.password
                 + " E-mail: " + $scope.regInfo.email);
+    
+    console.log($scope.regInfo);
+    
     $http({
         method: "POST",
         url: Debug.getURL("/user"),
