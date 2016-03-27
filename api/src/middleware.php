@@ -7,9 +7,11 @@ $mw = (function ($request, $response, $next) {
 
 	$token = $request->getHeader("Authorization")[0];
 	echo $token;
+	
+	$request= $request->withAttribute('test','TESTER');
 	$response = $next($request, $response);
 	$response= $response->withHeader('Authorization','test');
-           
+      
 	
 	return $response;
 });
@@ -25,8 +27,11 @@ $validateSession= (function ($request,$response,$next) {
 	
 	//if we found the token
 	if($validateSessionQuery->rowCount()==1){
-		
-		//put username in body of request somehow 
+		foreach($validateSessionQuery as $row){
+			$returnArray[0]=$row['UserID'];
+		}
+		//pass userID to attribute 
+		$request=$request->withAttribute('UserID',$returnArray[0]);
 		
 		
 		//do everything else in routes and return response 

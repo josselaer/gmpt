@@ -1,5 +1,5 @@
 <?php 
-	function getChatByGroupID($groupID){
+	function getChatByGroupID($userID,$groupID){
 		$db=$this->GMPT;
 		//calls apropriate routine
 		//$getChatByGroupIDQuery=$db->prepare("CALL -----");

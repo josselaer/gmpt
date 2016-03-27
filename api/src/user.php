@@ -9,7 +9,7 @@
 		$registerQuery->execute(array($username,hash('sha256',$password.$salt),$fName,$lName,$salt,$email));
 	}
 	
-	function updateUser($username, $password, $fName, $lName, $email){
+	function updateUser($userID,$username, $password, $fName, $lName, $email){
 		$db= $this->GMPT;
 		
 		$salt = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
