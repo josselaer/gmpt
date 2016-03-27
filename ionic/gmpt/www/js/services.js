@@ -1,50 +1,109 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
+.factory("UserInfo", function() {
+
+  user = {
+    "userName": "aakashpatel1",
+    "email": "helloworld@gmail.com",
+    "firstName": "Aakash",
+    "lastName": "Patel",
+    "auth": 0
+  }
+
+  return {
+    get: function() {
+      return user;
+    },
+    set: function(userData) {
+      user.userName = userData.userName;
+      user.email = userData.email;
+      user.firstName = userData.firstName;
+      user.lastName = userData.lastName;
+    },
+    setAuthToken: function(authToken) {
+      user.auth = authToken;
+    },
+    getAuthToken: function() {
+      return user.auth;
+    }
+
+  }
+
+})
+
+
+.factory('Chats', function($http, Debug) {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
+  d = new Date();
+  d.setTime(Date.now());
   var chats = [{
     id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
+    sender: 'Ben Sparrow',
+    text: 'You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?',
+    face: 'img/ben.png',
+    timeDate: d.toLocaleString(),
+    anonymous: true
   }, {
     id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
+    sender: 'Max Lynx',
+    text: 'Hey, it\'s me',
+    face: 'img/max.png',
+    timeDate: d.toLocaleString(),
+    anonymous: false
   }, {
     id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
+    sender: 'Adam Bradleyson',
+    text: 'I should buy a boat',
+    face: 'img/adam.jpg',
+    timeDate: d.toLocaleString(),
+    anonymous: false
   }, {
     id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
+    sender: 'Perry Governor',
+    text: 'Look at my mukluks!',
+    face: 'img/perry.png',
+    timeDate: d.toLocaleString(),
+    anonymous: false
   }, {
     id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
+    sender: 'Mike Harrington',
+    text: 'This is wicked good ice cream.',
+    face: 'img/mike.png',
+    timeDate: d.toLocaleString(),
+    anonymous: false
   }];
 
   return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    getGroupMessages: function(groupID) {
+
+      $http({
+
+        method: "GET",
+        url: Debug.getURL("/chat/" + groupID),
+        responseType: "json",
+        headers: {
+          'Content-Type': "json"
         }
-      }
-      return null;
+      }).then(function successCallback(response) {
+
+        console.log(response.data.messages);
+        return response.data.messages;
+    
+      }, function errorCallback(response) {
+
+        console.log(Debug.getURL("/chat/" + groupID));
+        console.log(response);
+
+        alert("Failed to get chat messages, please try again. " + response);
+
+        return null;
+
+      });
+    },
+    getDefaultMessages: function() {
+      return chats;
     }
   };
 })
@@ -80,7 +139,7 @@ angular.module('starter.services', [])
 
   debug = true;
 
-  apiaryURL = "http://private-anon-af0e45a81-gmpt.apiary-mock.com";
+  apiaryURL = "http://private-f963fa-gmpt.apiary-mock.com";
 
   prodURL = null;
 
