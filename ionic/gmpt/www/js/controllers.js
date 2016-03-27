@@ -21,7 +21,7 @@ angular.module('starter.controllers', [])
     $scope.chat = Chats.get($stateParams.messageId);
 })
 
-.controller('LoginCtrl', function ($scope, $state, $http, Debug) {
+.controller('LoginCtrl', function ($scope, $state, $http, Debug, $location) {
 
     $scope.logInfo = {};
 
@@ -41,7 +41,11 @@ angular.module('starter.controllers', [])
         });
 
     }
-
+    
+     $scope.go = function ( path ) {
+    $location.path( path );
+  };
+    
 
 })
 
