@@ -35,17 +35,18 @@ angular.module('starter.controllers', [])
             data: $scope.logInfo
         }).then(function successCallback(response) {
             console.log("You logged in!")
+            console.log(response);
             $state.go("groups");
         }, function errorCallback(response) {
             alert.log("Can't Login");
         });
 
     }
-    
-     $scope.go = function ( path ) {
-    $location.path( path );
-  };
-    
+
+    $scope.go = function (path) {
+        $location.path(path);
+    };
+
 
 })
 
@@ -149,28 +150,22 @@ angular.module('starter.controllers', [])
 
 .controller('RegisterCtrl', function ($scope, $state, $http, Debug) {
 
-$scope.regInfo = {};
+    $scope.regInfo = {};
 
-$scope.register = function () {
+    $scope.register = function () {
 
-    console.log("UserName: " + $scope.regInfo.userName
-                + " First Name: "  + $scope.regInfo.firstName
-                + " Last Name: " + $scope.regInfo.lastName
-                + " Password: " + $scope.regInfo.password
-                + " E-mail: " + $scope.regInfo.email);
-    
-    console.log($scope.regInfo);
-    
-    $http({
-        method: "POST",
-        url: Debug.getURL("/user"),
-        data: $scope.logInfo
-    }).then(function successCallback(response) {
-        console.log("Successful Registration. Welcome to gmpt!")
-        $state.go("groups");
-    }, function errorCallback(response) {
-        alert.log("Couldn't Register");
-    });
+        console.log("UserName: " + $scope.regInfo.userName + " First Name: " + $scope.regInfo.firstName + " Last Name: " + $scope.regInfo.lastName + " Password: " + $scope.regInfo.password + " E-mail: " + $scope.regInfo.email);
 
-}
+        $http({
+            method: "POST",
+            url: Debug.getURL("/user"),
+            data: $scope.logInfo
+        }).then(function successCallback(response) {
+            console.log("Successful Registration. Welcome to gmpt!")
+            $state.go("groups");
+        }, function errorCallback(response) {
+            alert.log("Couldn't Register");
+        });
+
+    }
 });
