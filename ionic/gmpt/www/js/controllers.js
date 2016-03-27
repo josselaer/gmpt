@@ -21,7 +21,7 @@ angular.module('starter.controllers', [])
     $scope.chat = Chats.get($stateParams.messageId);
 })
 
-.controller('LoginCtrl', function ($scope, $state, $http, Debug) {
+.controller('LoginCtrl', function ($scope, $state, $http, Debug, $location) {
 
     $scope.logInfo = {};
 
@@ -41,25 +41,29 @@ angular.module('starter.controllers', [])
         });
 
     }
-
+    
+     $scope.go = function ( path ) {
+    $location.path( path );
+  };
+    
 
 })
 
 
-.controller('MeetingsCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  }
+.controller('MeetingsCtrl', function ($scope) {
+    $scope.settings = {
+        enableFriends: true
+    }
 })
 
-.controller ('GroupsCtrl', function($scope, $http, Groups, Debug) {
+.controller('GroupsCtrl', function ($scope, $http, Groups, Debug) {
 
-  $http({
+    $http({
 
         method: "GET",
         url: Debug.getURL("/groups"),
         responseType: "json"
-      }).then(function successCallback(response) {
+    }).then(function successCallback(response) {
 
         console.log(Debug.getURL("/groups"));
         console.log(response);
@@ -68,8 +72,8 @@ angular.module('starter.controllers', [])
 
         Groups.set(groups);
         $scope.groups = groups;
-    
-      }, function errorCallback(response) {
+
+    }, function errorCallback(response) {
 
         console.log(Debug.getURL("/groups"));
         console.log(response);
@@ -78,61 +82,92 @@ angular.module('starter.controllers', [])
 
         return null;
 
-      });
+    });
 
 
-  $scope.groups = Groups.all();
+    $scope.groups = Groups.all();
 })
 
-.controller('AddGroupCtrl', function($scope, $state, $http, Debug) {
+.controller('AddGroupCtrl', function ($scope, $state, $http, Debug) {
 
     $scope.group = {};
 
     $scope.search = '';
     $scope.orderByAttribute = '';
     $scope.members = [
-    {"_username":"henrysdev","_email":"henrysdev@gmail.com","done":false,"remove":false}
+        {
+            "_username": "henrysdev",
+            "_email": "henrysdev@gmail.com",
+            "done": false,
+            "remove": false
+        }
     ];
-    $scope.addMember = function()
-    {
-      console.log("Clicked");
-      console.log("username: ", this._username, "email: ", this._email);
-      if(this._username !=' ' && this._email !=' ')
-      {
-        $scope.members.push({'_username':this._username,'_email':this._email,'done':false, 'remove':false});
-        this._username = ' ';
-        this._email = ' ';
-      }
-    }
-    
-    $scope.removeItem = function(index)
-    {
-      $scope.members.splice(index,1);
-      console.log("delete member");
-      $scope.members = $scope.members.filter(function(item)
-      {
-        return !item.done;
-      })
+    $scope.addMember = function () {
+        console.log("Clicked");
+        console.log("username: ", this._username, "email: ", this._email);
+        if (this._username != ' ' && this._email != ' ') {
+            $scope.members.push({
+                '_username': this._username,
+                '_email': this._email,
+                'done': false,
+                'remove': false
+            });
+            this._username = ' ';
+            this._email = ' ';
+        }
     }
 
-  $scope.addGroup = function() {
-
-    console.log($scope.group.groupName);
-    
-    var group = {
-      groupName: $scope.group.groupName,
-      description: $scope.group.groupDesc
+    $scope.removeItem = function (index) {
+        $scope.members.splice(index, 1);
+        console.log("delete member");
+        $scope.members = $scope.members.filter(function (item) {
+            return !item.done;
+        })
     }
 
+    $scope.addGroup = function () {
+
+        console.log($scope.group.groupName);
+
+        var group = {
+            groupName: $scope.group.groupName,
+            description: $scope.group.groupDesc
+        }
+
+        $http({
+            method: "POST",
+            url: Debug.getURL("/groups"),
+            data: group
+        }).then(function successCallback(response) {
+            $state.go("groups");
+        }, function errorCallback(response) {
+            alert.log("Failed to add group");
+        });
+    }
+})
+
+
+.controller('RegisterCtrl', function ($scope, $state, $http, Debug) {
+
+$scope.regInfo = {};
+
+$scope.register = function () {
+
+    console.log("UserName: " + $scope.regInfo.userName
+                + " First Name: "  + $scope.regInfo.firstName
+                + " Last Name: " + $scope.regInfo.lastName
+                + " Password: " + $scope.regInfo.password
+                + " E-mail: " + $scope.regInfo.email);
     $http({
-      method:"POST",
-      url: Debug.getURL("/groups"),
-      data: group
+        method: "POST",
+        url: Debug.getURL("/user"),
+        data: $scope.logInfo
     }).then(function successCallback(response) {
-      $state.go("groups");
+        console.log("Successful Registration. Welcome to gmpt!")
+        $state.go("groups");
     }, function errorCallback(response) {
-      alert.log("Failed to add group");
+        alert.log("Couldn't Register");
     });
-  }
 
+}
 });
