@@ -6,25 +6,25 @@
 <label>Meeting Topic</label>
 <p></p>
 <label class="item item-input">
-  <input ng-model="topic" type="text">
+  <input ng-model="topic" type="text" placeholder={{currentMeeting().topic}}>
 </label>
 <p></p>
 
 <label>Description</label>
 <div class="item item-input">
-<textarea name="comment" ng-model="desc">
+<textarea name="comment" ng-model="desc" placeholder={{currentMeeting().desc}}>
 </textarea>
 </div>
 <p></p>
 
 <label>Date</label>
 <div class="item item-input">
-  <input ng-model="date" type="text">
+  <input ng-model="date" type="text" placeholder={{currentMeeting().date}}>
 </div>
 <p></p>
 <label>Time</label>
 <div class="item item-input">
-  <input ng-model="time_" type="text">
+  <input ng-model="time_" type="text" placeholder={{currentMeeting().time_}}>
 </div>
 
 <div class="row">

@@ -90,6 +90,8 @@ angular.module('starter.services', [])
     desc: "lorum ipsum random description"
   }];
 
+  editing = false;
+
   currInd = 0;
   //console.log("[1]currInd = ", currInd);
   return {
@@ -114,6 +116,14 @@ angular.module('starter.services', [])
     {
       currInd = index;
       //console.log("[2]currInd = ", currInd);
+    },
+    getEdit: function()
+    {
+      return editing;
+    },
+    setEdit: function(bool)
+    {
+      editing = bool;
     }
   };
 })

@@ -87,8 +87,8 @@ angular.module('starter.controllers', [])
     console.log("current index inside function: ", Meetings.getCurr());
     //console.log("current meeting: ", $scope.currentMeeting);
     //return $scope.currentMeeting;
-    $state.go('group.meetings');
-    return $scope.currentMeeting;
+    //$state.go('group.meetings');
+    //return $scope.currentMeeting;
   }
 
   $scope.currentMeeting = function()
@@ -100,13 +100,46 @@ angular.module('starter.controllers', [])
   {  
     if(this.date != "" && this.time_ != "" && this.topic != "" && this.desc != "")
     {
-      $scope.meetings.push({'date':this.date,'time_':this.time_,'topic':this.topic,'desc':this.desc});
+      if(Meetings.getEdit() == false)
+      {
+        $scope.meetings.push({'date':this.date,'time_':this.time_,'topic':this.topic,'desc':this.desc});
+        Meetings.set($scope.meetings);
+      }
+      else if(Meetings.getEdit() == true)
+      {
+        console.log("lol");
+        $scope.meetings[Meetings.getCurr()].topic = this.topic;
+        $scope.meetings[Meetings.getCurr()].date = this.date;
+        $scope.meetings[Meetings.getCurr()].time_ = this.time_;
+        $scope.meetings[Meetings.getCurr()].desc = this.desc;
+        Meetings.set($scope.meetings);
+      }
       this.date = "";
       this.time_ = "";
       this.topic = "";
       this.desc = "";
+      /*
+      $scope.meetings = $scope.meetings.filter(function(item)
+      {
+        return !item.done;
+      })*/
     }
+
     console.log($scope.meetings);
+  }
+
+  $scope.editMeeting = function(index)
+  {
+    Meetings.setEdit(true);
+    Meetings.setCurr(index);
+    $scope.currentMeeting = Meetings.get(Meetings.getCurr());
+  }
+
+  $scope.newMeeting = function()
+  {
+    Meetings.setEdit(false);
+    Meetings.setCurr(999);
+    $scope.currentMeeting = Meetings.get(Meetings.getCurr());
   }
 })
 
