@@ -14,8 +14,8 @@ return [
             'path' => __DIR__ . '/../logs/app.log',
         ],
         'GMPT' => [
-            'username' =>'testuser',
-            'password' => 'test',
+            'username' =>'root',
+            'password' => 'root',
             'host' => 'localhost',
             'dbname' => 'GMPT',
             'db' => 'mysql',

@@ -81,42 +81,57 @@ $app->get('/groups',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$query=$db->query('select * from Groups;');
+		$row = $query->fetch_assoc();
 	}
 
 );
+
+*/
+
 
 //test
 $app->post('/groups',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
-		$groupID = $request->getAttribute('groupID');
+		/*$groupID = $request->getAttribute('groupID');
 		$groupName = $request->getAttribute('groupName');
 		$description = $request->getAttribute('description');
-		$meetingID = $request->getAttribute('meetingID');
-		$query=$db->query('INSERT INTO Groups (groupName,description, meetingID) VALUES($groupName, $description, $meetingID);');
-		
+		$meetingID = $request->getAttribute('meetingID');*/
+
+		$credentials = $request->getParsedBody();
+		$groupID = $credentials['groupID'];
+		$groupName = $credentials['groupName'];
+		$description = $credentials['description'];
+		$meetingID = $credentials['meetingID'];
+
+		$query=$db->query("INSERT INTO Groups (groupName,description, meetingID) VALUES('$groupName', '$description', '$meetingID');");
+		$row = $query->fetchAll();
+
+		return json_encode($response);
 	}
 );
 
-//test
 $app->get('/groups/{groupID}',
 	function($request,$response,$args) {
-		$db = $this->Recommender;
-		//$name = $request->getAttribute('name');
-		$userId=$request->getAttribute('userId');
-		$itemId = $request->getAttribute('itemId');
-		$query = $db->query("CALL getRecommendation ('$itemId',$userId)");
-		$strToReturn = '';
+		$db = $this->GMPT;
+		$GroupID = $request->getAttribute('groupID');
 
-		$returnArray=array();
-		foreach ($query as $row) {
-			$strToReturn .= $row['ProductName'] . ', ' . $row['COUNT(*)'] . '<br/>';
-			$returnArray[$row['ProductName']] = $row['COUNT(*)'];
-		}
-		return $response->write(json_encode($returnArray));
+		$query=$db->query("SELECT * FROM Groups WHERE GroupID = '$GroupID';");
+		//echo $query;
+		$row = $query->fetchAll();
+		//echo $row;
+		$data = $row[0];
+
+		$GroupName = $data['GroupName'];
+		$Description = $data['Description'];
+		$DateCreated = $data['DateCreated'];
+
+		$response = array("GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated);
+		echo json_encode($response);
 	}		
 );
 
+/*
 //test
 $app->get('/meetings/',
 	function($request,$response,$args) {
