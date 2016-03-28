@@ -6,11 +6,13 @@
 -->
 <ion-view view-title="Meeting Details">
   <ion-content class="padding">
-    <label><b>{{currentMeeting.topic}}</b></label>
+    <a class="button" href = "#/group/meetings"> Back </a>
+    <p></p>
+    <label><b>{{currentMeeting().topic}}</b></label>
     <div class="card">
-    <p>{{currentMeeting.date}}</p>
-    <p>{{currentMeeting.time_}}</p>
-    <p>{{currentMeeting.desc}}</p>
+    <p>{{currentMeeting().date}}</p>
+    <p>{{currentMeeting().time_}}</p>
+    <p>{{currentMeeting().desc}}</p>
 	</div>
   </ion-content>
 </ion-view>

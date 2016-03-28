@@ -76,15 +76,24 @@ angular.module('starter.controllers', [])
       });
 */
   $scope.meetings = Meetings.all();
-
-  $scope.currentMeeting = $scope.meetings[0];
+  //console.log("current index outside function: ", Meetings.getCurr());
+  $scope.currentMeeting = Meetings.get(Meetings.getCurr());
 
   $scope.meetingDetails = function(index)
   {
     //console.log("INDEX: ", index);
-    $scope.currentMeeting = Meetings.get(index);
+    Meetings.setCurr(index);
+    $scope.currentMeeting = Meetings.get(Meetings.getCurr());
+    console.log("current index inside function: ", Meetings.getCurr());
     //console.log("current meeting: ", $scope.currentMeeting);
+    //return $scope.currentMeeting;
+    $state.go('group.meetings');
     return $scope.currentMeeting;
+  }
+
+  $scope.currentMeeting = function()
+  {
+    return Meetings.get(Meetings.getCurr());
   }
 
   $scope.confirmMeeting = function()

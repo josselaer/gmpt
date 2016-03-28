@@ -90,6 +90,8 @@ angular.module('starter.services', [])
     desc: "lorum ipsum random description"
   }];
 
+  currInd = 0;
+  //console.log("[1]currInd = ", currInd);
   return {
     all: function() {
 
@@ -102,8 +104,16 @@ angular.module('starter.services', [])
     },
     get: function(index)
     {
-      currentIndex = index;
-      meetings[index];
+      return meetings[index];
+    },
+    getCurr: function()
+    {
+      return currInd;
+    },
+    setCurr: function(index)
+    {
+      currInd = index;
+      //console.log("[2]currInd = ", currInd);
     }
   };
 })
