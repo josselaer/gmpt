@@ -25,14 +25,6 @@ $app->get('/goodbye',
 	
 )->add($mw);
 
-$app->get('/login/[{username}]', function ($request, $response, $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
-
-    // Render index view
-    return "Hello {$args['username']}";
-});
-
 
 //validate if user is correct
 $app->post('/login', function ($request, $response, $args) {
@@ -58,13 +50,31 @@ $app->post('/login', function ($request, $response, $args) {
 //Register:  POST @ /user endpoint
 $app->post('/user', 
 	function($request, $response,$args){
-		$username= $request->getAttribute('userName');
-		$password = $request->getAttribute('password');
-		$fName =$request->getAttribute('firstName');
-		$lName =$request->getAttribute('lastName');
-		$email= $request->getAttribute('email');
+		$form_data = $request->getParsedBody();
+		$username = $form_data['username'];
+		$password = $form_data['password'];
+		$fName  = $form_data['firstName'];
+		$lName = $form_data['lastName'];
+		$email = $form_data['email'];
+			$db = $this->GMPT;		
+		$salt = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
+		$passwordHash = hash('sha256',$password.$salt);
 		
-		registerUser($username,$password,$fName,$lName,$email);
+		//$returnArray = array("Volvo", "BMW", "Toyota");
+		//prepare query
+		$registerQuery=$db->prepare("CALL CreateUser (?,?,?,?,?)");
+		$registerQuery->bindValue(1, $username, PDO::PARAM_STR);
+		$registerQuery->bindValue(2, $passwordHash, PDO::PARAM_STR);
+		$registerQuery->bindValue(3, $fName, PDO::PARAM_STR);
+		$registerQuery->bindValue(4, $lName, PDO::PARAM_STR);
+		$registerQuery->bindValue(5, $email, PDO::PARAM_STR);
+		
+		$registerQuery->execute();
+
+		
+		$returnArray = array($username, $passwordHash, $fName, $lName, $email);
+		$response->getBody()->write(json_encode($returnArray));
+		return $response;
 		
 	}
 );	

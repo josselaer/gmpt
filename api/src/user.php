@@ -4,9 +4,9 @@
 		$salt = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
 
 		//prepare query
-		$registerQuery=$db->prepare("CALL CreateUser (?,?,?,?,?,?)");
+		$registerQuery=$db->prepare("CALL CreateUser (?,?,?,?,?)");
 		
-		$registerQuery->execute(array($username,hash('sha256',$password.$salt),$fName,$lName,$salt,$email));
+		$registerQuery->execute(array($username,hash('sha256',$password.$salt),$fName,$lName, $email));
 	}
 	
 	function updateUser($userID,$username, $password, $fName, $lName, $email){
