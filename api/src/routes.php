@@ -75,39 +75,42 @@ $app->post('/logout', function ($request, $response, $args) {
 	return json_encode($returnArray);
 });
 
-/*
+
 //test json_encode
 $app->get('/groups',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$query=$db->query('select * from Groups;');
-		$row = $query->fetch_assoc();
+		$results = [];
+		$row = $query->fetchAll();
+		foreach($row as $data) {
+			$GroupName = $data['GroupName'];
+			$Description = $data['Description'];
+			$DateCreated = $data['DateCreated'];
+			$group = array("GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated);
+			array_push($results,$group);
+		}
+		$response=$results;
+		echo json_encode($response);
 	}
-
 );
-
-*/
 
 
 //test
 $app->post('/groups',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
-		/*$groupID = $request->getAttribute('groupID');
-		$groupName = $request->getAttribute('groupName');
-		$description = $request->getAttribute('description');
-		$meetingID = $request->getAttribute('meetingID');*/
 
-		$credentials = $request->getParsedBody();
-		$groupID = $credentials['groupID'];
-		$groupName = $credentials['groupName'];
-		$description = $credentials['description'];
-		$meetingID = $credentials['meetingID'];
+		//credentials
 
-		$query=$db->query("INSERT INTO Groups (groupName,description, meetingID) VALUES('$groupName', '$description', '$meetingID');");
-		$row = $query->fetchAll();
+		$GroupName = $_POST['GroupName'];
+		$Description = $_POST['Description'];
 
+		$query=$db->query("INSERT INTO Groups (GroupName,Description) VALUES('$GroupName', '$Description');");
+		
+		$response = array("worked"=>true);
 		return json_encode($response);
+
 	}
 );
 
