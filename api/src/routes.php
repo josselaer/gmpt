@@ -29,17 +29,42 @@ $app->get('/goodbye',
 //validate if user is correct
 $app->post('/login', function ($request, $response, $args) {
     
-	$username = $request->getAttribute('userName');
-	$password = $request->getAttribute('password');
-	
+	$form_data = $request->getParsedBody();
+	$username = $form_data['username'];
+	$password = $form_data['password'];
 	//set token
-	$token=validateUser($username,$password);
+	$db=$this->GMPT;
+		
+	//get salt
+	$getSaltQuery = $db->prepare("CALL GetSalt(?)");
+	$getSaltQuery->execute(array($username));
+	$rArray=array();
+	foreach($getSaltQuery as $row){
+		$rArray[$row['UserName']]=$row['Salt'];
+	}
 	
-	//set Authorization header to token
+	//hash pass with salt
+	$hashedPass= hash('sha256',$pasword.($rArray[$username]));
+		
+	//validate user
+	$validateUserQuery= $db->prepare("CALL ValidateUser(?,?)");
+	$validateUserQuery->execute(array($username,$hashedPass));
+	
+	//get token 
 	$returnArray=array();
-	$returnArray['Authorization']=$token;
+	foreach($validateUserQuery as $row){
+		$returnArray[0]=$row['Token'];
+	}
 	
-	$response= $response->getBody()->write(json_encode($returnArray));
+	
+	//return the token
+	$token= $returnArray[0];
+
+	//set Authorization header to token
+	$returnArray1=array();
+	$returnArray1['Authorization']=$token;
+	
+	$response= $response->getBody()->write(json_encode($returnArray1));
 
 	//return the response
 	return $response;
@@ -56,18 +81,19 @@ $app->post('/user',
 		$fName  = $form_data['firstName'];
 		$lName = $form_data['lastName'];
 		$email = $form_data['email'];
-			$db = $this->GMPT;		
+		$db = $this->GMPT;		
 		$salt = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
 		$passwordHash = hash('sha256',$password.$salt);
 		
 		//$returnArray = array("Volvo", "BMW", "Toyota");
 		//prepare query
-		$registerQuery=$db->prepare("CALL CreateUser (?,?,?,?,?)");
+		$registerQuery=$db->prepare("CALL CreateUser (?,?,?,?,?,?)");
 		$registerQuery->bindValue(1, $username, PDO::PARAM_STR);
 		$registerQuery->bindValue(2, $passwordHash, PDO::PARAM_STR);
 		$registerQuery->bindValue(3, $fName, PDO::PARAM_STR);
 		$registerQuery->bindValue(4, $lName, PDO::PARAM_STR);
-		$registerQuery->bindValue(5, $email, PDO::PARAM_STR);
+		$registerQuery->bindValue(5, $salt, PDO::PARAM_STR);
+		$registerQuery->bindValue(6, $email, PDO::PARAM_STR);
 		
 		$registerQuery->execute();
 
