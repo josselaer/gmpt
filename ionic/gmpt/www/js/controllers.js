@@ -160,7 +160,7 @@ angular.module('starter.controllers', [])
 
         $http({
             method: "POST",
-            url:"http://52.37.56.8/gmpt/api/public/user",
+            url:"http://localhost:8100/api",
             data: $scope.regInfo
         }).then(function successCallback(response) {
             console.log("Successful Registration. Welcome to gmpt!")

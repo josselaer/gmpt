@@ -1,4 +1,10 @@
 {
   "name": "gmpt",
-  "app_id": ""
+  "app_id": "",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://52.37.56.8/gmpt/api/public"
+    }
+  ]
 }
