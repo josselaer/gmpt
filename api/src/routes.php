@@ -1,6 +1,7 @@
 <?php
 // Routes
 include 'meetings.php';
+include 'groups.php';
 
 $app->get('/hello', function ($request, $response, $args) {
     // Sample log message
@@ -81,16 +82,8 @@ $app->get('/groups',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$query=$db->query('select * from Groups;');
-		$results = [];
-		$row = $query->fetchAll();
-		foreach($row as $data) {
-			$GroupName = $data['GroupName'];
-			$Description = $data['Description'];
-			$DateCreated = $data['DateCreated'];
-			$group = array("GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated);
-			array_push($results,$group);
-		}
-		$response=$results;
+		
+		$response=getGroups($query);
 		echo json_encode($response);
 	}
 );
@@ -118,18 +111,8 @@ $app->get('/groups/{groupID}',
 	function($request,$response,$args) {
 		$db = $this->GMPT;
 		$GroupID = $request->getAttribute('groupID');
-
 		$query=$db->query("SELECT * FROM Groups WHERE GroupID = '$GroupID';");
-		//echo $query;
-		$row = $query->fetchAll();
-		//echo $row;
-		$data = $row[0];
-
-		$GroupName = $data['GroupName'];
-		$Description = $data['Description'];
-		$DateCreated = $data['DateCreated'];
-
-		$response = array("GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated);
+		$response = getGroupsByID($query);
 		echo json_encode($response);
 	}		
 );
@@ -138,7 +121,7 @@ $app->get('/meetings',
 	function($request,$response,$args) {
 		$db = $this->GMPT;
 		$query = $db->query('select * from Meetings;');
-		$response=getMeetings($query);
+		$response = getMeetings($query);
 		echo json_encode($response);
 	}	
 );
