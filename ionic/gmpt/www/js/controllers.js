@@ -4,6 +4,8 @@ angular.module('starter.controllers', [])
 
 .controller('ChatsCtrl', function ($scope, $http, $stateParams, UserInfo, Chats, Debug) {
   
+    $scope.chatsctrl = {};
+    $scope.messages = [];
 
     $http({
 
@@ -27,34 +29,26 @@ angular.module('starter.controllers', [])
 
       });
 
-    $scope.remove = function (chat) {
+    $scope.chatsctrl.remove = function (chat) {
         Chats.remove(chat);
     };
 
-    $scope.report = function(messageID) {
+    $scope.chatsctrl.report = function(messageID) {
         console.log("Reported message " + messageID);
     };
 
-    $scope.send = function() {
-
-        messageData = { 
-          sender: UserInfo.get().user.userName,
+    $scope.chatsctrl.send = function() {
+        console.log("Sending: " + $scope.message.text);
+        
+        var m = { 
+          //sender: UserInfo.get().user.userName,
           text: $scope.message.text,
-          anonymous: $scope.message.anonymous,
+          anonymous: false,
           flag: false,
           timeDate: Date.now()
-        }
+        };
 
-        $http({
-            method: "POST",
-            url: Debug.getURL("/chat/1"),
-            data: messageData,
-            contentType:"json"
-        }).then(function successCallback(response) {
-            console.log("You sent a message!")
-        }, function errorCallback(response) {
-            alert.log("Message failed. " + response);
-        });
+        Chats.sendMessage(JSON.stringify(m));
     };
 })
 
@@ -290,7 +284,7 @@ angular.module('starter.controllers', [])
         $http({
             method: "POST",
             url: Debug.getURL("/user"),
-            data: $scope.logInfo
+            data: $scope.regInfo
         }).then(function successCallback(response) {
             console.log("Successful Registration. Welcome to gmpt!")
             $state.go("login");

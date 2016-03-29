@@ -89,6 +89,12 @@ img.profile-pic.right {
 }
 
 .bar.item-input-inset .item-input-wrapper input {
+  position:absolute;
   width: 100% !important;
+}
+
+.report:hover {
+  color:red;
+
 }
 

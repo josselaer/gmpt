@@ -35,53 +35,13 @@ angular.module('starter.services', [])
 .factory('Chats', function($http, Debug) {
   // Might use a resource here that returns a JSON array
 
-  // Some fake testing data
-  d = new Date();
-  d.setTime(Date.now());
-  var chats = [{
-    id: 0,
-    sender: 'Ben Sparrow',
-    text: 'You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?You on your way?',
-    face: 'img/ben.png',
-    timeDate: d.toLocaleString(),
-    anonymous: true
-  }, {
-    id: 1,
-    sender: 'Max Lynx',
-    text: 'Hey, it\'s me',
-    face: 'img/max.png',
-    timeDate: d.toLocaleString(),
-    anonymous: false
-  }, {
-    id: 2,
-    sender: 'Adam Bradleyson',
-    text: 'I should buy a boat',
-    face: 'img/adam.jpg',
-    timeDate: d.toLocaleString(),
-    anonymous: false
-  }, {
-    id: 3,
-    sender: 'Perry Governor',
-    text: 'Look at my mukluks!',
-    face: 'img/perry.png',
-    timeDate: d.toLocaleString(),
-    anonymous: false
-  }, {
-    id: 4,
-    sender: 'Mike Harrington',
-    text: 'This is wicked good ice cream.',
-    face: 'img/mike.png',
-    timeDate: d.toLocaleString(),
-    anonymous: false
-  }];
-
   return {
     getGroupMessages: function(groupID) {
 
-      $http({
+      return $http({
 
         method: "GET",
-        url: Debug.getURL("/chat/" + groupID),
+        url: Debug.getURL("/chat/1"),
         responseType: "json",
         headers: {
           'Content-Type': "json"
@@ -101,6 +61,23 @@ angular.module('starter.services', [])
         return null;
 
       });
+    },
+
+    sendMessage: function(messageData) {
+
+      return $http({
+          method: "POST",
+          url: Debug.getURL("/chat/1"),
+          data: messageData,
+          contentType: "application/json"
+        }).then(function successCallback(response) {
+          console.log("You sent a message!");
+        }, function errorCallback(response) {
+          console.log(response);
+          console.log(messageData);
+          alert("Message failed. " + response);
+        });
+
     },
     getDefaultMessages: function() {
       return chats;
