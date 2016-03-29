@@ -105,12 +105,22 @@ $app->post('/user',
 		return $response;
 		
 	}
-)->add($mw);	
+);	
 
 //close session
 $app->get('/logout', function ($request, $response, $args) {
-	$token = $request->getHeader("Authorization")[0];
+
+	$token = $request->getAttribute('Token');
 	$db=$this->GMPT;
+<<<<<<< HEAD
+	$time= date("Y-m-d h:i:s");
+	echo json_encode($time);
+	
+	$closeSessionQuery= $db->prepare('UPDATE Session SET LogoutTimestamp=$time WHERE SessionID = ?');
+	//$closeSessionQuery= $db->prepare('CALL CloseSession(?)');
+	//$closeSessionQuery->bindParam(1, $token, PDO::PARAM_STR);
+	$closeSessionQuery->execute(array($token));
+=======
 	$closeSessionQuery= $db->prepare("CALL CloseSession(?)");
 	$closeSessionQuery->bindValue(1, $token, PDO::PARAM_STR);
 	print_r($closeSessionQuery);
@@ -120,9 +130,42 @@ $app->get('/logout', function ($request, $response, $args) {
 	else {
 		echo "False";
 	}
+>>>>>>> 7db9b0e08f932d6ce76043fd25e8559b08ce6d4b
 	return $response;
 })->add($validateSession);
 
+//Edit a user: PUT @ /user endpoint
+$app->put('/user', 
+	function($request, $response,$args){
+		$form_data = $request->getParsedBody();
+		$username = $form_data['username'];
+		$password = $form_data['password'];
+		$fName  = $form_data['firstName'];
+		$lName = $form_data['lastName'];
+		$email = $form_data['email'];
+		$db = $this->GMPT;		
+		$salt = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
+		$passwordHash = hash('sha256',$password.$salt);
+		
+		//$returnArray = array("Volvo", "BMW", "Toyota");
+		//prepare query
+		$registerQuery=$db->prepare("CALL UpdateUser (?,?,?,?,?,?)");
+		$registerQuery->bindValue(1, $username, PDO::PARAM_STR);
+		$registerQuery->bindValue(2, $passwordHash, PDO::PARAM_STR);
+		$registerQuery->bindValue(3, $fName, PDO::PARAM_STR);
+		$registerQuery->bindValue(4, $lName, PDO::PARAM_STR);
+		$registerQuery->bindValue(5, $salt, PDO::PARAM_STR);
+		$registerQuery->bindValue(6, $email, PDO::PARAM_STR);
+		
+		$registerQuery->execute();
+
+		
+		$returnArray = array($username, $passwordHash, $fName, $lName, $email);
+		$response->getBody()->write(json_encode($returnArray));
+		return $response;
+		
+	}
+)->add($validateSession);
 /*
 //test json_encode
 //Returns all groups for the currently authenticated user
@@ -227,18 +270,7 @@ $app->post('/meetings/',
 
 
 //test 
-//Edit a user: PUT @ /user endpoint
-$app->post('/user', 
-	function($request, $response,$args){
-		$userID = $request->getAttribute('UserID');
-		$username= $request->getAttribute('userName');
-		$password = $request->getAttribute('password');
-		$fName =$request->getAttribute('firstName');
-		$lName =$request->getAttribute('lastName');
-		$email= $request->getAttribute('email');
-		updateUser($userID,$username,$password,$fName,$lName,$email);
-	}
-)->add($validateSession);
+
 
 //test
 //Edit group by GroupID : PUT @  /groups/{groupID} endpoint 
