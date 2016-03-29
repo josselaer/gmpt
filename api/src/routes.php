@@ -113,7 +113,13 @@ $app->get('/logout', function ($request, $response, $args) {
 	$db=$this->GMPT;
 	$closeSessionQuery= $db->prepare("CALL CloseSession(?)");
 	$closeSessionQuery->bindValue(1, $token, PDO::PARAM_STR);
-	$closeSessionQuery->execute();
+	print_r($closeSessionQuery);
+	if($closeSessionQuery->execute()) {
+		echo "True";
+	}
+	else {
+		echo "False";
+	}
 	return $response;
 })->add($validateSession);
 
