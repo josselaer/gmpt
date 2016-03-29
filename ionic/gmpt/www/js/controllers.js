@@ -189,7 +189,7 @@ angular.module('starter.controllers', [])
         $http({
             method: "POST",
             url: Debug.getURL("/user"),
-            data: $scope.logInfo
+            data: $scope.regInfo
         }).then(function successCallback(response) {
             console.log("Successful Registration. Welcome to gmpt!")
             $state.go("login");
