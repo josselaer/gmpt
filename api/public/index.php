@@ -25,7 +25,5 @@ require __DIR__ . '/../src/middleware.php';
 // Register routes
 require __DIR__ . '/../src/routes.php';
 
-$app->add($corsMiddleware);
-
 // Run app
 $app->run();
