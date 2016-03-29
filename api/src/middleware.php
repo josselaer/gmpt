@@ -11,6 +11,8 @@ $mw = (function ($request, $response, $next) {
 	$request= $request->withAttribute('test','TESTER');
 	$response = $next($request, $response);
 	$response= $response->withHeader('Access-Control-Allow-Origin','*');
+	$response= $response->withHeader('Access-Control-Allow-Methods','GET, POST');
+	$response= $response->withHeader('Access-Control-Allow-Credentials','false');
       
 	
 	return $response;
