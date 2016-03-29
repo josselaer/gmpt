@@ -134,53 +134,57 @@ $app->get('/groups/{groupID}',
 	}		
 );
 
-/*
-//test
-$app->get('/meetings/',
+$app->get('/meetings',
 	function($request,$response,$args) {
-		$response=getMeetings();
-
+		$db = $this->GMPT;
+		$query = $db->query('select * from Meetings;');
+		$response=getMeetings($query);
+		echo json_encode($response);
 	}	
 );
 
 //test
 $app->get('/meetings/{groupID}',
 	function($request,$response,$args) {
-
 		$groupID=$request->getAttribute('groupID');
-		$response=getMeetingsByGroup($groupID);
-
+		$db = $this->GMPT;
+		$query = $db->query("SELECT * FROM Meetings WHERE GroupID = '$groupID';");
+		$response=getMeetingsByGroup($query);
+		echo json_encode($response);
 	}		
 );
 
 //test
-$app->get('/meetings/{meetingID}',
+/*$app->get('/meetings/{meetingID}',
 	function($request,$response,$args) {
 
 		$meetingID=$request->getAttribute('meetingID');
 		$response=getMeetingByMeetingID($meetingID);
 
 	}		
-);
+);*/
 
 //test
-$app->post('/meetings/',
+$app->post('/meetings',
 	function($request,$response,$args) {
 
-		$topic = $request->getAttribute('topic');
-		$groupName = $request->getAttribute('groupName');
-		$date = $request->getAttribute('date');
-		$description = $request->getAttribute('description');
-		$location = $request->getAttribute('location');
-		$startTime = $request->getAttribute('startTime');
-		$endTime = $request->getAttribute('endTime');
+		$topic = $_POST['Topic'];
+		$date = $_POST['Date'];
+		$description = $_POST['Description'];
+		$location = $_POST['Location'];
+		$startTime = $_POST['StartTime'];
+		$endTime = $_POST['EndTime'];
+		$groupID = $_POST['GroupID'];
 
+		$db = $this->GMPT;
+		$query=$db->query("INSERT INTO Meetings (Topic,Date,Description,Location,StartTime,EndTime,GroupID) VALUES('$topic','$date','$description','$location','$startTime','$endTime','$groupID');");
 
-		$response=createMeeting($topic,$groupName,$date,$description,$location,$startTime,$endTime);		
-
+		$response=createMeeting($query);		
+		echo json_encode($response);
 	}	
 );
 
+/*
 //test
 //Register:  POST @ /user endpoint
 $app->post('/user', 

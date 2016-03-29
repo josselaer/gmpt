@@ -1,12 +1,41 @@
 <?php
-	function getMeetings() {
-		$db = $this->GMPT;
-		return $query = $db->query('select * from Meetings');
+	function getMeetings($query) {
+		
+		$results = [];
+		$row = $query->fetchAll();
+		foreach($row as $data) {
+			$MeetingID = $data['MeetingID'];
+			$Topic = $data['Topic'];
+			$Date = $data['Date'];
+			$Description = $data['Description'];
+			$Location = $data['Location'];
+			$StartTime = $data['StartTime'];
+			$EndTime = $data['EndTime'];
+			$GroupID = $data['GroupID'];
+
+			$meeting = array("MeetingID"=>$MeetingID, "Topic"=>$Topic, "Date"=>$Date, "Description"=>$Description,"Location"=>$Location,"StartTime"=>$StartTime,"EndTime"=>$EndTime,"GroupID"=>$GroupID);
+			array_push($results,$meeting);
+		}
+		return $results;
 	}
 
-	function getMeetingsByGroup($groupID) {
-		$db = $this->GMPT;
-		return $query = $db->query("SELECT * FROM Meetings WHERE groupID = '$groupID'");
+	function getMeetingsByGroup($query) {
+		$row = $query->fetchAll();
+		$results=[];
+		foreach($row as $data) {
+			$MeetingID = $data['MeetingID'];
+			$Topic = $data['Topic'];
+			$Date = $data['Date'];
+			$Description = $data['Description'];
+			$Location = $data['Location'];
+			$StartTime = $data['StartTime'];
+			$EndTime = $data['EndTime'];
+			$GroupID = $data['GroupID'];
+
+			$meeting = array("MeetingID"=>$MeetingID, "Topic"=>$Topic, "Date"=>$Date, "Description"=>$Description,"Location"=>$Location,"StartTime"=>$StartTime,"EndTime"=>$EndTime,"GroupID"=>$GroupID);
+			array_push($results,$meeting);
+		}
+		return $results;
 
 	}
 
@@ -15,10 +44,8 @@
 		return $query = $db->query("SELECT * FROM Meetings WHERE meetingID = '$meetingID'");
 	}
 
-	function createMeeting($topic,$groupName,$date,$description,$location,$startTime,$endTime) {
-		$db = $this->GMPT;
-		return $query=$db->query("INSERT INTO Meetings (topic,groupName,date,description,location,startTime,endTime) VALUES('$topic','$groupName','$date','$description','$location','$startTime','$endTime');");
-
+	function createMeeting($query) {
+		return array("worked"=>true);
 	}
 
 ?>
