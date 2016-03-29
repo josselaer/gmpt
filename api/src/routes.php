@@ -105,7 +105,7 @@ $app->post('/user',
 		return $response;
 		
 	}
-);	
+)->add($mw);	
 
 //close session
 $app->get('/logout', function ($request, $response, $args) {
