@@ -10,9 +10,22 @@ $mw = (function ($request, $response, $next) {
 	
 	$request= $request->withAttribute('test','TESTER');
 	$response = $next($request, $response);
+	//$response= $response->withHeader('Access-Control-Allow-Origin','*');
+	//$response= $response->withHeader('Access-Control-Allow-Methods','GET, POST, OPTIONS');
+	//$response= $response->withHeader('Access-Control-Allow-Headers','*');
+	//('Access-Control-Allow-Credentials', 'true')
+      
+	
+	return $response;
+});
+
+$corsMiddleware = (function ($request, $response, $next) {
+	
+	$response = $next($request, $response);
 	$response= $response->withHeader('Access-Control-Allow-Origin','*');
 	$response= $response->withHeader('Access-Control-Allow-Methods','GET, POST, OPTIONS');
 	$response= $response->withHeader('Access-Control-Allow-Headers','*');
+	//('Access-Control-Allow-Credentials', 'true')
       
 	
 	return $response;
