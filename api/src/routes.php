@@ -112,7 +112,7 @@ $app->get('/logout', function ($request, $response, $args) {
 
 	$token = $request->getAttribute('Token');
 	$db=$this->GMPT;
-<<<<<<< HEAD
+
 	$time= date("Y-m-d h:i:s");
 	echo json_encode($time);
 	
@@ -120,17 +120,17 @@ $app->get('/logout', function ($request, $response, $args) {
 	//$closeSessionQuery= $db->prepare('CALL CloseSession(?)');
 	//$closeSessionQuery->bindParam(1, $token, PDO::PARAM_STR);
 	$closeSessionQuery->execute(array($token));
-=======
-	$closeSessionQuery= $db->prepare("CALL CloseSession(?)");
-	$closeSessionQuery->bindValue(1, $token, PDO::PARAM_STR);
-	print_r($closeSessionQuery);
-	if($closeSessionQuery->execute()) {
-		echo "True";
-	}
-	else {
-		echo "False";
-	}
->>>>>>> 7db9b0e08f932d6ce76043fd25e8559b08ce6d4b
+	
+	//$closeSessionQuery= $db->prepare("CALL CloseSession(?)");
+	//$closeSessionQuery->bindValue(1, $token, PDO::PARAM_STR);
+	//print_r($closeSessionQuery);
+	//if($closeSessionQuery->execute()) {
+	//	echo "True";
+	//}
+	//else {
+	//	echo "False";
+	//}
+
 	return $response;
 })->add($validateSession);
 
