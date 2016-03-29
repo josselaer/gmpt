@@ -10,7 +10,7 @@ $mw = (function ($request, $response, $next) {
 	
 	$request= $request->withAttribute('test','TESTER');
 	$response = $next($request, $response);
-	$response= $response->withHeader('Authorization','test');
+	$response= $response->withHeader('Access-Control-Allow-Origin','*');
       
 	
 	return $response;
