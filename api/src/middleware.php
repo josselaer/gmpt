@@ -11,8 +11,8 @@ $mw = (function ($request, $response, $next) {
 	$request= $request->withAttribute('test','TESTER');
 	$response = $next($request, $response);
 	$response= $response->withHeader('Access-Control-Allow-Origin','*');
-	$response= $response->withHeader('Access-Control-Allow-Methods','GET, POST, PUT, OPTIONS');
-	$response= $response->withHeader('Access-Control-Allow-Headers','X-PINGOTHER');
+	$response= $response->withHeader('Access-Control-Allow-Methods','GET, POST, OPTIONS');
+	$response= $response->withHeader('Access-Control-Allow-Headers','*');
       
 	
 	return $response;
