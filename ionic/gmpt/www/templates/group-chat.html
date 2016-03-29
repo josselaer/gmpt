@@ -6,28 +6,28 @@
           <div ng-switch-when="true">
             <h2>Anonymous Message:</h2> {{message.text}}
             <p class="timestamp">{{message.timeDate}}</p>
-            <i class="icon ion-flag icon-accessory"  ng-click="report({{message.id}})"></i>
+            <i class="report icon ion-flag icon-accessory"  ng-click="chatsctrl.report({{message.id}})"></i>
           </div>
           <div ng-switch-default>
             <h2>{{message.sender}}:</h2> {{message.text}}
             <p class="timestamp">{{message.timeDate}}</p>
-            <i class="icon ion-flag icon-accessory"  ng-click="report({{message.id}})"></i>
+            <i class="report icon ion-flag icon-accessory "  ng-click="chatsctrl.report({{message.id}})"></i>
           </div>
         </div>
       </ion-item>
     </ion-list>
-
-
   </ion-content>
+
+ 
 
   <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
     <label class="item-input-wrapper">
-        <textarea ng-model="message.text" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic></textarea>
+        <textarea class="item-input-wrapper" ng-model="message.text" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic></textarea>
     </label>
     <div class="footer-btn-wrap">
-      <button class="button button-icon icon ion-android-send footer-btn" ng-click="send()">
+      <button class="button button-icon icon ion-android-send footer-btn" ng-click="chatsctrl.send()">
       </button>
     </div>
   </ion-footer-bar>
-
+ 
 </ion-view>
