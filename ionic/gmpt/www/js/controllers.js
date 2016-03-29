@@ -155,11 +155,13 @@ angular.module('starter.controllers', [])
     $scope.register = function () {
 
         console.log("UserName: " + $scope.regInfo.userName + " First Name: " + $scope.regInfo.firstName + " Last Name: " + $scope.regInfo.lastName + " Password: " + $scope.regInfo.password + " E-mail: " + $scope.regInfo.email);
+        
+        console.log($scope.regInfo);
 
         $http({
             method: "POST",
-            url: Debug.getURL("/user"),
-            data: $scope.logInfo
+            url:"http://52.37.56.8/gmpt/api/public/user",
+            data: $scope.regInfo
         }).then(function successCallback(response) {
             console.log("Successful Registration. Welcome to gmpt!")
             $state.go("login");
