@@ -28,7 +28,7 @@ $validateSession= (function ($request,$response,$next) {
 	//if we found the token
 	if($validateSessionQuery->rowCount()==1){
 		foreach($validateSessionQuery as $row){
-			$returnArray[0]=$row['UserID'];
+			$returnArray[0]=$row['userID'];
 		}
 		//pass userID to attribute 
 		$request=$request->withAttribute('UserID',$returnArray[0]);

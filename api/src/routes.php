@@ -17,13 +17,15 @@ $app->get('/hello', function ($request, $response, $args) {
 $app->get('/goodbye', 
 	function($request,$response,$args) {
 	    $response->getBody()->write("Time to go. Goodbye!");
-		$test=$request->getAttribute('test');
-		echo $test;
+		$userID = $request->getAttribute('UserID');
+			
+	    $response->getBody()->write($userID);	
+		
 		return $response;
 	}
 	
 	
-)->add($mw);
+)->add($validateSession);
 
 
 //validate if user is correct
@@ -106,10 +108,13 @@ $app->post('/user',
 );	
 
 //close session
-$app->post('/logout', function ($request, $response, $args) {
+$app->get('/logout', function ($request, $response, $args) {
 	$token = $request->getHeader("Authorization")[0];
-	closeSessionQuery($token);
-	
+	$db=$this->GMPT;
+	$closeSessionQuery= $db->prepare("CALL CloseSession(?)");
+	$closeSessionQuery->bindValue(1, $token, PDO::PARAM_STR);
+	$closeSessionQuery->execute();
+	return $response;
 })->add($validateSession);
 
 /*
