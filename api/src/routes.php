@@ -40,29 +40,29 @@ $app->post('/login', function ($request, $response, $args) {
 	$getSaltQuery->execute(array($username));
 	$rArray=array();
 	foreach($getSaltQuery as $row){
-		$rArray[$row['UserName']]=$row['Salt'];
+		$rArray[$username]=$row['Salt'];
 	}
-	
 	//hash pass with salt
-	$hashedPass= hash('sha256',$pasword.($rArray[$username]));
-		
+	$hashedPass= hash('sha256',$password.($rArray[$username]));
+	$getSaltQuery->closeCursor();
 	//validate user
 	$validateUserQuery= $db->prepare("CALL ValidateUser(?,?)");
-	$validateUserQuery->execute(array($username,$hashedPass));
 	
-	//get token 
-	$returnArray=array();
+	$validateUserQuery->bindValue(1, $username, PDO::PARAM_STR);
+	$validateUserQuery->bindValue(2, $hashedPass, PDO::PARAM_STR);
+	$validateUserQuery->execute();
+	$tokenArray=array();
 	foreach($validateUserQuery as $row){
-		$returnArray[0]=$row['Token'];
+		$tokenArray[$username]=$row['ReturnToken'];
 	}
 	
+	//get token 
 	
-	//return the token
-	$token= $returnArray[0];
-
+	
+	
 	//set Authorization header to token
 	$returnArray1=array();
-	$returnArray1['Authorization']=$token;
+	$returnArray1['Authorization']=$tokenArray[$username];
 	
 	$response= $response->getBody()->write(json_encode($returnArray1));
 
