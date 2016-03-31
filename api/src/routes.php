@@ -1,10 +1,56 @@
 <?php
 // Routes
+include 'project.php';
+//test
+$app->get('/project',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$query=$db->query('select * from Project;');
+		
+		$response=getGroups($query);
+		echo json_encode($response);
+	}
+);
 
-$app->get('/[{name}]', function ($request, $response, $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
 
-    // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
-});
+//test
+$app->post('/project',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+
+		//credentials
+
+		$GroupName = $_POST['GroupName'];
+		$Description = $_POST['Description'];
+
+		$query=$db->query("INSERT INTO Project (GroupName,Description) VALUES('$GroupName', '$Description');");
+		
+		$response = array("worked"=>true);
+		return json_encode($response);
+
+	}
+);
+
+//test
+$app->get('/project/{ProjectID}',
+	function($request,$response,$args) {
+		$db = $this->GMPT;
+		$ProjectID = $request->getAttribute('ProjectID');
+		$query=$db->query("SELECT * FROM Project WHERE ProjectID = '$ProjectID';");
+		$response = getProjectByID($query);
+		echo json_encode($response);
+	}		
+);
+/*
+$app->put('/groups/{groupID}',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$groupID = $request->getAttribute('groupID');
+		$groupName = $request->getAttribute('groupName');
+		$description = $request->getAttribute('description');
+		$meetingID = $request->getAttribute('meetingID');
+		$query=$db->query('INSERT INTO Groups (groupName,description, meetingID) VALUES($groupName, $description, $meetingID);');
+		
+	}
+);*/
+
