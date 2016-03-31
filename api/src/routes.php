@@ -121,6 +121,7 @@ $app->get('/meetings',
 	function($request,$response,$args) {
 		$db = $this->GMPT;
 		$query = $db->query('select * from Meetings;');
+		echo json_encode($query);
 		$response = getMeetings($query);
 		echo json_encode($response);
 	}	

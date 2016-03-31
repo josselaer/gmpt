@@ -1,4 +1,4 @@
 USE GMPT;
 
-Insert INTO Roles(RoleID, Name) VALUES (0, 'Student');
-Insert INTO Roles(RoleID, Name) VALUES (1, 'Teacher');
+Insert INTO Role(RoleID, RoleName) VALUES (0, 'Student');
+Insert INTO Role(RoleID, RoleName) VALUES (1, 'Teacher');

@@ -1,6 +1,5 @@
 <?php
 	function getMeetings($query) {
-		
 		$results = [];
 		$row = $query->fetchAll();
 		foreach($row as $data) {
