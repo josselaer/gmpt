@@ -31,7 +31,7 @@ angular.module('starter.controllers', [])
 
         $http({
             method: "POST",
-            url: Debug.getURL("/login"),
+            url: "http://private-75d02-gmpt.apiary-mock.com/login",
             data: $scope.logInfo
         }).then(function successCallback(response) {
             console.log("You logged in!")
@@ -153,14 +153,12 @@ angular.module('starter.controllers', [])
     $scope.regInfo = {};
 
     $scope.register = function () {
-
-        console.log("UserName: " + $scope.regInfo.userName + " First Name: " + $scope.regInfo.firstName + " Last Name: " + $scope.regInfo.lastName + " Password: " + $scope.regInfo.password + " E-mail: " + $scope.regInfo.email);
         
         console.log($scope.regInfo);
 
         $http({
             method: "POST",
-            url:"http://localhost:8100/api",
+            url:"http://52.37.56.8/gmpt/api/public/user",
             data: $scope.regInfo
         }).then(function successCallback(response) {
             console.log("Successful Registration. Welcome to gmpt!")
