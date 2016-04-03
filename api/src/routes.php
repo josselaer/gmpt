@@ -22,22 +22,28 @@ $app->get('/projects',
 
 
 //test
-$app->post('/project',
+$app->post('/projects',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
-
-		//credentials
 
 		$GroupName = $_POST['GroupName'];
 		$Description = $_POST['Description'];
 
-		$query=$db->query("INSERT INTO Project (GroupName,Description) VALUES('$GroupName', '$Description');");
+		echo $GroupName;
+		echo $Description;
+		$query = $db->prepare("CALL CreateProject(?,?)");
+		$query->bindParam(1,$GroupName, PDO::PARAM_STR);
+		$query->bindParam(2,$Description, PDO::PARAM_STR);
+		$query->execute();
+		echo json_encode($query);
+		unset($query);
+		//$query=$db->query("INSERT INTO Project (GroupName,Description) VALUES('$GroupName', '$Description');");
 		
 		$response = array("worked"=>true);
 		return json_encode($response);
 
 	}
-);
+)->add($validateSession);
 
 //test
 $app->get('/project/{ProjectID}',
