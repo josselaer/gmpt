@@ -2,6 +2,10 @@ angular.module('starter.controllers', [])
 
 .controller('StatsCtrl', function ($scope) {})
 
+.controller('SideMenuCtrl', function ($scope) {
+console.log("gothere");
+})
+
 .controller('ChatsCtrl', function ($scope, $http, $stateParams, UserInfo, Chats, Debug) {
   
     $scope.chatsctrl = {};
@@ -56,6 +60,8 @@ angular.module('starter.controllers', [])
 
     $scope.logInfo = {};
 
+
+
     $scope.login = function () {
 
         console.log("LOGIN user: " + $scope.logInfo.userName + " - PW: " + $scope.logInfo.password);
@@ -83,6 +89,10 @@ angular.module('starter.controllers', [])
 
 .controller('MeetingsCtrl', function($scope, $state, $http, Meetings, Debug) {
 
+$scope.toggleMenu = function(){
+      console.log("got here");
+      $state.go("SideMenuCtrl");
+    }
 /*
   $http({
 

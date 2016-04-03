@@ -30,7 +30,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-  
+
+  .state('sidemenu', {
+    url: '/sidemenu',
+    abstract: true,
+    templateUrl: 'templates/sidemenu.html',
+    controller: 'SideMenuCtrl'
+  })
+
     .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
@@ -74,15 +81,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         'group-chat': {
           templateUrl: 'templates/group-chat.html',
           controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('group.message', {
-      url: '/message/:messageId',
-      views: {
-        'group-message': {
-          templateUrl: 'templates/message-detail.html',
-          controller: 'MessageCtrl'
         }
       }
     })
