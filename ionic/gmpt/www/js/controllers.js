@@ -105,6 +105,7 @@ angular.module('starter.controllers', [])
             url: Debug.getURL("/login"),
             data: $scope.logInfo
         }).then(function successCallback(response) {
+            UserInfo.setAuthToken(response.data[1])
             console.log("You logged in!")
             console.log(response);
             alert("Logged in!: " + JSON.stringify(response));
