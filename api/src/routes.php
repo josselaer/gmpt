@@ -41,6 +41,17 @@ $app->get('/project/{ProjectID}',
 		echo json_encode($response);
 	}		
 );
+
+$app->group('/project/{id}', function() {
+	$this->map(['GET','DELETE','PATCH','PUT'], '', function ($request,$response,$args) {
+
+	})->setName('project');
+	$this->get('/getByUserID', function($request,$response,$args) {
+		
+
+	})->setName('getProjectByUserID');
+});
+
 /*
 $app->put('/groups/{groupID}',
 	function($request,$response,$args) {
