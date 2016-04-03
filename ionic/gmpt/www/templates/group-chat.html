@@ -1,16 +1,33 @@
-<ion-view view-title="Chats">
+<ion-view view-title="Chat">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/group/chat/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
+      <ion-item class="item-remove-animate item-icon-right item-text-wrap" ng-repeat="message in messages">
+        <div ng-switch on="message.anonymous">
+          <div ng-switch-when="true">
+            <h2>Anonymous Message:</h2> {{message.text}}
+            <p class="timestamp">{{message.timeDate}}</p>
+            <i class="report icon ion-flag icon-accessory"  ng-click="chatsctrl.report({{message.id}})"></i>
+          </div>
+          <div ng-switch-default>
+            <h2>{{message.sender}}:</h2> {{message.text}}
+            <p class="timestamp">{{message.timeDate}}</p>
+            <i class="report icon ion-flag icon-accessory "  ng-click="chatsctrl.report({{message.id}})"></i>
+          </div>
+        </div>
       </ion-item>
     </ion-list>
   </ion-content>
+
+ 
+
+  <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
+    <label class="item-input-wrapper">
+        <textarea class="item-input-wrapper" ng-model="message.text" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic></textarea>
+    </label>
+    <div class="footer-btn-wrap">
+      <button class="button button-icon icon ion-android-send footer-btn" ng-click="chatsctrl.send()">
+      </button>
+    </div>
+  </ion-footer-bar>
+ 
 </ion-view>
