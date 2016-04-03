@@ -26,8 +26,8 @@ $app->post('/projects',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 
-		$GroupName = $_POST['GroupName'];
-		$Description = $_POST['Description'];
+		$GroupName = $_POST['groupName'];
+		$Description = $_POST['description'];
 
 		echo $GroupName;
 		echo $Description;
@@ -38,7 +38,7 @@ $app->post('/projects',
 		echo json_encode($query);
 		unset($query);
 		//$query=$db->query("INSERT INTO Project (GroupName,Description) VALUES('$GroupName', '$Description');");
-		
+		/*
 		//get user id by email
 		$users = $_POST['users'];
 		$userIDs = [];
@@ -63,7 +63,7 @@ $app->post('/projects',
 			unset($query3);
 			$counter = $counter + 1;
 		}
-
+		*/
 		$response = array("worked"=>true);
 		return json_encode($response);
 
