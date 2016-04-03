@@ -6,20 +6,17 @@ include 'user.php';
 include 'chat.php';
 
 //test
-$app->get('/project',
+$app->get('/projects',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
-		$form_data = $request->getParsedBody();
-		$UserID = $form_data['UserID'];
+		$UserID = (int)$request->getAttribute('UserID');
 		
 		$query = $db->prepare("CALL GetProjects(?)");
-		$query->bindValue(1, $UserID, PDO::PARAM_STR);
-		$query->execute();
-
-		//$query=$db->query("SELECT * from Project WHERE UserID = '$UserID';");
-		
-		$response=getGroups($query);
-		echo json_encode($response);
+		$query->bindParam(1,$UserID, PDO::PARAM_INT);
+		$result=$query->execute();
+		$response=getProjects($query);
+		unset($query);	
+		return $response;
 	}
 )->add($validateSession);
 
@@ -52,7 +49,7 @@ $app->get('/project/{ProjectID}',
 		echo json_encode($response);
 	}		
 );
-
+/*
 $app->group('/project/{id}', function() {
 	$this->map(['GET','DELETE','PATCH','PUT'], '', function ($request,$response,$args) {
 
@@ -62,7 +59,7 @@ $app->group('/project/{id}', function() {
 
 	})->setName('getProjectByUserID');
 });
-
+*/
 //test stuff
 $app->get('/goodbye', 
 	function($request,$response,$args) {

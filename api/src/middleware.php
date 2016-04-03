@@ -32,10 +32,9 @@ $validateSession= (function ($request,$response,$next) {
 		foreach($validateSessionQuery as $row){
 			$returnArray[0]=$row['userID'];
 		}
-		//pass userID to attribute 
+		unset($validateSessionQuery);
 		$request=$request->withAttribute('UserID',$returnArray[0]);
 		$request=$request->withAttribute('Token',$token);
-		
 		//do everything else in routes and return response 
 		$response=$next($request,$response);
 		return $response;
