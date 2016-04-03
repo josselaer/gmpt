@@ -13,8 +13,10 @@ angular.module('starter.controllers', [])
         url: Debug.getURL("/chat/" + $stateParams.groupID),
         responseType: "json",
         headers: {
-          'Content-Type': "json"
+          'Content-Type': "json",
+          'Authorization': UserInfo.getAuthToken()
         }
+
       }).then(function successCallback(response) {
 
         console.log(response.data.messages);
@@ -52,13 +54,51 @@ angular.module('starter.controllers', [])
     };
 })
 
+.controller('GroupsCtrl', function ($scope, $http, Groups, Debug) {
+
+    $http({
+
+        method: "GET",
+        url: Debug.getURL("/groups"),
+        responseType: "json"
+    }).then(function successCallback(response) {
+
+        console.log(Debug.getURL("/groups"));
+        console.log(response);
+        groups = response.data;
+        console.log(groups);
+
+        Groups.set(groups);
+        $scope.groups = groups;
+
+    }, function errorCallback(response) {
+
+        console.log(Debug.getURL("/groups"));
+        console.log(response);
+
+        alert("Failed to load groups, please try again.");
+
+        return null;
+
+    });
+
+  $scope.groups = Groups.all();
+})
+
 .controller('LoginCtrl', function ($scope, $state, $http, UserInfo, Debug, $location) {
 
     $scope.logInfo = {};
 
+    var redirect = function () {
+      
+    }
+    $scope.go = function (path) {
+        $location.path(path);
+    };
+
     $scope.login = function () {
 
-        console.log("LOGIN user: " + $scope.logInfo.userName + " - PW: " + $scope.logInfo.password);
+        console.log("LOGIN user: " + $scope.logInfo.username + " - PW: " + $scope.logInfo.password);
 
         $http({
             method: "POST",
@@ -67,17 +107,15 @@ angular.module('starter.controllers', [])
         }).then(function successCallback(response) {
             console.log("You logged in!")
             console.log(response);
+            alert("Logged in!: " + JSON.stringify(response));
             $state.go("groups");
         }, function errorCallback(response) {
-            alert.log("Can't Login");
+            alert("Can't Login: " + JSON.stringify(response));
         });
 
     }
 
-    $scope.go = function (path) {
-        $location.path(path);
-    };
-
+    
 
 })
 
@@ -183,36 +221,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('GroupsCtrl', function ($scope, $http, Groups, Debug) {
 
-    $http({
-
-        method: "GET",
-        url: Debug.getURL("/groups"),
-        responseType: "json"
-    }).then(function successCallback(response) {
-
-        console.log(Debug.getURL("/groups"));
-        console.log(response);
-        groups = response.data;
-        console.log(groups);
-
-        Groups.set(groups);
-        $scope.groups = groups;
-
-    }, function errorCallback(response) {
-
-        console.log(Debug.getURL("/groups"));
-        console.log(response);
-
-        alert("Failed to load groups, please try again.");
-
-        return null;
-
-    });
-
-  $scope.groups = Groups.all();
-})
 
 .controller('AddGroupCtrl', function ($scope, $state, $http, Debug) {
 
@@ -278,12 +287,12 @@ angular.module('starter.controllers', [])
     $scope.regInfo = {};
 
     $scope.register = function () {
-
-        console.log("UserName: " + $scope.regInfo.userName + " First Name: " + $scope.regInfo.firstName + " Last Name: " + $scope.regInfo.lastName + " Password: " + $scope.regInfo.password + " E-mail: " + $scope.regInfo.email);
+        
+        console.log($scope.regInfo);
 
         $http({
             method: "POST",
-            url: Debug.getURL("/user"),
+            url:Debug.getURL("/user"),
             data: $scope.regInfo
         }).then(function successCallback(response) {
             console.log("Successful Registration. Welcome to gmpt!")

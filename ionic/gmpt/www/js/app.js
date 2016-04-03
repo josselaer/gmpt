@@ -31,7 +31,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each state's controller can be found in controllers.js
   $stateProvider
   
-    .state('login', {
+  .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
@@ -77,27 +77,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-    .state('group.message', {
-      url: '/message/:messageId',
-      views: {
-        'group-message': {
-          templateUrl: 'templates/message-detail.html',
-          controller: 'MessageCtrl'
-        }
-      }
-    })
+
   .state('addmeeting', {
     url: '/addmeeting',
     templateUrl: 'templates/new-meeting.html',
     controller: 'MeetingsCtrl'
 
   })
+
   .state('meeting-details', {
     url: '/meeting-details',
     templateUrl: 'templates/meeting-details.html',
     controller: 'MeetingsCtrl'
 
   })
+
   .state('group.meetings', {
     url: '/meetings',
     views: {
@@ -108,7 +102,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
   
-     .state('register', {
+  .state('register', {
     url: '/register',
     templateUrl: 'templates/register.html',
     controller: 'RegisterCtrl'

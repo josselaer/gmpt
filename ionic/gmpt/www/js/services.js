@@ -7,6 +7,7 @@ angular.module('starter.services', [])
     "email": "helloworld@gmail.com",
     "firstName": "Aakash",
     "lastName": "Patel",
+    "userID": 0,
     "auth": 0
   }
 
@@ -166,7 +167,7 @@ angular.module('starter.services', [])
 
 .factory("Debug", function() {
 
-  debug = true;
+  debug = false;
 
   apiaryURL = "http://private-f963fa-gmpt.apiary-mock.com";
 
