@@ -170,7 +170,7 @@ angular.module('starter.services', [])
 
   apiaryURL = "http://private-f963fa-gmpt.apiary-mock.com";
 
-  prodURL = null;
+  prodURL = "http://52.37.56.8/gmpt/api/public";
 
   return {
     getURL: function(endpoint) {
