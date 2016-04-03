@@ -69,7 +69,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   .state('group.chat', {
-      url: '/chat/',
+      url: '/chat/:groupID',
       views: {
         'group-chat': {
           templateUrl: 'templates/group-chat.html',
@@ -86,7 +86,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
+  .state('addmeeting', {
+    url: '/addmeeting',
+    templateUrl: 'templates/new-meeting.html',
+    controller: 'MeetingsCtrl'
 
+  })
+  .state('meeting-details', {
+    url: '/meeting-details',
+    templateUrl: 'templates/meeting-details.html',
+    controller: 'MeetingsCtrl'
+
+  })
   .state('group.meetings', {
     url: '/meetings',
     views: {
