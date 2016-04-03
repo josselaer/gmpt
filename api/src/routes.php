@@ -5,13 +5,19 @@ include 'project.php';
 $app->get('/project',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
+		$form_data = $request->getParsedBody();
+		$UserID = $form_data['UserID'];
 		
-		$query=$db->query('select * from Project;');
+		$query = $db->prepare("CALL GetProjects(?)");
+		$query->bindValue(1, $UserID, PDO::PARAM_STR);
+		$query->execute();
+
+		//$query=$db->query("SELECT * from Project WHERE UserID = '$UserID';");
 		
 		$response=getGroups($query);
 		echo json_encode($response);
 	}
-))->add($validateSession);
+)->add($validateSession);
 
 
 //test
