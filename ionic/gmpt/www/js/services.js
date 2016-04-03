@@ -166,7 +166,7 @@ angular.module('starter.services', [])
 
 .factory("Debug", function() {
 
-  debug = true;
+  debug = false;
 
   apiaryURL = "http://private-f963fa-gmpt.apiary-mock.com";
 

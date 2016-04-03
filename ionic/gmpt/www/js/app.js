@@ -77,15 +77,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-    .state('group.message', {
-      url: '/message/:messageId',
-      views: {
-        'group-message': {
-          templateUrl: 'templates/message-detail.html',
-          controller: 'MessageCtrl'
-        }
-      }
-    })
+
   .state('addmeeting', {
     url: '/addmeeting',
     templateUrl: 'templates/new-meeting.html',

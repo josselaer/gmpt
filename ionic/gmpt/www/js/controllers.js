@@ -58,13 +58,14 @@ angular.module('starter.controllers', [])
 
     $scope.login = function () {
 
-        console.log("LOGIN user: " + $scope.logInfo.userName + " - PW: " + $scope.logInfo.password);
+        console.log("LOGIN user: " + $scope.logInfo.username + " - PW: " + $scope.logInfo.password);
 
         $http({
             method: "POST",
-            url: "http://private-75d02-gmpt.apiary-mock.com/login",
+            url:Debug.getURL("/login"),
             data: $scope.logInfo
         }).then(function successCallback(response) {
+            UserInfo.setAuthToken(response.data[1])
             console.log("You logged in!")
             console.log(response);
             $state.go("groups");
