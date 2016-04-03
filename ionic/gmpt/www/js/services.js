@@ -1,50 +1,86 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+.factory("UserInfo", function() {
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
+  user = {
+    "userName": "aakashpatel1",
+    "email": "helloworld@gmail.com",
+    "firstName": "Aakash",
+    "lastName": "Patel",
+    "auth": 0
+  }
 
   return {
-    all: function() {
-      return chats;
+    get: function() {
+      return user;
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
+    set: function(userData) {
+      user.userName = userData.userName;
+      user.email = userData.email;
+      user.firstName = userData.firstName;
+      user.lastName = userData.lastName;
     },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    setAuthToken: function(authToken) {
+      user.auth = authToken;
+    },
+    getAuthToken: function() {
+      return user.auth;
+    }
+
+  }
+
+})
+
+
+.factory('Chats', function($http, Debug) {
+  // Might use a resource here that returns a JSON array
+
+  return {
+    getGroupMessages: function(groupID) {
+
+      return $http({
+
+        method: "GET",
+        url: Debug.getURL("/chat/1"),
+        responseType: "json",
+        headers: {
+          'Content-Type': "json"
         }
-      }
-      return null;
+      }).then(function successCallback(response) {
+
+        console.log(response.data.messages);
+        return response.data.messages;
+    
+      }, function errorCallback(response) {
+
+        console.log(Debug.getURL("/chat/" + groupID));
+        console.log(response);
+
+        alert("Failed to get chat messages, please try again. " + response);
+
+        return null;
+
+      });
+    },
+
+    sendMessage: function(messageData) {
+
+      return $http({
+          method: "POST",
+          url: Debug.getURL("/chat/1"),
+          data: messageData,
+          contentType: "application/json"
+        }).then(function successCallback(response) {
+          console.log("You sent a message!");
+        }, function errorCallback(response) {
+          console.log(response);
+          console.log(messageData);
+          alert("Message failed. " + response);
+        });
+
+    },
+    getDefaultMessages: function() {
+      return chats;
     }
   };
 })
@@ -76,11 +112,63 @@ angular.module('starter.services', [])
   };
 })
 
+.factory("Meetings", function($http) {
+
+  meetings = [{
+    date: "12/3/12",
+    time_: "6:30PM",
+    topic: "Mock Ups",
+    desc: "lorum ipsum random description"
+  }, {
+    date: "12/7/9",
+    time_: "8:30PM",
+    topic: "Front End Design",
+    desc: "lorum ipsum random description"
+  }];
+
+  editing = false;
+
+  currInd = 0;
+  //console.log("[1]currInd = ", currInd);
+  return {
+    all: function() {
+
+      return meetings;
+    },
+    set: function(g) {
+      meetings = g;
+
+      console.log("Set()" + meetings);
+    },
+    get: function(index)
+    {
+      return meetings[index];
+    },
+    getCurr: function()
+    {
+      return currInd;
+    },
+    setCurr: function(index)
+    {
+      currInd = index;
+      //console.log("[2]currInd = ", currInd);
+    },
+    getEdit: function()
+    {
+      return editing;
+    },
+    setEdit: function(bool)
+    {
+      editing = bool;
+    }
+  };
+})
+
 .factory("Debug", function() {
 
   debug = true;
 
-  apiaryURL = "http://private-anon-af0e45a81-gmpt.apiary-mock.com";
+  apiaryURL = "http://private-f963fa-gmpt.apiary-mock.com";
 
   prodURL = null;
 

@@ -50,51 +50,68 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: '/tab',
+    .state('group', {
+    url: '/group',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/group.html'
   })
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('group.stats', {
+    url: '/stats',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'group-stats': {
+        templateUrl: 'templates/group-stats.html',
+        controller: 'StatsCtrl'
       }
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats/',
+  .state('group.chat', {
+      url: '/chat/:groupID',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
+        'group-chat': {
+          templateUrl: 'templates/group-chat.html',
           controller: 'ChatsCtrl'
         }
       }
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
+    .state('group.message', {
+      url: '/message/:messageId',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+        'group-message': {
+          templateUrl: 'templates/message-detail.html',
+          controller: 'MessageCtrl'
         }
       }
     })
+  .state('addmeeting', {
+    url: '/addmeeting',
+    templateUrl: 'templates/new-meeting.html',
+    controller: 'MeetingsCtrl'
 
-  .state('tab.account', {
-    url: '/account',
+  })
+  .state('meeting-details', {
+    url: '/meeting-details',
+    templateUrl: 'templates/meeting-details.html',
+    controller: 'MeetingsCtrl'
+
+  })
+  .state('group.meetings', {
+    url: '/meetings',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+      'group-meetings': {
+        templateUrl: 'templates/group-meetings.html',
+        controller: 'MeetingsCtrl'
       }
     }
+  })
+  
+     .state('register', {
+    url: '/register',
+    templateUrl: 'templates/register.html',
+    controller: 'RegisterCtrl'
   });
 
   // if none of the above states are matched, use this as the fallback
