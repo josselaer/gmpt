@@ -5,12 +5,13 @@ include 'project.php';
 $app->get('/project',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
+		
 		$query=$db->query('select * from Project;');
 		
 		$response=getGroups($query);
 		echo json_encode($response);
 	}
-);
+))->add($validateSession);
 
 
 //test
