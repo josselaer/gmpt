@@ -41,14 +41,14 @@ angular.module('starter.controllers', [])
         console.log("Sending: " + $scope.message.text);
         
         var m = { 
-          //sender: UserInfo.get().user.userName,
+          sender: UserInfo.get().user.username,
           text: $scope.message.text,
           anonymous: false,
           flag: false,
           timeDate: Date.now()
         };
 
-        Chats.sendMessage(JSON.stringify(m));
+        Chats.sendMessage(m);
     };
 })
 

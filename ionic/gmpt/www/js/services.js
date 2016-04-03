@@ -41,7 +41,7 @@ angular.module('starter.services', [])
       return $http({
 
         method: "GET",
-        url: Debug.getURL("/chat/1"),
+        url: Debug.getURL("/chat/" + groupID),
         responseType: "json",
         headers: {
           'Content-Type': "json"
@@ -170,7 +170,7 @@ angular.module('starter.services', [])
 
   apiaryURL = "http://private-f963fa-gmpt.apiary-mock.com";
 
-  prodURL = null;
+  prodURL = "http://52.37.56.8/gmpt/api/public";
 
   return {
     getURL: function(endpoint) {
