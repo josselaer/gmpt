@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
 
 
 .controller('ChatsCtrl', function ($scope, $http, $stateParams, UserInfo, Chats, Debug) {
-  
+
   $scope.chatsctrl = {};
   $scope.messages = [];
 
@@ -40,7 +40,7 @@ angular.module('starter.controllers', [])
 
   $scope.chatsctrl.send = function() {
     console.log("Sending: " + $scope.message.text);
-    
+
     var m = { 
           //sender: UserInfo.get().user.userName,
           text: $scope.message.text,
@@ -134,27 +134,26 @@ angular.module('starter.controllers', [])
 
   $scope.confirmMeeting = function()
   {  
-    if(this.date != "" && this.startTime != "" && this.topic != "" && this.desc != "")
+    if(this.date != "" && this.startTime != "" && this.topic != "" && this.meetingDescription != "")
     {
       if(Meetings.getEdit() == false)
       {
-        $scope.meetings.push({'date':this.date,'startTime':this.startTime,'topic':this.topic,'desc':this.desc});
+        $scope.meetings.push({'date':this.date,'startTime':this.startTime,'topic':this.topic,'meetingDescription':this.meetingDescription});
         Meetings.set($scope.meetings);
       }
       else if(Meetings.getEdit() == true)
       {
-        console.log("lol");
         $scope.meetings[Meetings.getCurr()].topic = this.topic;
         $scope.meetings[Meetings.getCurr()].date = this.date;
         $scope.meetings[Meetings.getCurr()].startTime = this.startTime;
-        $scope.meetings[Meetings.getCurr()].desc = this.desc;
+        $scope.meetings[Meetings.getCurr()].meetingDescription = this.meetingDescription;
         Meetings.set($scope.meetings);
         var meeting
         {
           topic = this.topic;
           date = this.date;
           startTime = this.startTime;
-          description = this.desc;
+          meetingDescription = this.meetingDescription;
         }
         $http({
           method:"POST",
@@ -169,12 +168,8 @@ angular.module('starter.controllers', [])
       this.date = "";
       this.startTime = "";
       this.topic = "";
-      this.desc = "";
-      /*
-      $scope.meetings = $scope.meetings.filter(function(item)
-      {
-        return !item.done;
-      })*/
+      this.meetingDescription = "";
+
 }
 
 console.log($scope.meetings);
@@ -298,7 +293,7 @@ $scope.newMeeting = function()
   $scope.regInfo = {};
 
   $scope.register = function () {
-    
+
     console.log($scope.regInfo);
 
     $http({
