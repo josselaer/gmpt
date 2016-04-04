@@ -2,39 +2,73 @@ angular.module('starter.controllers', [])
 
 .controller('StatsCtrl', function ($scope) {})
 
-.controller('ChatsCtrl', function ($scope, Chats) {
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
 
-$scope.chats = Chats.all();
-$scope.remove = function (chat) {
-  Chats.remove(chat);
-};
-})
+.controller('ChatsCtrl', function ($scope, $http, $stateParams, UserInfo, Chats, Debug) {
+  
+  $scope.chatsctrl = {};
+  $scope.messages = [];
 
-.controller('MessageCtrl', function ($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.messageId);
-})
+  $http({
 
-.controller('LoginCtrl', function ($scope, $state, $http, Debug) {
+    method: "GET",
+    url: Debug.getURL("/chat/" + $stateParams.groupID),
+    responseType: "json",
+    headers: {
+      'Content-Type': "json"
+    }
+  }).then(function successCallback(response) {
+
+    console.log(response.data.messages);
+    $scope.messages = response.data.messages;
+    
+  }, function errorCallback(response) {
+
+    console.log(Debug.getURL("/chat/" + $stateParams.groupID));
+    console.log(response);
+
+    alert("Failed to get chat messages, please try again. " + response);
+
+  });
+
+  $scope.chatsctrl.remove = function (chat) {
+    Chats.remove(chat);
+  };
+
+  $scope.chatsctrl.report = function(messageID) {
+    console.log("Reported message " + messageID);
+  };
+
+  $scope.chatsctrl.send = function() {
+    console.log("Sending: " + $scope.message.text);
+    
+    var m = { 
+          //sender: UserInfo.get().user.userName,
+          text: $scope.message.text,
+          anonymous: false,
+          flag: false,
+          timeDate: Date.now()
+        };
+
+        Chats.sendMessage(JSON.stringify(m));
+      };
+    })
+
+.controller('LoginCtrl', function ($scope, $state, $http, UserInfo, Debug, $location) {
 
   $scope.logInfo = {};
 
   $scope.login = function () {
 
-    console.log("LOGIN user: " + $scope.logInfo.userName + " - PW: " + $scope.logInfo.password);
+    console.log("LOGIN user: " + $scope.logInfo.username + " - PW: " + $scope.logInfo.password);
 
     $http({
       method: "POST",
-      url: Debug.getURL("/login"),
+      url:Debug.getURL("/login"),
       data: $scope.logInfo
     }).then(function successCallback(response) {
+      UserInfo.setAuthToken(response.data[1])
       console.log("You logged in!")
+      console.log(response);
       $state.go("groups");
     }, function errorCallback(response) {
       alert.log("Can't Login");
@@ -42,9 +76,12 @@ $scope.remove = function (chat) {
 
   }
 
+  $scope.go = function (path) {
+    $location.path(path);
+  };
+
 
 })
-
 
 .controller('MeetingsCtrl', function($scope, $state, $http, Meetings, Debug) {
 
@@ -163,7 +200,7 @@ $scope.newMeeting = function()
 
 })
 
-.controller ('GroupsCtrl', function($scope, $http, Groups, Debug) {
+.controller('GroupsCtrl', function ($scope, $http, Groups, Debug) {
 
   $http({
 
@@ -172,14 +209,16 @@ $scope.newMeeting = function()
     responseType: "json"
   }).then(function successCallback(response) {
 
+
     console.log(Debug.getURL("/groups"));
     console.log(response);
     groups = response.data;
     console.log(groups);
 
+
     Groups.set(groups);
     $scope.groups = groups;
-    
+
   }, function errorCallback(response) {
 
     console.log(Debug.getURL("/groups"));
@@ -195,48 +234,54 @@ $scope.newMeeting = function()
   $scope.groups = Groups.all();
 })
 
-.controller('AddGroupCtrl', function($scope, $state, $http, Debug) {
+.controller('AddGroupCtrl', function ($scope, $state, $http, Debug) {
 
   $scope.group = {};
 
   $scope.search = '';
   $scope.orderByAttribute = '';
   $scope.members = [
-  {"_username":"henrysdev","_email":"henrysdev@gmail.com","done":false,"remove":false}
-  ];
-  $scope.addMember = function()
   {
+    "_username": "henrysdev",
+    "_email": "henrysdev@gmail.com",
+    "done": false,
+    "remove": false
+  }
+  ];
+  $scope.addMember = function () {
     console.log("Clicked");
     console.log("username: ", this._username, "email: ", this._email);
-    if(this._username !=' ' && this._email !=' ')
-    {
-      $scope.members.push({'_username':this._username,'_email':this._email,'done':false, 'remove':false});
+    if (this._username != ' ' && this._email != ' ') {
+      $scope.members.push({
+        '_username': this._username,
+        '_email': this._email,
+        'done': false,
+        'remove': false
+      });
       this._username = ' ';
       this._email = ' ';
     }
   }
 
-  $scope.removeItem = function(index)
-  {
-    $scope.members.splice(index,1);
+  $scope.removeItem = function (index) {
+    $scope.members.splice(index, 1);
     console.log("delete member");
-    $scope.members = $scope.members.filter(function(item)
-    {
+    $scope.members = $scope.members.filter(function (item) {
       return !item.done;
     })
   }
 
-  $scope.addGroup = function() {
+  $scope.addGroup = function () {
 
     console.log($scope.group.groupName);
-    
+
     var group = {
       groupName: $scope.group.groupName,
       description: $scope.group.groupDesc
     }
 
     $http({
-      method:"POST",
+      method: "POST",
       url: Debug.getURL("/groups"),
       data: group
     }).then(function successCallback(response) {
@@ -245,5 +290,27 @@ $scope.newMeeting = function()
       alert.log("Failed to add group");
     });
   }
+})
 
+
+.controller('RegisterCtrl', function ($scope, $state, $http, Debug) {
+
+  $scope.regInfo = {};
+
+  $scope.register = function () {
+    
+    console.log($scope.regInfo);
+
+    $http({
+      method: "POST",
+      url:Debug.getURL("/user"),
+      data: $scope.regInfo
+    }).then(function successCallback(response) {
+      console.log("Successful Registration. Welcome to gmpt!")
+      $state.go("login");
+    }, function errorCallback(response) {
+      alert.log("Couldn't Register");
+    });
+
+  }
 });

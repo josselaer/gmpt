@@ -69,7 +69,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   .state('group.chat', {
-      url: '/chat/',
+      url: '/chat/:groupID',
       views: {
         'group-chat': {
           templateUrl: 'templates/group-chat.html',
@@ -77,15 +77,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-    .state('group.message', {
-      url: '/message/:messageId',
-      views: {
-        'group-message': {
-          templateUrl: 'templates/message-detail.html',
-          controller: 'MessageCtrl'
-        }
-      }
-    })
+
   .state('addmeeting', {
     url: '/addmeeting',
     templateUrl: 'templates/new-meeting.html',
@@ -106,6 +98,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller: 'MeetingsCtrl'
       }
     }
+  })
+  
+     .state('register', {
+    url: '/register',
+    templateUrl: 'templates/register.html',
+    controller: 'RegisterCtrl'
   });
 
   // if none of the above states are matched, use this as the fallback
