@@ -25,22 +25,21 @@ $app->get('/projects',
 $app->post('/projects',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
-
-		$GroupName = $_POST['groupName'];
-		$Description = $_POST['description'];
-
-		echo $GroupName;
-		echo $Description;
+		$form_data = $request->getParsedBody();
+		
+		$GroupName = $form_data['groupName'];
+		$Description = $form_data['description'];
 		$query = $db->prepare("CALL CreateProject(?,?)");
 		$query->bindParam(1,$GroupName, PDO::PARAM_STR);
 		$query->bindParam(2,$Description, PDO::PARAM_STR);
 		$ProjID = (int)$query->execute();
 		echo json_encode($query);
 		unset($query);
-		//$query=$db->query("INSERT INTO Project (GroupName,Description) VALUES('$GroupName', '$Description');");
-		/*
+		
 		//get user id by email
-		$users = $_POST['users'];
+		$users = $form_data['users'];
+		echo "Users";
+		echo json_encode($users);
 		$userIDs = [];
 		$userRoles = [];
 		foreach ($users as $user) {
@@ -53,6 +52,8 @@ $app->post('/projects',
 			array_push($userIDs,$userID);
 			array_push($userRoles,$role);
 		}
+		echo json_encode($userIDs);
+		echo json_encode($userRoles);
 		//add user to project
 		$counter = 0;
 		foreach($userIDs as $uID) {
@@ -63,7 +64,7 @@ $app->post('/projects',
 			unset($query3);
 			$counter = $counter + 1;
 		}
-		*/
+		
 		$response = array("worked"=>true);
 		return json_encode($response);
 
