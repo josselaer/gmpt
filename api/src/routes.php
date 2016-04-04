@@ -32,14 +32,13 @@ $app->post('/projects',
 		$query = $db->prepare("CALL CreateProject(?,?)");
 		$query->bindParam(1,$GroupName, PDO::PARAM_STR);
 		$query->bindParam(2,$Description, PDO::PARAM_STR);
-		$ProjID = (int)$query->execute();
-		echo json_encode($query);
+		$query->execute();
+		$q1result = $query->fetchAll();
+		$ProjID = (int)$q1result[0]['ProjectID'];
 		unset($query);
 		
 		//get user id by email
 		$users = $form_data['users'];
-		echo "Users";
-		echo json_encode($users);
 		$userIDs = [];
 		$userRoles = [];
 		foreach ($users as $user) {
@@ -47,20 +46,23 @@ $app->post('/projects',
 			$role = $user['roleName'];
 			$query2 = $db->prepare("CALL GetUserIDByEmail(?)");
 			$query2->bindParam(1,$email,PDO::PARAM_STR);
-			$userID = $query2->execute();
+			$query2->execute();
+			$q2result = $query2->fetchAll();
+			$userID = $q2result[0]["UserID"];
 			unset($query2);
-			array_push($userIDs,$userID);
+			array_push($userIDs,(int)$userID);
 			array_push($userRoles,$role);
 		}
-		echo json_encode($userIDs);
-		echo json_encode($userRoles);
 		//add user to project
 		$counter = 0;
 		foreach($userIDs as $uID) {
 			$query3 = $db->prepare("CALL AddUserToProject(?,?,?)");
 			$query3->bindParam(1,$ProjID, PDO::PARAM_INT);
-			$query3->bindParam(1,$uID, PDO::PARAM_INT);
-			$query3->bindParam(1,$userRoles[$counter], PDO::PARAM_STR);
+			$query3->bindParam(2,$uID, PDO::PARAM_INT);
+			$query3->bindParam(3,$userRoles[$counter], PDO::PARAM_STR);
+			$query3->execute();
+			echo "Query 3";
+			echo json_encode($query3->fetchAll());
 			unset($query3);
 			$counter = $counter + 1;
 		}
