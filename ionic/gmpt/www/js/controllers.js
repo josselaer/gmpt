@@ -87,13 +87,13 @@ console.log("gothere");
 
 })
 
-.controller('MeetingsCtrl', function($scope, $state, $http, Meetings, Debug) {
+.controller('MeetingsCtrl', function($scope, $state, $http, $ionicSideMenuDelegate, Meetings, Debug) {
 
-$scope.toggleMenu = function(){
-      console.log("got here");
-      $state.go("SideMenuCtrl");
-    }
-/*
+$scope.toggleLeft = function(){
+  console.log("ok");
+    $ionicSideMenuDelegate.toggleLeft();
+};
+
   $http({
 
         method: "GET",
@@ -119,7 +119,7 @@ $scope.toggleMenu = function(){
         return null;
 
       });
-*/
+
   $scope.meetings = Meetings.all();
   //console.log("current index outside function: ", Meetings.getCurr());
   $scope.currentMeeting = Meetings.get(Meetings.getCurr());
