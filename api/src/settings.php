@@ -13,5 +13,13 @@ return [
             'name' => 'slim-app',
             'path' => __DIR__ . '/../logs/app.log',
         ],
+        'GMPT' => [
+            'username' =>'gmpt_master_user',
+            'password' => 'gmptMaster1',
+            'host' => 'gmpt-dev.cze344fgq3d6.us-west-2.rds.amazonaws.com',
+            'dbname' => 'GMPT',
+            'db' => 'mysql',
+        
+        ],
     ],
 ];
