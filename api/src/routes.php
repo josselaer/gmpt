@@ -47,7 +47,7 @@ $app->post('/projects',
 			$role = $user['roleName'];
 			$query2 = $db->prepare("CALL GetUserIDByEmail(?)");
 			$query2->bindParam(1,$email,PDO::PARAM_STR);
-			$userID = (int)$query2->execute();
+			$userID = $query2->execute();
 			unset($query2);
 			array_push($userIDs,$userID);
 			array_push($userRoles,$role);
