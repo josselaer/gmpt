@@ -45,7 +45,8 @@ $app->post('/projects',
 		$userRoles = [];
 		foreach ($users as $user) {
 			$email = $user['email'];
-			$role = $user['roleName'];
+			//$role = $user['roleName'];
+			$role = "Student";
 			$query2 = $db->prepare("CALL GetUserIDByEmail(?)");
 			$query2->bindParam(1,$email,PDO::PARAM_STR);
 			$query2->execute();
