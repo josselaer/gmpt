@@ -22,6 +22,8 @@ angular.module('starter.services', [])
     },
     setAuthToken: function(authToken) {
       user.auth = authToken;
+
+      console.log("Set auth token: " + user.auth);
     },
     getAuthToken: function() {
       return user.auth;

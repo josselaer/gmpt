@@ -1,8 +1,8 @@
-<ion-view view-title="Groups">
+<ion-view view-title="{{userName}}'s Groups">
   <ion-content class="padding">
     <ion-list>
       <ion-item class="item" ng-repeat="group in groups" type="item-text-wrap" href="#/group/chat/1">
-        <h2>{{group.groupName}}</h2>
+        <h2>{{group.GroupName}}</h2>
         <h4 class=" item-text-right">Upcoming meeting: </h4>
         <span class="badge badge-assertive"><h2>0</h2></span>
       </ion-item>
