@@ -3,10 +3,25 @@ angular.module('starter.controllers', [])
 .controller('StatsCtrl', function ($scope) {})
 
 
-.controller('ChatsCtrl', function ($scope, $http, $stateParams, UserInfo, Chats, Debug) {
+.controller('ChatsCtrl', function ($scope, $http, $stateParams, $interval, $animate, 
+                                    UserInfo, Chats, Debug) {
 
   $scope.chatsctrl = {};
   $scope.messages = [];
+
+  $interval(function getMessages() {
+    
+    Chats.getGroupMessages($stateParams.groupID).then(function success(response) {
+        $animate.enabled(false);
+        $scope.messages=[];
+        $scope.messages = response;
+
+        $animate.enabled(true);
+      }, function error(response) {
+        console.log("Error");
+      });
+
+  }, 3000);
 
   $scope.$on("$ionicView.enter", function() {
       $http({
@@ -262,7 +277,7 @@ $scope.newMeeting = function()
   $scope.members = [];
 
   $scope.addMember = function () {
-    console.log("Clicked");
+    //console.log("Clicked");
     console.log("username: ", this._username, "email: ", this._email);
     if (this._username != ' ' && this._email != ' ') {
       $scope.members.push({
@@ -283,7 +298,7 @@ $scope.newMeeting = function()
 
   $scope.addGroup = function () {
 
-    console.log($scope.groupName);
+    //console.log($scope.groupName);
 
     var group = {
       groupName: $scope.group.groupName,
@@ -291,21 +306,27 @@ $scope.newMeeting = function()
       users: $scope.members
     }
 
-    console.log("Adding group: " + JSON.stringify(group));
+    //console.log("Adding group: " + JSON.stringify(group));
 
     $http({
       method: "POST",
       url: Debug.getURL("/projects"),
       data: group,
       headers: {
-      "Content-Type": "application/json",
-      "Authorization": UserInfo.getAuthToken()
-    }
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
     }).then(function successCallback(response) {
+      console.log("Add group success");
+      console.log(response);
       return response;
     }, function errorCallback(response) {
+      console.log("Add group 'fail': ");
+      console.log(response);
       alert("Failed to add group");
+      return null;
     }).then(function redirect(response) {
+      console.log("redirecting...");
       console.log(response);
       $state.go("groups");
     });
