@@ -8,26 +8,29 @@ angular.module('starter.controllers', [])
   $scope.chatsctrl = {};
   $scope.messages = [];
 
-  $http({
+  $scope.$on("$ionicView.enter", function() {
+      $http({
 
-    method: "GET",
-    url: Debug.getURL("/chat/" + $stateParams.groupID),
-    responseType: "json",
-    headers: {
-      'Content-Type': "json"
-    }
-  }).then(function successCallback(response) {
+      method: "GET",
+      url: Debug.getURL("/messages/" + $stateParams.groupID),
+      responseType: "json",
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
 
-    console.log(response.data.messages);
-    $scope.messages = response.data.messages;
-    
-  }, function errorCallback(response) {
+      console.log(response.data);
+      $scope.messages = response.data.messages;
+      
+    }, function errorCallback(response) {
 
-    console.log(Debug.getURL("/chat/" + $stateParams.groupID));
-    console.log(response);
+      console.log(Debug.getURL("/chat/" + $stateParams.groupID));
+      console.log(response);
 
-    alert("Failed to get chat messages, please try again. " + response);
+      alert("Failed to get chat messages, please try again. " + response);
 
+    });
   });
 
   $scope.chatsctrl.remove = function (chat) {
@@ -42,16 +45,26 @@ angular.module('starter.controllers', [])
     console.log("Sending: " + $scope.message.text);
 
     var m = { 
-          //sender: UserInfo.get().user.userName,
-          text: $scope.message.text,
-          anonymous: false,
-          flag: false,
-          timeDate: Date.now()
-        };
+      //sender: UserInfo.get().user.userName,
+      text: $scope.message.text,
+    };
 
-        Chats.sendMessage(JSON.stringify(m));
-      };
-    })
+    Chats.sendMessage(JSON.stringify(m), $stateParams.groupID).then( function() {
+
+      Chats.getGroupMessages($stateParams.groupID).then( function(response) {
+        $scope.messages = response;
+      }, function(response) {
+        console.log("Error");
+      });
+
+    }, function() {
+      console.log("Error in sending message");
+    });
+
+
+    
+  };
+})
 
 .controller('LoginCtrl', function ($scope, $state, $http, UserInfo, Debug, $location) {
 
@@ -66,12 +79,16 @@ angular.module('starter.controllers', [])
       url:Debug.getURL("/login"),
       data: $scope.logInfo
     }).then(function successCallback(response) {
-      UserInfo.setAuthToken(response.data[1])
-      console.log("You logged in!")
-      console.log(response);
-      $state.go("groups");
+      return response;
     }, function errorCallback(response) {
       alert.log("Can't Login");
+    }).then(function redirect(response) {
+
+      UserInfo.setAuthToken(response.data.Authorization);
+      console.log("You logged in!")
+      console.log(response);
+      
+      $state.go("groups");
     });
 
   }
@@ -195,63 +212,61 @@ $scope.newMeeting = function()
 
 })
 
-.controller('GroupsCtrl', function ($scope, $http, Groups, Debug) {
+.controller('GroupsCtrl', function ($scope, $http, UserInfo, Groups, Debug) {
 
-  $http({
+  $scope.userName = UserInfo.get().userName;
 
-    method: "GET",
-    url: Debug.getURL("/groups"),
-    responseType: "json"
-  }).then(function successCallback(response) {
+  $scope.$on("$ionicView.enter", function() {
+    $http({
 
+        method: "GET",
+        url: Debug.getURL("/projects"),
+    //    responseType: "json",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": UserInfo.getAuthToken()
+        }
+      }).then(function successCallback(response) {
 
-    console.log(Debug.getURL("/groups"));
-    console.log(response);
-    groups = response.data;
-    console.log(groups);
+        console.log("Get project auth: " + UserInfo.getAuthToken());
+        console.log(Debug.getURL("/projects"));
+        console.log(response);
 
+        Groups.set(response.data.projects);
+        $scope.groups = response.data.projects;
 
-    Groups.set(groups);
-    $scope.groups = groups;
+      }, function errorCallback(response) {
 
-  }, function errorCallback(response) {
+        console.log(Debug.getURL("/projects"));
+        console.log(response);
 
-    console.log(Debug.getURL("/groups"));
-    console.log(response);
+        alert("Failed to load groups, please try again.");
 
-    alert("Failed to load groups, please try again.");
+        return null;
 
-    return null;
+    });
 
-  });
+  }); 
+  
 
 
   $scope.groups = Groups.all();
 })
 
-.controller('AddGroupCtrl', function ($scope, $state, $http, Debug) {
+.controller('AddGroupCtrl', function ($scope, $state, $http, UserInfo, Debug) {
 
   $scope.group = {};
 
   $scope.search = '';
   $scope.orderByAttribute = '';
-  $scope.members = [
-  {
-    "_username": "henrysdev",
-    "_email": "henrysdev@gmail.com",
-    "done": false,
-    "remove": false
-  }
-  ];
+  $scope.members = [];
+
   $scope.addMember = function () {
     console.log("Clicked");
     console.log("username: ", this._username, "email: ", this._email);
     if (this._username != ' ' && this._email != ' ') {
       $scope.members.push({
-        '_username': this._username,
-        '_email': this._email,
-        'done': false,
-        'remove': false
+        'email': this._email
       });
       this._username = ' ';
       this._email = ' ';
@@ -268,21 +283,31 @@ $scope.newMeeting = function()
 
   $scope.addGroup = function () {
 
-    console.log($scope.group.groupName);
+    console.log($scope.groupName);
 
     var group = {
       groupName: $scope.group.groupName,
-      description: $scope.group.groupDesc
+      projDescription: $scope.group.groupDesc,
+      users: $scope.members
     }
+
+    console.log("Adding group: " + JSON.stringify(group));
 
     $http({
       method: "POST",
-      url: Debug.getURL("/groups"),
-      data: group
+      url: Debug.getURL("/projects"),
+      data: group,
+      headers: {
+      "Content-Type": "application/json",
+      "Authorization": UserInfo.getAuthToken()
+    }
     }).then(function successCallback(response) {
-      $state.go("groups");
+      return response;
     }, function errorCallback(response) {
-      alert.log("Failed to add group");
+      alert("Failed to add group");
+    }).then(function redirect(response) {
+      console.log(response);
+      $state.go("groups");
     });
   }
 })
