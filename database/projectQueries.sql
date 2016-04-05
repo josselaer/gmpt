@@ -8,12 +8,12 @@ BEGIN
 	SELECT UserID FROM User WHERE Email=EmailVal;
 END
 
-
 CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `CreateProject`(IN ProjectNameVal VARCHAR(32), DescriptionVal VARCHAR(255))
 BEGIN
 	INSERT INTO Project (ProjectName, Description, DateCreated) 
     VALUES (ProjectNameVal, DescriptionVal, NOW());
-    SELECT ProjectID FROM Project WHERE ProjectName=ProjectNameVal AND Description=DescriptionVal;
+    INSERT INTO MessageRoom (ProjectID, CreationDate) VALUES ((  SELECT ProjectID FROM Project WHERE ProjectName=ProjectNameVal AND Description=DescriptionVal ORDER BY ProjectID DESC LIMIT 1), NOW());
+    SELECT ProjectID FROM Project WHERE ProjectName=ProjectNameVal AND Description=DescriptionVal ORDER BY ProjectID DESC LIMIT 1;
 END
 
 CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `AddUserToProject`(IN ProjectIDVal INT, UserIDVal INT, RoleVal VARCHAR(25))
