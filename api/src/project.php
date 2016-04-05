@@ -4,7 +4,6 @@
 		$results = [];
 		$row = $query->fetchAll();
 		foreach($row as $data) {
-			//echo json_encode($row);
 			$ProjectID = $data['ProjectID'];
 			$GroupName = $data['ProjectName'];
 			$Description = $data['Description'];
@@ -12,6 +11,7 @@
 			$project = array("ProjectID"=>$ProjectID, "GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated);
 			array_push($results,$project);
 		}
+		$results['projects'] = $results;
 		return $results;
 	}
 
