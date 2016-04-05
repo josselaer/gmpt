@@ -11,6 +11,10 @@
 			$project = array("ProjectID"=>$ProjectID, "GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated);
 			array_push($results,$project);
 		}
+		/*$resultSize =  count($results);
+		for($i = 0; $i < $resultSize; $i++) {
+
+		}*/
 		$results['projects'] = $results;
 		return $results;
 	}

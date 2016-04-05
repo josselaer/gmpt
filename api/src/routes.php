@@ -15,6 +15,7 @@ $app->get('/projects',
 		$query->bindParam(1,$UserID, PDO::PARAM_INT);
 		$result=$query->execute();
 		$response->write(json_encode(getProjects($query)));
+		//$response = getProjects($query);
 		unset($query);	
 		//echo json_encode($response);
 		return $response;
@@ -29,7 +30,7 @@ $app->post('/projects',
 		$form_data = $request->getParsedBody();
 		
 		$GroupName = $form_data['groupName'];
-		$Description = $form_data['description'];
+		$Description = $form_data['projDescription'];
 		$query = $db->prepare("CALL CreateProject(?,?)");
 		$query->bindParam(1,$GroupName, PDO::PARAM_STR);
 		$query->bindParam(2,$Description, PDO::PARAM_STR);
