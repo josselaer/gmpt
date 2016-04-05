@@ -354,4 +354,25 @@ $scope.newMeeting = function()
     });
 
   }
+})
+
+
+.controller('LogoutCtrl', function ($scope, $state, $http, UserInfo, Debug) {
+
+  $scope.logout = function () {
+    $http({
+      method: "GET",
+      url:Debug.getURL("/logout"),
+   headers: {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }    }).then(function successCallback(response) {
+      console.log("Logging out. See you later!")
+      $state.go("login");
+    }, function errorCallback(response) {
+      alert.log("Can't logout. You can never leave!");
+        console.error;
+    });
+
+  }
 });
