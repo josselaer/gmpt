@@ -14,8 +14,9 @@ $app->get('/projects',
 		$query = $db->prepare("CALL GetProjects(?)");
 		$query->bindParam(1,$UserID, PDO::PARAM_INT);
 		$result=$query->execute();
-		$response=getProjects($query);
+		$response->write(json_encode(getProjects($query)));
 		unset($query);	
+		//echo json_encode($response);
 		return $response;
 	}
 )->add($validateSession);
@@ -79,7 +80,7 @@ $app->get('/project/{ProjectID}',
 		$db = $this->GMPT;
 		$ProjectID = $request->getAttribute('ProjectID');
 		$query=$db->query("SELECT * FROM Project WHERE ProjectID = '$ProjectID';");
-		$response = getProjectByID($query);
+		$response->write(json_encode(getProjectByID($query)));
 		echo json_encode($response);
 	}		
 );
