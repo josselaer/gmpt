@@ -10,7 +10,7 @@ console.log("gothere");
   
     $scope.chatsctrl = {};
     $scope.messages = [];
-
+    console.log("in chat controller");
     $http({
 
         method: "GET",
@@ -91,6 +91,7 @@ console.log("gothere");
 
 $scope.toggleLeft = function(){
   console.log("ok");
+  //$state.go("sidemenu");
     $ionicSideMenuDelegate.toggleLeft();
 };
 

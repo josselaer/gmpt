@@ -32,10 +32,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $stateProvider
 
   .state('sidemenu', {
-    url: '/sidemenu',
     abstract: true,
-    templateUrl: 'templates/sidemenu.html',
-    controller: 'SideMenuCtrl'
+    templateUrl: 'templates/menu.html',
+    //controller: 'SideMenuCtrl'
   })
 
     .state('login', {
@@ -58,6 +57,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   // setup an abstract state for the tabs directive
     .state('group', {
+    parent: 'sidemenu',
     url: '/group',
     abstract: true,
     templateUrl: 'templates/group.html'
@@ -66,6 +66,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each tab has its own nav history stack:
 
   .state('group.stats', {
+    //parent: 'sidemenu',
     url: '/stats',
     views: {
       'group-stats': {
@@ -76,6 +77,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   .state('group.chat', {
+      //parent: 'sidemenu',
       url: '/chat/:groupID',
       views: {
         'group-chat': {
@@ -97,6 +99,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   })
   .state('group.meetings', {
+    //parent: 'sidemenu',
     url: '/meetings',
     views: {
       'group-meetings': {
