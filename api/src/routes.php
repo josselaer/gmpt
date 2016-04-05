@@ -37,8 +37,8 @@ $app->post('/projects',
 		$query->execute();
 		$q1result = $query->fetchAll();
 		$ProjID = (int)$q1result[0]['ProjectID'];
+		$response = $query->fetchAll();
 		unset($query);
-		
 		//get user id by email
 		$users = $form_data['users'];
 		$userIDs = [];
@@ -70,7 +70,7 @@ $app->post('/projects',
 			$counter = $counter + 1;
 		}
 		
-		$response = array("worked"=>true);
+		//$response = array("worked"=>true);
 		return json_encode($response);
 
 	}

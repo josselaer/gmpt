@@ -11,11 +11,12 @@
 			$project = array("ProjectID"=>$ProjectID, "GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated);
 			array_push($results,$project);
 		}
-		/*$resultSize =  count($results);
-		for($i = 0; $i < $resultSize; $i++) {
-
-		}*/
+		$resultSize =  count($results);
 		$results['projects'] = $results;
+		for($i = 0; $i < $resultSize; $i++) {
+			$temp = (string)$i;
+			unset($results[$temp]);
+		}
 		return $results;
 	}
 
