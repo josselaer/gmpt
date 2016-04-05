@@ -38,8 +38,6 @@ $app->post('/messages/{project_id}', function($request,$response,$args) {
 		$message_data = $request->getParsedBody();
 		$text = $message_data['text'];
 		$anonymous = $message_data['anonymous'];
-		echo $text;
-		echo $anonymous;
 		$db=$this->GMPT;
 		
 		$stmt = $db->prepare("CALL GetMessageRoomID(?)");
