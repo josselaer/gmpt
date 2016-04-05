@@ -8,26 +8,29 @@ angular.module('starter.controllers', [])
   $scope.chatsctrl = {};
   $scope.messages = [];
 
-  $http({
+  $scope.$on("$ionicView.enter", function() {
+      $http({
 
-    method: "GET",
-    url: Debug.getURL("/chat/" + $stateParams.groupID),
-    responseType: "json",
-    headers: {
-      'Content-Type': "json"
-    }
-  }).then(function successCallback(response) {
+      method: "GET",
+      url: Debug.getURL("/messages/" + $stateParams.groupID),
+      responseType: "json",
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
 
-    console.log(response.data.messages);
-    $scope.messages = response.data.messages;
-    
-  }, function errorCallback(response) {
+      console.log(response.data);
+      $scope.messages = response.data.messages;
+      
+    }, function errorCallback(response) {
 
-    console.log(Debug.getURL("/chat/" + $stateParams.groupID));
-    console.log(response);
+      console.log(Debug.getURL("/chat/" + $stateParams.groupID));
+      console.log(response);
 
-    alert("Failed to get chat messages, please try again. " + response);
+      alert("Failed to get chat messages, please try again. " + response);
 
+    });
   });
 
   $scope.chatsctrl.remove = function (chat) {
@@ -42,16 +45,26 @@ angular.module('starter.controllers', [])
     console.log("Sending: " + $scope.message.text);
 
     var m = { 
-          //sender: UserInfo.get().user.userName,
-          text: $scope.message.text,
-          anonymous: false,
-          flag: false,
-          timeDate: Date.now()
-        };
+      //sender: UserInfo.get().user.userName,
+      text: $scope.message.text,
+    };
 
-        Chats.sendMessage(JSON.stringify(m));
-      };
-    })
+    Chats.sendMessage(JSON.stringify(m), $stateParams.groupID).then( function() {
+
+      Chats.getGroupMessages($stateParams.groupID).then( function(response) {
+        $scope.messages = response;
+      }, function(response) {
+        console.log("Error");
+      });
+
+    }, function() {
+      console.log("Error in sending message");
+    });
+
+
+    
+  };
+})
 
 .controller('LoginCtrl', function ($scope, $state, $http, UserInfo, Debug, $location) {
 
@@ -219,8 +232,8 @@ $scope.newMeeting = function()
         console.log(Debug.getURL("/projects"));
         console.log(response);
 
-        Groups.set(response.data);
-        $scope.groups = groups;
+        Groups.set(response.data.projects);
+        $scope.groups = response.data.projects;
 
       }, function errorCallback(response) {
 
