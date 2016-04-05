@@ -108,3 +108,39 @@ CREATE TABLE IF NOT EXISTS RolePermission(
 	FOREIGN KEY(RoleID) REFERENCES Role(RoleID),
 	FOREIGN KEY(PermissionID) REFERENCES Permission(PermissionID)
 );
+<<<<<<< HEAD
+=======
+
+CREATE TABLE IF NOT EXISTS Roles(
+	RoleID INT NOT NULL,
+	Name VARCHAR(25),
+	PRIMARY KEY (RoleID)
+);
+
+CREATE TABLE IF NOT EXISTS RolePermissions(
+	RoleID INT NOT NULL,
+	PermissionID INT NOT NULL,
+	PRIMARY KEY (RoleID, PermissionID),
+	FOREIGN KEY (RoleID) REFERENCES Roles(RoleID),
+	FOREIGN KEY (PermissionID) REFERENCES Permssions(PermissionID)
+);
+
+CREATE TABLE IF NOT EXISTS Permissions(
+	PermissionID INT NOT NULL,
+	Name VARCHAR(50),
+	PRIMARY KEY (PermissionID)
+);
+
+DELIMITER // 
+	CREATE PROCEDURE 	`Register` (IN uName VARCHAR(255), pass VARCHAR(255), fName VARCHAR(255), lName VARCHAR(255), salt VARCHAR(255), mail VARCHAR(255))
+	LANGUAGE SQL
+	DETERMINISTIC
+	SQL 				SECURITY DEFINER
+	COMMENT 			'This procedure Registers a User and puts all his data in the Users table, hashing the password with salt added'
+BEGIN
+	INSERT INTO Users (UserName, Password, Salt, FirstName, LastName, Email, RegisterDate, LastLogin) VALUES (uName, pass, salt, fName,lName,mail, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	
+END//
+DELIMITER ;
+
+>>>>>>> 7b53a0623d87482872b6113091568109fe5696bd

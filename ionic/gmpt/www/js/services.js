@@ -118,12 +118,12 @@ angular.module('starter.services', [])
     date: "12/3/12",
     time_: "6:30PM",
     topic: "Mock Ups",
-    desc: "lorum ipsum random description"
+    meetingDescription: "lorum ipsum random description"
   }, {
     date: "12/7/9",
     time_: "8:30PM",
     topic: "Front End Design",
-    desc: "lorum ipsum random description"
+    meetingDescription: "lorum ipsum random description"
   }];
 
   editing = false;
@@ -166,11 +166,11 @@ angular.module('starter.services', [])
 
 .factory("Debug", function() {
 
-  debug = true;
+  debug = false;
 
   apiaryURL = "http://private-f963fa-gmpt.apiary-mock.com";
 
-  prodURL = null;
+  prodURL = "http://52.37.56.8/gmpt/api/public";
 
   return {
     getURL: function(endpoint) {
