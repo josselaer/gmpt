@@ -81,7 +81,8 @@ $app->get('/project/{ProjectID}',
 		$ProjectID = $request->getAttribute('ProjectID');
 		$query=$db->query("SELECT * FROM Project WHERE ProjectID = '$ProjectID';");
 		$response->write(json_encode(getProjectByID($query)));
-		echo json_encode($response);
+		//echo json_encode($response);
+		return $response;
 	}		
 );
 /*
