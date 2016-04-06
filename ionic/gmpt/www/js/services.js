@@ -22,6 +22,8 @@ angular.module('starter.services', [])
     },
     setAuthToken: function(authToken) {
       user.auth = authToken;
+
+      console.log("Set auth token: " + user.auth);
     },
     getAuthToken: function() {
       return user.auth;
@@ -32,7 +34,7 @@ angular.module('starter.services', [])
 })
 
 
-.factory('Chats', function($http, Debug) {
+.factory('Chats', function($http, UserInfo, Debug) {
   // Might use a resource here that returns a JSON array
 
   return {
@@ -41,37 +43,46 @@ angular.module('starter.services', [])
       return $http({
 
         method: "GET",
-        url: Debug.getURL("/chat/1"),
-        responseType: "json",
+        url: Debug.getURL("/messages/" + groupID),
         headers: {
-          'Content-Type': "json"
+          "Content-Type": "application/json",
+          "Authorization": UserInfo.getAuthToken()
         }
       }).then(function successCallback(response) {
 
-        console.log(response.data.messages);
+        //console.log(response.data.messages);
         return response.data.messages;
     
       }, function errorCallback(response) {
 
-        console.log(Debug.getURL("/chat/" + groupID));
+        console.log(Debug.getURL("/messages/" + groupID));
         console.log(response);
 
-        alert("Failed to get chat messages, please try again. " + response);
+        alert("Failed to get chat messages, please try again. " + JSON.stringify(response));
 
-        return null;
+        return response;
 
+      }).then(function receivedMessage(response) {
+
+        console.log(response);
+        return response;
       });
     },
 
-    sendMessage: function(messageData) {
+    sendMessage: function(messageData, groupID) {
 
       return $http({
           method: "POST",
-          url: Debug.getURL("/chat/1"),
+          url: Debug.getURL("/messages/" + groupID),
           data: messageData,
-          contentType: "application/json"
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": UserInfo.getAuthToken()
+          }
         }).then(function successCallback(response) {
           console.log("You sent a message!");
+          console.log(response);
+          return;
         }, function errorCallback(response) {
           console.log(response);
           console.log(messageData);
@@ -87,17 +98,7 @@ angular.module('starter.services', [])
 
 .factory("Groups", function($http) {
 
-  groups = [{
-    id: 1,
-    name: "GMPT",
-    nextMeeting: "Sunday 12:00 PM",
-    notifications: 9
-  }, {
-    id: 2,
-    name: "Software Engineering",
-    nextMeeting: "Thursday 12:00 PM",
-    notifications: 2
-  }];
+  groups = [];
 
   return {
     all: function() {
