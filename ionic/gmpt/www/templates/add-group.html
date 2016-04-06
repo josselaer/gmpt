@@ -34,7 +34,7 @@
     <li ng-repeat="member in members">
       <!--<span ng-class="{'done':member.done}" type = "btn btn-warning">-->
         <p>{{member.email}}</p>
-        <p>{{member.isProfessor}}</p>
+        <p>Professor?: {{member.isProfessor}}</p>
         <button ng-click="removeItem($index)">X</button> 
       <!--</span>-->
     </li>
