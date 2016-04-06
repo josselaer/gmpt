@@ -44,7 +44,7 @@ $app->post('/projects',
 		$userRoles = [];
 		foreach ($users as $user) {
 			$email = $user['email'];
-			$isProffessor = $user['isProfessor'];
+			$isProfessor = $user['isProfessor'];
 			if($isProfessor == true) {
 				$role = "Teacher";
 			}
