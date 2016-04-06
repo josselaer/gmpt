@@ -277,14 +277,14 @@ $scope.newMeeting = function()
   $scope.members = [];
 
   $scope.addMember = function () {
-    //console.log("Clicked");
-    console.log("username: ", this._username, "email: ", this._email);
-    if (this._username != ' ' && this._email != ' ') {
+    console.log("email: ", this.email);
+    if (this.email != ' ') {
       $scope.members.push({
-        'email': this._email
+        'email': this.email,
+        'isProfessor': this.isProfessor
       });
-      this._username = ' ';
-      this._email = ' ';
+      this.email = ' ';
+      this.isProfessor = false;
     }
   }
 

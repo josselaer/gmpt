@@ -21,11 +21,9 @@
   <div class="container">
 <form name="frm" ng-submit="addMember()">
   <label class="item item-input">
-    <input type="text" name="_username" ng-model="_username" placeholder="Username" required>
+    <input type="text" name="email" ng-model="email" placeholder="Email" required>
   </label>
-  <label class="item item-input">
-    <input type="text" name="_email" ng-model="_email" placeholder="Email" required>
-  </label>
+  <ion-checkbox ng-model="isProfessor">Professor</ion-checkbox>
   <p></p>
   <button class="button button-assertive" ng-disabled="frm.$invalid">
     + Add<p></p></button>
@@ -34,10 +32,11 @@
 
   <ul>
     <li ng-repeat="member in members">
-      <span ng-class="{'done':member.done}" type = "btn btn-warning">{{member._username}}
-        <p>{{member._email}}
+      <!--<span ng-class="{'done':member.done}" type = "btn btn-warning">-->
+        <p>{{member.email}}</p>
+        <p>{{member.isProfessor}}</p>
         <button ng-click="removeItem($index)">X</button> 
-      </span>
+      <!--</span>-->
     </li>
   </ul>
 </div>
