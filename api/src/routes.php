@@ -6,6 +6,22 @@ include 'user.php';
 include 'chat.php';
 
 //test
+$app->get('/meetings',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$ProjectID = (int)$request->getAttribute('ProjectID');
+		
+		$query = $db->prepare("CALL Meetings(?)");
+		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$result=$query->execute();
+		$response->write(json_encode(getMeetings($query)));
+		//$response = getProjects($query);
+		unset($query);	
+		//echo json_encode($response);
+		return $response;
+	}
+)->add($validateSession);
+
 $app->get('/projects',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
