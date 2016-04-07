@@ -22,6 +22,40 @@ $app->get('/meetings',
 	}
 )->add($validateSession);
 
+//test
+$app->post('/meetings',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$form_data = $request->getParsedBody();	
+		$ProjectID = $form_data['ProjectID'];
+		$Description = $form_data['MeetingDescription'];
+		$MeetingDate = $form_data['MeetingDate'];
+		$LocationName = $form_data['LocationName'];
+		$StartTime = $form_data['StartTime'];
+		$EndTime = $form_data['EndTime'];
+
+		$query = $db->prepare("CALL CreateMeeting(?,?)");
+		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$query->bindParam(2,$Description, PDO::PARAM_STR);
+		$query->bindParam(3,$MeetingDate, PDO::PARAM_STR);
+		$query->bindParam(4,$LocationName, PDO::PARAM_STR);
+		$query->bindParam(5,$StartTime, PDO::PARAM_STR);
+		$query->bindParam(6,$EndTime, PDO::PARAM_STR);
+
+		$query->execute();
+		$result = $query->fetchAll();
+		$MeetingID = (int)$result[0]['MeetingID'];
+		$response = $query->fetchAll();
+		echo $response;
+		unset($query);
+		//get user id by email
+		
+		//$response = array("worked"=>true);
+		return json_encode($response);
+
+	}
+)->add($validateSession);
+
 $app->get('/projects',
 	function($request,$response,$args) {
 		$db=$this->GMPT;

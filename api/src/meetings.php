@@ -3,6 +3,7 @@
 		$results = [];
 		$row = $query->fetchAll();
 		foreach($row as $data) {
+			$MeetingID = $data['MeetingID'];
 			$GroupName = $data['ProjectName'];
 			$MeetingDescription = $data['MeetingDescription'];
 			$LocationName = $data['LocationName'];
@@ -10,7 +11,7 @@
 			$StartTime = $data['StartTime'];
 			$EndTime = $data['EndTime'];
 
-			$meeting = array("GroupName"=>$ProjectName, "MeetingDescription"=>$MeetingDescription, "MeetingDate"=>$MeetingDate, "StartTime"=>$StartTime, "EndTime"=>$EndTime);
+			$meeting = array("MeetingID"=>$MeetingID,"GroupName"=>$ProjectName, "MeetingDescription"=>$MeetingDescription, "MeetingDate"=>$MeetingDate, "StartTime"=>$StartTime, "EndTime"=>$EndTime);
 			array_push($results,$meeting);
 		}
 		$resultSize =  count($results);
