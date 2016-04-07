@@ -32,3 +32,9 @@ BEGIN
 	WHERE MeetingID = MeetingIDVal;
     SELECT MeetingID FROM Meeting WHERE MeetingID=MeetingIDVal;
 END //
+
+CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `GetAttendance`(IN MeetingIDVal INT, UserIDVal INT)
+BEGIN
+	SELECT MeetingID, UserID, AttendanceIndicator FROM Attendance 
+	WHERE UserID = UserIDVal AND MeetingID=MeetingIDVal;
+END //
