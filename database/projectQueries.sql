@@ -5,9 +5,13 @@ END
 
 CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `GetUserIDByEmail`(IN EmailVal VARCHAR(25))
 BEGIN
-	SELECT UserID FROM User WHERE Email=EmailVal;
+	IF (
+		SELECT UserID FROM User WHERE Email=EmailVal
+	) 
+    THEN SELECT TRUE;
+    ELSE SELECT FALSE;
+END IF;
 END
-
 
 CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `CreateProject`(IN ProjectNameVal VARCHAR(32), DescriptionVal VARCHAR(255))
 BEGIN
