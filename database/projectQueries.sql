@@ -30,3 +30,8 @@ BEGIN
     FROM User NATURAL JOIN UserProject NATURAL JOIN Project NATURAL JOIN Role
     WHERE ProjectID=ProjectIDVal;
 END
+
+CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `AutocompleteUserEmail`(IN Term VARCHAR(25))
+BEGIN
+	SELECT Email FROM User WHERE Email LIKE Term;
+END
