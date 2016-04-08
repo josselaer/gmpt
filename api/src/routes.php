@@ -4,6 +4,7 @@ include 'project.php';
 include 'meetings.php';
 include 'user.php';
 include 'chat.php';
+include 'notification.php';
 
 //test
 $app->get('/projects',
@@ -85,7 +86,9 @@ $app->get('/project/{ProjectID}',
 	function($request,$response,$args) {
 		$db = $this->GMPT;
 		$ProjectID = $request->getAttribute('ProjectID');
-		$query=$db->query("SELECT * FROM Project WHERE ProjectID = '$ProjectID';");
+		$query = $db->prepare("CALL GetProjectByID(?)");
+		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$query->execute();
 		$response->write(json_encode(getProjectByID($query)));
 		//echo json_encode($response);
 		return $response;
