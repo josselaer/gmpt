@@ -343,6 +343,34 @@ $app->put('/user',
 		
 	}
 )->add($validateSession);
+
+$app->post('/autocomplete', 
+	function($request,$response, $args){
+		$form_data = $request->getParsedBody();
+		$term = '%'.$form_data['term'].'%';
+		
+		$db= $this->GMPT;
+		$autocompleteQuery= $db->prepare("CALL AutocompleteUserEmail(?)");
+		$autocompleteQuery->bindValue(1,$term);
+		$autocompleteQuery->execute();
+		$results = [];
+		$row = $autocompleteQuery->fetchAll();
+		foreach($row as $data) {
+			$ProjectID = $data['Email'];
+			$suggestion = array("suggestion"=>$ProjectID);
+			array_push($results,$suggestion);
+		}
+		$resultSize =  count($results);
+		$results['suggestions'] = $results;
+		for($i = 0; $i < $resultSize; $i++) {
+			$temp = (string)$i;
+			unset($results[$temp]);
+		}
+		
+		$response->write(json_encode($results));
+		
+	}
+)->add($validateSession);
 /*
 //test json_encode
 //Returns all groups for the currently authenticated user
