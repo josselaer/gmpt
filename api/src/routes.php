@@ -27,8 +27,7 @@ $app->get('/projects',
 $app->post('/projects',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
-		$form_data = $request->getParsedBody();
-		
+		$form_data = $request->getParsedBody();	
 		$GroupName = $form_data['groupName'];
 		$Description = $form_data['projDescription'];
 		$query = $db->prepare("CALL CreateProject(?,?)");
@@ -45,8 +44,13 @@ $app->post('/projects',
 		$userRoles = [];
 		foreach ($users as $user) {
 			$email = $user['email'];
-			//$role = $user['roleName'];
-			$role = "Student";
+			$isProfessor = $user['isProfessor'];
+			if($isProfessor == true) {
+				$role = "Teacher";
+			}
+			else {
+				$role = "Student";
+			}
 			$query2 = $db->prepare("CALL GetUserIDByEmail(?)");
 			$query2->bindParam(1,$email,PDO::PARAM_STR);
 			$query2->execute();
