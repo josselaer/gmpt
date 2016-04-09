@@ -10,8 +10,10 @@ $app->get('/messages/{project_id}', function($request,$response,$args) {
 		if ($result) {
 			$messageRoomID = (int)$stmt->fetchAll()[0]["MessageRoomID"];
 			unset($stmt);
-			$stmt1 = $db->prepare("CALL GetMessages(?)");
+			$stmt1 = $db->prepare("CALL GetMessages(?,?,?)");
 			$stmt1->bindParam(1, $messageRoomID, PDO::PARAM_INT);
+			$stmt1->bindParam(2, $userID, PDO::PARAM_INT);
+			$stmt1->bindParam(3, $projectID, PDO::PARAM_INT);
 			$resultOne = $stmt1->execute();
 			if ($resultOne) {
 				$messages = $stmt1->fetchAll();
