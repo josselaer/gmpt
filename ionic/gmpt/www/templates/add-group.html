@@ -21,7 +21,7 @@
   <div class="container">
 <form name="frm" ng-submit="addMember()">
   <label class="item item-input">
-    <input type="text" name="email" ng-model="email" placeholder="Email" required>
+    <input type="text" name="email" ng-model="email" placeholder="Email" ng-change="autoCompleteUpdate(email)" required>
   </label>
   <ion-checkbox ng-model="isProfessor">Professor</ion-checkbox>
   <p></p>
@@ -33,10 +33,17 @@
   <ul>
     <li ng-repeat="member in members">
       <!--<span ng-class="{'done':member.done}" type = "btn btn-warning">-->
-        <p>{{member.email}}</p>
-        <p>Professor?: {{member.isProfessor}}</p>
-        <button ng-click="removeItem($index)">X</button> 
+      <div class = "item item-stable">
+        <div class="row">
+          <label>{{member.email}}</label>
+        </div>
+          <div class="col-offset-75">
+            <button ng-click="removeItem($index)" class="button ion-android-cancel"> </button> 
+          </div>
+        </div>
+        
       <!--</span>-->
+    </div>
     </li>
   </ul>
 </div>

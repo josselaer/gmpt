@@ -306,7 +306,7 @@ $scope.newMeeting = function()
       users: $scope.members
     }
 
-    //console.log("Adding group: " + JSON.stringify(group));
+    console.log("Adding group: " + JSON.stringify(group));
 
     $http({
       method: "POST",
@@ -330,6 +330,70 @@ $scope.newMeeting = function()
       console.log(response);
       $state.go("groups");
     });
+  }
+  $scope.autoCompleteUpdate = function(input)
+  {
+
+    var input_data = 
+    {
+      term: input
+    }
+    console.log(input_data);
+    $http(
+    {
+      method: "POST",
+      url: Debug.getURL("/autocomplete"),
+      data: input_data,
+      headers: 
+      {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) 
+    {
+      console.log(response);
+      return response;
+    }, function errorCallback(response) 
+    {
+      console.log("auto complete 'fail': ");
+      console.log(response);
+      alert("Failed to post autocomplete");
+      return null;
+    }).then(function redirect(response) 
+    {
+      console.log("redirecting...");
+      console.log(response);
+    });
+    /*
+    $http({
+
+        method: "GET",
+        url: Debug.getURL("/autocomplete"),
+    //    responseType: "json",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": UserInfo.getAuthToken()
+        }
+      }).then(function successCallback(response) {
+
+        console.log("Get project auth: " + UserInfo.getAuthToken());
+        console.log(Debug.getURL("/autocomplete"));
+        console.log(response);
+
+        Groups.set(response.data.suggestions);
+        $scope.suggestions = response.data.suggestions;
+
+      }, function errorCallback(response) {
+
+        console.log(Debug.getURL("/projects"));
+        console.log(response);
+
+        alert("Failed to load groups, please try again.");
+
+        return null;
+
+    });
+*/
   }
 })
 
