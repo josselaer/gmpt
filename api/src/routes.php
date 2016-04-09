@@ -108,16 +108,37 @@ $app->group('/project/{id}', function() {
 //test stuff
 $app->get('/goodbye', 
 	function($request,$response,$args) {
-	    $response->getBody()->write("Time to go. Goodbye!");
-		$userID = $request->getAttribute('UserID');
-			
-	    $response->getBody()->write($userID);	
-		
-		return $response;
+echo (extension_loaded('openssl')?'SSL loaded':'SSL not loaded')."\n";
+		$mail = new PHPMailer;
+
+		$mail->SMTPDebug = 1;                               // Enable verbose debug output
+
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = 'ssl://smtp.gmail.com:465'; // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = 'gmptDBGUI@gmail.com';                 // SMTP username
+		$mail->Password = 'gmptMaster1';                           // SMTP password
+		//$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+		//$mail->Port = 465;                                    // TCP port to connect to
+
+		$mail->setFrom('gmptDBGUI@gmail.com');
+		$mail->addAddress('spopov@smu.edu');     
+		$mail->addReplyTo('info@example.com', 'Information');
+
+		$mail->isHTML(true);                                  // Set email format to HTML
+
+		$mail->Subject = 'PLEASE';
+		$mail->Body    = 'PLEASE WORK';
+
+		if(!$mail->send()) {
+			echo 'Message could not be sent.';
+			echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+			echo 'Message has been sent';
+		}
+	
 	}
-	
-	
-)->add($validateSession);
+);
 
 
 //validate if user is correct
