@@ -3,7 +3,7 @@
 	function getProjects($query) {
 		$results = [];
 		$row = $query->fetchAll();
-		print_r($row);
+		//print_r($row);
 		foreach($row as $data) {
 			$ProjectID = $data['ProjectID'];
 			$GroupName = $data['ProjectName'];
