@@ -10,6 +10,14 @@ $app->get('/chat/{project_id}', function($request,$response,$args) {
 		if ($result) {
 			$messageRoomID = (int)$stmt->fetchAll()[0]["MessageRoomID"];
 			unset($stmt);
+			
+			
+			//read receipt functionality 
+			$setChatLastRead = $db->prepare("CALL SetChatLastRead(?,?)");
+			$setChatLastRead->execute(array($userID,$messageRoomID));
+			unset($setChatLastRead);
+			
+			
 			$stmt1 = $db->prepare("CALL GetMessages(?,?,?)");
 			$stmt1->bindParam(1, $messageRoomID, PDO::PARAM_INT);
 			$stmt1->bindParam(2, $userID, PDO::PARAM_INT);
