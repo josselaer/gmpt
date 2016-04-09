@@ -9,18 +9,19 @@
 
   <ion-side-menu side="left">
     <header class="bar bar-header bar-stable">
-      <h1 class="title">Left</h1>
+      <h1 class="title">Options</h1>
     </header>
     <ion-content class="has-header">
       <ion-list>
-        <ion-item nav-clear menu-close href="#/app/search">
+        <ion-item nav-clear menu-close>
           Check In
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/browse">
+        <ion-item nav-clear menu-close>
           Groups
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/playlists">
-          Logout
+        <ion-item nav-clear menu-close>
+        <button class="button ion-log-out button-positive" id="logoutBtn" ng-controller="LogoutCtrl" ng-click="logout()" >
+          Logout   </button>
         </ion-item>
       </ion-list>
     </ion-content>

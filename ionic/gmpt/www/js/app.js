@@ -43,15 +43,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 //    controller: 'GroupsCtrl'
 //  })
   
-  // setup an abstract state for the tabs directive
-    .state('groups', {
-    parent: 'menu',
-    url: '/groups',
-    abstract: true,
-    templateUrl: 'templates/groups.html'
-  })
-
-
+  .state('menu.groups', {
+      url: "/groups",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/groups.html",
+          controller: 'GroupsCtrl'
+        }
+      }
+    })
+  
   .state('addgroup', {
     url: '/addgroup',
     templateUrl: 'templates/add-group.html',
@@ -119,7 +120,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/menu',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'MenuCtrl'
+      controller: "MenuCtrl"
   });
 
   // if none of the above states are matched, use this as the fallback
