@@ -1,10 +1,17 @@
 <ion-view view-title="{{userName}}'s Groups">
+   
+<!--  <ion-content class="has-header">-->
   <ion-content class="padding">
+     <ion-nav-bar class="bar-stable">
+        <ion-nav-buttons side="left">
+            <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="toggleLeft()"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
     <ion-list>
       <ion-item class="item" ng-repeat="group in groups" type="item-text-wrap" href="#/group/chat/{{group.ProjectID}}">
         <h2>{{group.GroupName}}</h2>
         <h4 class=" item-text-right">Upcoming meeting: </h4>
-        <span class="badge badge-assertive"><h2>{{group.Notification}}</h2></span>
+        <span class="badge badge-assertive"><h2>0</h2></span>
       </ion-item>
       
       <ion-item class="item item-icon-left" type="item-text-wrap" href="#/addgroup">

@@ -379,4 +379,9 @@ $scope.newMeeting = function()
     });
 
   }
+})
+
+.controller('MenuCtrl', function ($scope, $state) {
+    console.log("In MenuCtrl");
+
 });
