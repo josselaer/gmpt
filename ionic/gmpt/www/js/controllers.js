@@ -379,6 +379,7 @@ $scope.newMeeting = function()
     console.log("current input: " , this.email);
     this.email = selected_email;
     document.getElementById('email_input').value = selected_email.suggestion;
+    $scope.email = selected_email.suggestion;
   }
 })
 
