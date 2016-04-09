@@ -1,5 +1,6 @@
 angular.module('starter.controllers', [])
 
+
 .controller('StatsCtrl', function ($scope) {})
 
 
@@ -12,8 +13,9 @@ angular.module('starter.controllers', [])
   $interval(function getMessages() {
     
     Chats.getGroupMessages($stateParams.groupID).then(function success(response) {
+      
         $animate.enabled(false);
-        $scope.messages=[];
+        $scope.messages = [];
         $scope.messages = response;
 
         $animate.enabled(true);
@@ -24,16 +26,8 @@ angular.module('starter.controllers', [])
   }, 3000);
 
   $scope.$on("$ionicView.enter", function() {
-      $http({
 
-      method: "GET",
-      url: Debug.getURL("/messages/" + $stateParams.groupID),
-      responseType: "json",
-      headers: {
-          "Content-Type": "application/json",
-          "Authorization": UserInfo.getAuthToken()
-      }
-    }).then(function successCallback(response) {
+      Chats.getGroupMessages($stateParams.groupID).then(function successCallback(response) {
 
       console.log(response.data);
       $scope.messages = response.data.messages;
@@ -57,6 +51,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.chatsctrl.send = function() {
+
     console.log("Sending: " + $scope.message.text);
 
     var m = { 
@@ -75,9 +70,6 @@ angular.module('starter.controllers', [])
     }, function() {
       console.log("Error in sending message");
     });
-
-
-    
   };
 })
 
@@ -245,7 +237,7 @@ $scope.newMeeting = function()
 
         console.log("Get project auth: " + UserInfo.getAuthToken());
         console.log(Debug.getURL("/projects"));
-        console.log(response);
+        console.log(response.data);
 
         Groups.set(response.data.projects);
         $scope.groups = response.data.projects;
