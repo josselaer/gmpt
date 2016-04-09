@@ -257,20 +257,21 @@ $app->put('/user',
 		$fName  = $form_data['firstName'];
 		$lName = $form_data['lastName'];
 		$email = $form_data['email'];
-		$registrationToken= $form_data['registrationToken'];
+		$registrationToken= $form_data['token'];
 		$db = $this->GMPT;
 		$salt = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
 		$passwordHash = hash('sha256',$password.$salt);
 		
 		//$returnArray = array("Volvo", "BMW", "Toyota");
 		//prepare query
-		$registerQuery=$db->prepare("CALL UpdateUser (?,?,?,?,?,?)");
+		$registerQuery=$db->prepare("CALL UpdateUser (?,?,?,?,?,?,?)");
 		$registerQuery->bindValue(1, $username, PDO::PARAM_STR);
 		$registerQuery->bindValue(2, $passwordHash, PDO::PARAM_STR);
 		$registerQuery->bindValue(3, $fName, PDO::PARAM_STR);
 		$registerQuery->bindValue(4, $lName, PDO::PARAM_STR);
 		$registerQuery->bindValue(5, $salt, PDO::PARAM_STR);
 		$registerQuery->bindValue(6, $email, PDO::PARAM_STR);
+		$registerQuery->bindValue(7, $registrationToken, PDO::PARAM_STR);
 		
 		$registerQuery->execute();
 
