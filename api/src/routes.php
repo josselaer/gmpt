@@ -39,6 +39,16 @@ $app->post('/projects',
 		$ProjID = (int)$q1result[0]['ProjectID'];
 		$response = $query->fetchAll();
 		unset($query);
+		
+		//getSenderEmail by ID
+		$SenderID = (int)$request->getAttribute('UserID');
+		$getSenderEmailQuery=$db->prepare("CALL GetEmailByUserID(?)");
+		$getSenderEmailQuery->execute(array($SenderID));
+		$SenderEmailResult= $getSenderEmailQuery->fetchAll();
+		$SenderEmail=$SenderEmailResult[0]['Email'];
+		
+		unset($getSenderEmailQuery);
+		
 		//get user id by email
 		$users = $form_data['users'];
 		$userIDs = [];
@@ -56,14 +66,23 @@ $app->post('/projects',
 			$query2->bindParam(1,$email,PDO::PARAM_STR);
 			$query2->execute();
 			$q2result = $query2->fetchAll();
-			$userID = $q2result[0]["UserID"];
-			unset($query2);
+			$userID=0;
+			if($query2->fetchColumn()==0){
+				unset($query2);
+				$userID=sendEmailInvite($SenderEmail,$email,$db);
+			}
+			else{
+				$userID = $q2result[0]["UserID"];
+				unset($query2);
+			}
 			array_push($userIDs,(int)$userID);
-			array_push($userRoles,$role);
+			array_push($userRoles,$role);	
 		}
 		//add user to project
 		$counter = 0;
+		echo json_encode($userIDs);
 		foreach($userIDs as $uID) {
+			echo $uID;
 			$query3 = $db->prepare("CALL AddUserToProject(?,?,?)");
 			$query3->bindParam(1,$ProjID, PDO::PARAM_INT);
 			$query3->bindParam(2,$uID, PDO::PARAM_INT);
@@ -108,7 +127,6 @@ $app->group('/project/{id}', function() {
 //test stuff
 $app->get('/goodbye', 
 	function($request,$response,$args) {
-echo (extension_loaded('openssl')?'SSL loaded':'SSL not loaded')."\n";
 		$mail = new PHPMailer;
 
 		$mail->SMTPDebug = 1;                               // Enable verbose debug output
@@ -234,7 +252,7 @@ $app->get('/logout', function ($request, $response, $args) {
 	return $response;
 })->add($validateSession);
 
-//Edit a user: PUT @ /user endpoint
+//Edit a user WHEN HE registers: PUT @ /user endpoint
 $app->put('/user', 
 	function($request, $response,$args){
 		$form_data = $request->getParsedBody();
@@ -243,7 +261,8 @@ $app->put('/user',
 		$fName  = $form_data['firstName'];
 		$lName = $form_data['lastName'];
 		$email = $form_data['email'];
-		$db = $this->GMPT;		
+		$registrationToken= $form_data['registrationToken'];
+		$db = $this->GMPT;
 		$salt = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
 		$passwordHash = hash('sha256',$password.$salt);
 		
@@ -265,7 +284,7 @@ $app->put('/user',
 		return $response;
 		
 	}
-)->add($validateSession);
+);
 /*
 //test json_encode
 //Returns all groups for the currently authenticated user
