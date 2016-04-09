@@ -272,7 +272,7 @@ $scope.newMeeting = function()
   $scope.groups = Groups.all();
 })
 
-.controller('AddGroupCtrl', function ($scope, $state, $http, UserInfo, Debug) {
+.controller('AddGroupCtrl', function ($scope, $ionicConfig, $state, $http, UserInfo, Debug) {
 
   $scope.group = {};
 
@@ -281,14 +281,14 @@ $scope.newMeeting = function()
   $scope.members = [];
 
   $scope.addMember = function () {
-    //console.log("Clicked");
-    console.log("username: ", this._username, "email: ", this._email);
-    if (this._username != ' ' && this._email != ' ') {
+    console.log("email: ", this.email);
+    if (this.email != ' ') {
       $scope.members.push({
-        'email': this._email
+        'email': this.email,
+        'isProfessor': this.isProfessor
       });
-      this._username = ' ';
-      this._email = ' ';
+      this.email = ' ';
+      this.isProfessor = false;
     }
   }
 
@@ -310,7 +310,7 @@ $scope.newMeeting = function()
       users: $scope.members
     }
 
-    //console.log("Adding group: " + JSON.stringify(group));
+    console.log("Adding group: " + JSON.stringify(group));
 
     $http({
       method: "POST",
@@ -334,6 +334,51 @@ $scope.newMeeting = function()
       console.log(response);
       $state.go("groups");
     });
+  }
+  $scope.autoCompleteUpdate = function(input)
+  {
+    console.log(this.email);
+    var input_data = 
+    {
+      term: input
+    }
+    var success = false;
+    $scope.input_suggestions = [];
+    $http(
+    {
+      method: "POST",
+      url: Debug.getURL("/autocomplete"),
+      data: input_data,
+      headers: 
+      {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) 
+    {
+      console.log(response);
+      success = true;
+      return response;
+    }, function errorCallback(response) 
+    {
+      console.log("auto complete 'fail': ");
+      console.log(response);
+      alert("Failed to post autocomplete");
+      return null;
+    }).then(function redirect(response) 
+    {
+      console.log("redirecting...");
+      console.log(response);
+      $scope.input_suggestions = response.data.suggestions;
+      console.log("Input suggestions: " , $scope.input_suggestions);
+    });
+  }
+
+  $scope.selectEmail = function(selected_email)
+  {
+    console.log("current input: " , this.email);
+    this.email = selected_email;
+    document.getElementById('email_input').value = selected_email.suggestion;
   }
 })
 
