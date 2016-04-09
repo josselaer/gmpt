@@ -4,6 +4,7 @@ include 'project.php';
 include 'meetings.php';
 include 'user.php';
 include 'chat.php';
+include 'stats.php';
 include 'notification.php';
 
 //test
@@ -243,6 +244,16 @@ $app->put('/user',
 		$response->getBody()->write(json_encode($returnArray));
 		return $response;
 		
+	}
+)->add($validateSession);
+
+//Get Group Totals
+$app->get('/statistics/totals/{project_id}', 
+	function($request, $response,$args){
+		$db=$this->GMPT;
+		$ProjectID = $request->getAttribute('project_id');
+		$result=getGroupTotals($db,$ProjectID);
+		echo json_encode($result);
 	}
 )->add($validateSession);
 /*
