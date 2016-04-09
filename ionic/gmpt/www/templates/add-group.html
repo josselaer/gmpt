@@ -24,13 +24,12 @@
   <label class="item item-input">
     <label class="item-input-wrapper">
     <i class="icon ion-ios7-search placeholder-icon"></i>
-    <input type="text" name="email" placeholder="Email" ng-change="autoCompleteUpdate(email)" ng-model="email" required>
+    <input type="text" name="email" id="email_input" placeholder="Email" ng-change="autoCompleteUpdate(email)" ng-model="email" required>
   </label>
   </label>
     <p></p>
       <div class="list">
-        <li class="item" ng-repeat="i_suggestion in input_suggestions">{{i_suggestion.suggestion}}
-
+        <li class="button item assertive" ng-repeat="i_suggestion in input_suggestions" ng-click="selectEmail(i_suggestion)" id="$index">{{i_suggestion.suggestion}}
         </li>
       </div>
 

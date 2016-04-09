@@ -268,7 +268,7 @@ $scope.newMeeting = function()
   $scope.groups = Groups.all();
 })
 
-.controller('AddGroupCtrl', function ($scope, $state, $http, UserInfo, Debug) {
+.controller('AddGroupCtrl', function ($scope, $ionicConfig, $state, $http, UserInfo, Debug) {
 
   $scope.group = {};
 
@@ -333,7 +333,7 @@ $scope.newMeeting = function()
   }
   $scope.autoCompleteUpdate = function(input)
   {
-
+    console.log(this.email);
     var input_data = 
     {
       term: input
@@ -368,6 +368,13 @@ $scope.newMeeting = function()
       $scope.input_suggestions = response.data.suggestions;
       console.log("Input suggestions: " , $scope.input_suggestions);
     });
+  }
+
+  $scope.selectEmail = function(selected_email)
+  {
+    console.log("current input: " , this.email);
+    this.email = selected_email;
+    document.getElementById('email_input').value = selected_email.suggestion;
   }
 })
 
