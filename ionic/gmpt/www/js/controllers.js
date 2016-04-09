@@ -32,7 +32,7 @@ angular.module('starter.controllers', [])
       Chats.getGroupMessages($stateParams.groupID).then(function successCallback(response) {
 
       console.log(response.data);
-      $scope.messages = response.data.messages;
+      $scope.messages = response;
       
     }, function errorCallback(response) {
 
