@@ -1,5 +1,5 @@
 <?php 
-$app->get('/messages/{project_id}', function($request,$response,$args) {
+$app->get('/chat/{project_id}', function($request,$response,$args) {
 		$userID = (int)$request->getAttribute('UserID');
 		$projectID = $request->getAttribute('project_id');
 		$db=$this->GMPT;
@@ -34,7 +34,7 @@ $app->get('/messages/{project_id}', function($request,$response,$args) {
 
 
 //test
-$app->post('/messages/{project_id}', function($request,$response,$args) {
+$app->post('/chat/{project_id}', function($request,$response,$args) {
 		$userID = (int)$request->getAttribute('UserID');
 		$projectID = $request->getAttribute('project_id');
 		$message_data = $request->getParsedBody();
