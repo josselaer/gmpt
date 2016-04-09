@@ -8,28 +8,39 @@
 </label>
 <p></p>
 <label>Description</label>
-<div class="card">
-  <div class="item item-text-wrap">
-    <input ng-model="group.groupDesc" type="text">
-  </div>
-</div>
+<p></p>
+<ion-item>
+  <textarea class="bar"  ngModel="group.groupDesc"></textarea>
+</ion-item>
 <p></p>
 
 
 <label>Add Team Member</label>
 <p></p>
   <div class="container">
+
 <form name="frm" ng-submit="addMember()">
+
   <label class="item item-input">
-    <input type="text" name="email" ng-model="email" placeholder="Email" ng-change="autoCompleteUpdate(email)" required>
+    <label class="item-input-wrapper">
+    <i class="icon ion-ios7-search placeholder-icon"></i>
+    <input type="text" name="email" placeholder="Email" ng-change="autoCompleteUpdate(email)" ng-model="email" required>
   </label>
+  </label>
+    <p></p>
+      <div class="list">
+        <li class="item" ng-repeat="i_suggestion in input_suggestions">{{i_suggestion.suggestion}}
+
+        </li>
+      </div>
+
   <ion-checkbox ng-model="isProfessor">Professor</ion-checkbox>
+
   <p></p>
   <button class="button button-assertive" ng-disabled="frm.$invalid">
     + Add<p></p></button>
   </form>
   <p></p>
-
   <ul>
     <li ng-repeat="member in members">
       <!--<span ng-class="{'done':member.done}" type = "btn btn-warning">-->

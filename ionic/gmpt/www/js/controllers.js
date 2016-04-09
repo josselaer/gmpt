@@ -338,7 +338,8 @@ $scope.newMeeting = function()
     {
       term: input
     }
-    console.log(input_data);
+    var success = false;
+    $scope.input_suggestions = [];
     $http(
     {
       method: "POST",
@@ -352,6 +353,7 @@ $scope.newMeeting = function()
     }).then(function successCallback(response) 
     {
       console.log(response);
+      success = true;
       return response;
     }, function errorCallback(response) 
     {
@@ -363,37 +365,9 @@ $scope.newMeeting = function()
     {
       console.log("redirecting...");
       console.log(response);
+      $scope.input_suggestions = response.data.suggestions;
+      console.log("Input suggestions: " , $scope.input_suggestions);
     });
-    /*
-    $http({
-
-        method: "GET",
-        url: Debug.getURL("/autocomplete"),
-    //    responseType: "json",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": UserInfo.getAuthToken()
-        }
-      }).then(function successCallback(response) {
-
-        console.log("Get project auth: " + UserInfo.getAuthToken());
-        console.log(Debug.getURL("/autocomplete"));
-        console.log(response);
-
-        Groups.set(response.data.suggestions);
-        $scope.suggestions = response.data.suggestions;
-
-      }, function errorCallback(response) {
-
-        console.log(Debug.getURL("/projects"));
-        console.log(response);
-
-        alert("Failed to load groups, please try again.");
-
-        return null;
-
-    });
-*/
   }
 })
 
