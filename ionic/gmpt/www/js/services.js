@@ -107,7 +107,7 @@ angular.module('starter.services', [])
       return $http({
 
         method: "GET",
-        url: Debug.getURL("/messages/" + groupID),
+        url: Debug.getURL("/chat/" + groupID),
         headers: {
           "Content-Type": "application/json",
           "Authorization": UserInfo.getAuthToken()
@@ -119,7 +119,7 @@ angular.module('starter.services', [])
     
       }, function errorCallback(response) {
 
-        console.log(Debug.getURL("/messages/" + groupID));
+        console.log(Debug.getURL("/chat/" + groupID));
         console.log(response);
 
         alert("Failed to get chat messages, please try again. " + JSON.stringify(response));
@@ -137,7 +137,7 @@ angular.module('starter.services', [])
 
       return $http({
           method: "POST",
-          url: Debug.getURL("/messages/" + groupID),
+          url: Debug.getURL("/chat/" + groupID),
           data: messageData,
           headers: {
             "Content-Type": "application/json",

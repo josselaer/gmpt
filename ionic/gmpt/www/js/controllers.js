@@ -10,10 +10,12 @@ angular.module('starter.controllers', [])
   $scope.chatsctrl = {};
   $scope.messages = [];
 
+  $scope.chatsctrl.anonymous = false;
+
   $interval(function getMessages() {
     
     Chats.getGroupMessages($stateParams.groupID).then(function success(response) {
-      
+
         $animate.enabled(false);
         $scope.messages = [];
         $scope.messages = response;
@@ -42,6 +44,15 @@ angular.module('starter.controllers', [])
     });
   });
 
+  $scope.chatsctrl.toggleAnonymous = function() {
+    if ($scope.chatsctrl.anonymous == true) {
+      $scope.chatsctrl.anonymous = false;
+    }
+    else {
+      $scope.chatsctrl.anonymous = true;
+    }
+  }
+
   $scope.chatsctrl.remove = function (chat) {
     Chats.remove(chat);
   };
@@ -57,6 +68,7 @@ angular.module('starter.controllers', [])
     var m = { 
       //sender: UserInfo.get().user.userName,
       text: $scope.message.text,
+      anonymous: $scope.chatsctrl.anonymous
     };
 
     Chats.sendMessage(JSON.stringify(m), $stateParams.groupID).then( function() {
