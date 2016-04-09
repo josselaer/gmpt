@@ -79,10 +79,8 @@ $app->post('/projects',
 			array_push($userRoles,$role);	
 		}
 		//add user to project
-		$counter = 0;
-		echo json_encode($userIDs);
+		$counter = 0;		
 		foreach($userIDs as $uID) {
-			echo $uID;
 			$query3 = $db->prepare("CALL AddUserToProject(?,?,?)");
 			$query3->bindParam(1,$ProjID, PDO::PARAM_INT);
 			$query3->bindParam(2,$uID, PDO::PARAM_INT);
