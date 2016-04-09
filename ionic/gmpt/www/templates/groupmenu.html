@@ -14,14 +14,16 @@
     <ion-content class="has-header">
       <ion-list>
         <ion-item nav-clear menu-close>
-          Check In
+         <i class="fa fa-check-square-o"></i>
+            Check In
         </ion-item>
-        <ion-item nav-clear menu-close>
-          Groups
+        <ion-item nav-clear menu-close href="#/groupsmenu/groups">
+        <i class="fa fa-users"></i>
+          Groups 
         </ion-item>
-        <ion-item nav-clear menu-close>
-         <button class="button ion-log-out button-positive button-full" id="logoutBtn" ng-controller="LogoutCtrl" ng-click="logout()" >
-          Logout   </button>
+          
+        <ion-item nav-clear menu-close ng-controller="LogoutCtrl" ng-click="logout()" class="ion-log-out">
+            Logout
         </ion-item>
       </ion-list>
     </ion-content>

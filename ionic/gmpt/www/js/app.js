@@ -43,7 +43,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 //    controller: 'GroupsCtrl'
 //  })
   
-  .state('menu.groups', {
+  .state('groupsmenu.groups', {
       url: "/groups",
       views: {
         'menuContent' :{
@@ -74,11 +74,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       'group-stats': {
         templateUrl: 'templates/group-stats.html',
         controller: 'StatsCtrl'
-      }
+      },
+        'menuContent' :{
+          templateUrl: "templates/groups.html",
+          controller: 'GroupsCtrl'
+        }
     }
   })
 
-  .state('group.chat', {
+  .state('groupmenu.group.chat', {
       url: '/chat/:groupID',
       views: {
         'group-chat': {
@@ -116,11 +120,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'RegisterCtrl'
   })
   
-    .state('menu', {
-    url: '/menu',
+    .state('groupsmenu', {
+    url: '/groupsmenu',
     abstract: true,
-    templateUrl: 'templates/menu.html',
-      controller: "MenuCtrl"
+    templateUrl: 'templates/groupsmenu.html',
+      controller: "GroupsMenuCtrl"
+  })
+  
+  .state('groupmenu', {
+    url: '/groupmenu',
+    abstract: true,
+    templateUrl: 'templates/groupmenu.html',
+      controller: "GroupMenuCtrl"
   });
 
   // if none of the above states are matched, use this as the fallback

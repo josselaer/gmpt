@@ -107,7 +107,7 @@ angular.module('starter.controllers', [])
       console.log("You logged in!")
       console.log(response);
       
-      $state.go("menu.groups");
+      $state.go("groupsmenu.groups");
     });
 
   }
@@ -426,7 +426,13 @@ $scope.newMeeting = function()
   }
 })
 
-.controller('MenuCtrl', function ($scope, $ionicSideMenuDelegate) {
+.controller('GroupsMenuCtrl', function ($scope, $ionicSideMenuDelegate) {
+    $scope.toggleLeftSideMenu = function() {
+      $ionicSideMenuDelegate.toggleLeft();
+   };
+})
+
+.controller('GroupMenuCtrl', function ($scope, $ionicSideMenuDelegate) {
     $scope.toggleLeftSideMenu = function() {
       $ionicSideMenuDelegate.toggleLeft();
    };
