@@ -86,14 +86,12 @@ $app->post('/projects',
 			$query3->bindParam(2,$uID, PDO::PARAM_INT);
 			$query3->bindParam(3,$userRoles[$counter], PDO::PARAM_STR);
 			$query3->execute();
-			echo "Query 3";
-			echo json_encode($query3->fetchAll());
 			unset($query3);
 			$counter = $counter + 1;
 		}
 		
 		//$response = array("worked"=>true);
-		return json_encode($response);
+		return $response;
 
 	}
 )->add($validateSession);

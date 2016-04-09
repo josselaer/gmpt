@@ -46,7 +46,7 @@
 	function sendEmailInvite($senderEmail,$email,$db){
 		$mail = new PHPMailer;
 
-		//$mail->SMTPDebug = 1;                               // Enable verbose debug output
+		//$mail->SMTPDebug = 0;                               // Enable verbose debug output
 
 		$mail->isSMTP();                                      // Set mailer to use SMTP
 		$mail->Host = 'ssl://smtp.gmail.com:465'; // Specify main and backup SMTP servers
