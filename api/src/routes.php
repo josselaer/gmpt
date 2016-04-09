@@ -7,6 +7,107 @@ include 'chat.php';
 include 'notification.php';
 
 //test
+$app->get('/meetings',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$ProjectID = (int)$request->getAttribute('ProjectID');
+		
+		$query = $db->prepare("CALL GetMeetings(?)");
+		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$result=$query->execute();
+		$response->write(json_encode(getMeetings($query)));
+		//$response = getProjects($query);
+		unset($query);	
+		//echo json_encode($response);
+		return $response;
+	}
+)->add($validateSession);
+
+//test
+$app->get('/meetingbyid',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$Meeting = (int)$request->getAttribute('MeetingID');
+		
+		$query = $db->prepare("CALL GetMeetingByID(?)");
+		$query->bindParam(1,$MeetingID, PDO::PARAM_INT);
+		$result=$query->execute();
+		$response->write(json_encode(getMeetings($query)));
+		//$response = getProjects($query);
+		unset($query);	
+		//echo json_encode($response);
+		return $response;
+	}
+)->add($validateSession);
+
+//test
+$app->post('/meetings',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$form_data = $request->getParsedBody();	
+		$ProjectID = $form_data['ProjectID'];
+		$Description = $form_data['MeetingDescription'];
+		$MeetingDate = $form_data['MeetingDate'];
+		$LocationName = $form_data['LocationName'];
+		$StartTime = $form_data['StartTime'];
+		$EndTime = $form_data['EndTime'];
+
+		$query = $db->prepare("CALL CreateMeeting(?,?,?,?,?,?)");
+		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$query->bindParam(2,$Description, PDO::PARAM_STR);
+		$query->bindParam(3,$MeetingDate, PDO::PARAM_STR);
+		$query->bindParam(4,$LocationName, PDO::PARAM_STR);
+		$query->bindParam(5,$StartTime, PDO::PARAM_STR);
+		$query->bindParam(6,$EndTime, PDO::PARAM_STR);
+
+		$query->execute();
+		$result = $query->fetchAll();
+		$MeetingID = (int)$result[0]['MeetingID'];
+		$response = $query->fetchAll();
+		echo $response;
+		unset($query);
+		//get user id by email
+		
+		//$response = array("worked"=>true);
+		return json_encode($response);
+
+	}
+)->add($validateSession);
+
+//test
+$app->put('/meetings',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$form_data = $request->getParsedBody();	
+		$MeetingID = $form_data['MeetingID'];
+		$Description = $form_data['MeetingDescription'];
+		$MeetingDate = $form_data['MeetingDate'];
+		$LocationName = $form_data['LocationName'];
+		$StartTime = $form_data['StartTime'];
+		$EndTime = $form_data['EndTime'];
+
+		$query = $db->prepare("CALL EditMeeting(?,?,?,?,?,?)");
+		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$query->bindParam(2,$Description, PDO::PARAM_STR);
+		$query->bindParam(3,$MeetingDate, PDO::PARAM_STR);
+		$query->bindParam(4,$LocationName, PDO::PARAM_STR);
+		$query->bindParam(5,$StartTime, PDO::PARAM_STR);
+		$query->bindParam(6,$EndTime, PDO::PARAM_STR);
+
+		$query->execute();
+		$result = $query->fetchAll();
+		$MeetingID = (int)$result[0]['MeetingID'];
+		$response = $query->fetchAll();
+		echo $response;
+		unset($query);
+		//get user id by email
+		
+		//$response = array("worked"=>true);
+		return json_encode($response);
+
+	}
+)->add($validateSession);
+
 $app->get('/projects',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
@@ -242,6 +343,34 @@ $app->put('/user',
 		$returnArray = array($username, $passwordHash, $fName, $lName, $email);
 		$response->getBody()->write(json_encode($returnArray));
 		return $response;
+		
+	}
+)->add($validateSession);
+
+$app->post('/autocomplete', 
+	function($request,$response, $args){
+		$form_data = $request->getParsedBody();
+		$term = '%'.$form_data['term'].'%';
+		
+		$db= $this->GMPT;
+		$autocompleteQuery= $db->prepare("CALL AutocompleteUserEmail(?)");
+		$autocompleteQuery->bindValue(1,$term);
+		$autocompleteQuery->execute();
+		$results = [];
+		$row = $autocompleteQuery->fetchAll();
+		foreach($row as $data) {
+			$ProjectID = $data['Email'];
+			$suggestion = array("suggestion"=>$ProjectID);
+			array_push($results,$suggestion);
+		}
+		$resultSize =  count($results);
+		$results['suggestions'] = $results;
+		for($i = 0; $i < $resultSize; $i++) {
+			$temp = (string)$i;
+			unset($results[$temp]);
+		}
+		
+		$response->write(json_encode($results));
 		
 	}
 )->add($validateSession);

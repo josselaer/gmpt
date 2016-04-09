@@ -8,7 +8,6 @@ BEGIN
 	SELECT UserID FROM User WHERE Email=EmailVal;
 END
 
-
 CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `CreateProject`(IN ProjectNameVal VARCHAR(32), DescriptionVal VARCHAR(255))
 BEGIN
 	INSERT INTO Project (ProjectName, Description, DateCreated) 
@@ -29,4 +28,9 @@ BEGIN
 	SELECT ProjectName, Description, FirstName, LastName, UserID, RoleID 
     FROM User NATURAL JOIN UserProject NATURAL JOIN Project NATURAL JOIN Role
     WHERE ProjectID=ProjectIDVal;
+END
+
+CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `AutocompleteUserEmail`(IN Term VARCHAR(25))
+BEGIN
+	SELECT Email FROM User WHERE Email LIKE Term;
 END
