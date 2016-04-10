@@ -17,12 +17,22 @@
          <i class="fa fa-check-square-o"></i>
             Check In
         </ion-item>
-        <ion-item nav-clear menu-close href="#/groupsmenu/groups">
+          
+          <ion-item nav-clear menu-close>
+              <i class="fa fa-user-plus"></i>
+
+            Add Group Member
+        </ion-item>
+          
+        <ion-item nav-clear menu-close href="#/menu/groups">
         <i class="fa fa-users"></i>
           Groups 
         </ion-item>
           
+<!--          <ion-item ng-show=""-->
+                    
         <ion-item nav-clear menu-close ng-controller="LogoutCtrl" ng-click="logout()" class="ion-log-out">
+
             Logout
         </ion-item>
       </ion-list>

@@ -36,14 +36,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
-
-//  .state('groups', {
-//    url: '/groups',
-//    templateUrl: 'templates/groups.html',
-//    controller: 'GroupsCtrl'
-//  })
   
-  .state('groupsmenu.groups', {
+  .state('menu.groups', {
       url: "/groups",
       views: {
         'menuContent' :{
@@ -66,8 +60,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/group.html'
   })
 
-  // Each tab has its own nav history stack:
-
   .state('group.stats', {
     url: '/stats',
     views: {
@@ -82,7 +74,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-  .state('groupmenu.group.chat', {
+  .state('group.chat', {
       url: '/chat/:groupID',
       views: {
         'group-chat': {
@@ -120,20 +112,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'RegisterCtrl'
   })
   
-    .state('groupsmenu', {
-    url: '/groupsmenu',
+    .state('menu', {
+    url: '/menu',
     abstract: true,
-    templateUrl: 'templates/groupsmenu.html',
-      controller: "GroupsMenuCtrl"
+    templateUrl: 'templates/menu.html',
+      controller: "MenuCtrl"
   })
   
-  .state('groupmenu', {
-    url: '/groupmenu',
-    abstract: true,
-    templateUrl: 'templates/groupmenu.html',
-      controller: "GroupMenuCtrl"
-  });
-
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 
