@@ -47,17 +47,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
   
-  .state('addgroup', {
-    url: '/addgroup',
-    templateUrl: 'templates/add-group.html',
-    controller: 'AddGroupCtrl'
-  })
+   .state('menu.addgroup', {
+      url: "/addgroup",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/add-group.html",
+          controller: 'AddGroupCtrl'
+        }
+      }
+    })
+  
 
   // setup an abstract state for the tabs directive
-    .state('group', {
+    .state('menu.group', {
     url: '/group',
     abstract: true,
-    templateUrl: 'templates/group.html'
+    views:{
+    'menuContent' :{
+        templateUrl: 'templates/group.html'
+    }
+   }
   })
 
   .state('group.stats', {
@@ -66,15 +75,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       'group-stats': {
         templateUrl: 'templates/group-stats.html',
         controller: 'StatsCtrl'
-      },
-        'menuContent' :{
-          templateUrl: "templates/groups.html",
-          controller: 'GroupsCtrl'
-        }
+      }
     }
   })
 
-  .state('group.chat', {
+  .state('menu.group.chat', {
       url: '/chat/:groupID',
       views: {
         'group-chat': {
@@ -83,7 +88,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-
+  
   .state('addmeeting', {
     url: '/addmeeting',
     templateUrl: 'templates/new-meeting.html',

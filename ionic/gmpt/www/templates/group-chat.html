@@ -1,4 +1,7 @@
 <ion-view view-title="Chat">
+    <ion-nav-buttons side="left">
+            <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="toggleLeft()"></button>
+</ion-nav-buttons>
   <ion-content>
     <ion-list>
       <ion-item class="item-remove-animate item-icon-right item-text-wrap" ng-repeat="message in messages">
