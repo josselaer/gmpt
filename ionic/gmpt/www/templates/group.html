@@ -8,7 +8,7 @@ navigation history that also transitions its views in and out.
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
   <!-- Dashboard Tab -->
-  <ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/group/stats">
+  <ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" ui-sref="menu.group.stats">
     <ion-nav-view name="group-stats"></ion-nav-view>
   </ion-tab>
 
@@ -23,3 +23,8 @@ navigation history that also transitions its views in and out.
   </ion-tab>
 
 </ion-tabs>
+
+
+<!--ui-sref="menu.group.chat({groupID:group.ProjectID})"-->
+
+<!--<ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/group/stats">-->

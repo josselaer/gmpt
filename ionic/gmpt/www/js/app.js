@@ -68,16 +68,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
    }
   })
-
-  .state('group.stats', {
+  
+    .state('menu.group.stats', {
     url: '/stats',
     views: {
-      'group-stats': {
-        templateUrl: 'templates/group-stats.html',
-        controller: 'StatsCtrl'
+        'group-stats': {
+          templateUrl: 'templates/group-stats.html',
+          controller: 'StatsCtrl'
+        }
       }
-    }
-  })
+    })
 
   .state('menu.group.chat', {
       url: '/chat/:groupID',
