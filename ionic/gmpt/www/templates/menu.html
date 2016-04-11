@@ -1,0 +1,41 @@
+<ion-side-menus enable-menu-with-back-views="true">
+
+  <ion-pane ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+  </ion-pane>
+
+  <ion-side-menu side="left">
+    <header class="bar bar-header bar-stable">
+      <h1 class="title">Options</h1>
+    </header>
+    <ion-content class="has-header">
+      <ion-list>
+        <ion-item nav-clear menu-close>
+         <i class="fa fa-check-square-o"></i>
+            Check In
+        </ion-item>
+          
+          <ion-item nav-clear menu-close>
+              <i class="fa fa-user-plus"></i>
+
+            Add Group Member
+        </ion-item>
+          
+        <ion-item nav-clear menu-close href="#/menu/groups">
+        <i class="fa fa-users"></i>
+          Groups 
+        </ion-item>
+          
+<!--          <ion-item ng-show=""-->
+                    
+        <ion-item nav-clear menu-close ng-controller="LogoutCtrl" ng-click="logout()" class="ion-log-out">
+
+            Logout
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

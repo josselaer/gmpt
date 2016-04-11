@@ -36,39 +36,50 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
-
-  .state('groups', {
-    url: '/groups',
-    templateUrl: 'templates/groups.html',
-    controller: 'GroupsCtrl'
-  })
-
-  .state('addgroup', {
-    url: '/addgroup',
-    templateUrl: 'templates/add-group.html',
-    controller: 'AddGroupCtrl'
-  })
+  
+  .state('menu.groups', {
+      url: "/groups",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/groups.html",
+          controller: 'GroupsCtrl'
+        }
+      }
+    })
+  
+   .state('menu.addgroup', {
+      url: "/addgroup",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/add-group.html",
+          controller: 'AddGroupCtrl'
+        }
+      }
+    })
+  
 
   // setup an abstract state for the tabs directive
-    .state('group', {
+    .state('menu.group', {
     url: '/group',
     abstract: true,
-    templateUrl: 'templates/group.html'
+    views:{
+    'menuContent' :{
+        templateUrl: 'templates/group.html'
+    }
+   }
   })
-
-  // Each tab has its own nav history stack:
-
-  .state('group.stats', {
+  
+    .state('menu.group.stats', {
     url: '/stats',
     views: {
-      'group-stats': {
-        templateUrl: 'templates/group-stats.html',
-        controller: 'StatsCtrl'
+        'group-stats': {
+          templateUrl: 'templates/group-stats.html',
+          controller: 'StatsCtrl'
+        }
       }
-    }
-  })
+    })
 
-  .state('group.chat', {
+  .state('menu.group.chat', {
       url: '/chat/:groupID',
       views: {
         'group-chat': {
@@ -77,7 +88,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-
+  
   .state('addmeeting', {
     url: '/addmeeting',
     templateUrl: 'templates/new-meeting.html',
@@ -104,8 +115,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/register',
     templateUrl: 'templates/register.html',
     controller: 'RegisterCtrl'
-  });
-
+  })
+  
+    .state('menu', {
+    url: '/menu',
+    abstract: true,
+    templateUrl: 'templates/menu.html',
+      controller: "MenuCtrl"
+  })
+  
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 
