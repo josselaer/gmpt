@@ -99,9 +99,9 @@ angular.module('starter.services', [])
 
 
 .factory('Chats', function($http, UserInfo, Debug) {
-  // Might use a resource here that returns a JSON array
 
   return {
+
     getGroupMessages: function(groupID) {
 
       return $http({
@@ -114,7 +114,6 @@ angular.module('starter.services', [])
         }
       }).then(function successCallback(response) {
 
-        //console.log(response.data.messages);
         return response.data.messages;
     
       }, function errorCallback(response) {
@@ -131,6 +130,7 @@ angular.module('starter.services', [])
         console.log(response);
         return response;
       });
+      
     },
 
     sendMessage: function(messageData, groupID) {
@@ -154,6 +154,7 @@ angular.module('starter.services', [])
         });
 
     },
+
     getDefaultMessages: function() {
       return chats;
     }
