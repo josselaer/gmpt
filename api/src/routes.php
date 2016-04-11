@@ -21,7 +21,25 @@ $app->get('/meetings',
 		$query2 = $db->prepare("CALL getUserIDsByProject(?)");
 		$query2->bindParam(1,$ProjectID, PDO::PARAM_INT);
 		$result2=$query2->execute();
-		
+		unset($query2);
+
+
+		$meetingID = $data["MeetingID"];
+		$results = [];
+		foreach ($result2->fetchAll() as $data) {
+			$userID = $data["UserID"];
+			$query3 = $db->prepare("CALL GetAttendace(?,?)");
+			$query3->bindParam(1,$meetingID, PDO::PARAM_INT);
+			$query3->bindParam(2,$userID, PDO::PARAM_INT);
+			$result3=$query3->execute();
+			$info = $result3->fetchAll();
+
+			$attendace = array("UserID"=>$userID,"Attended"=>$info["Attended"]);
+			array_push($results,$attendace);
+			unset($query3);
+
+		}
+
 		//echo json_encode($response);
 		return $response;
 	}
@@ -68,6 +86,24 @@ $app->post('/meetings',
 		$result = $query->fetchAll();
 		$MeetingID = (int)$result[0]['MeetingID'];
 		$response = $query->fetchAll();
+		unset($query);
+
+
+		$query2 = $db->prepare("CALL getUserIDsByProject(?)");
+		$query2->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$result2=$query2->execute();
+		unset($query2);
+
+
+		foreach ($result2->fetchAll() as $data) {
+			$userID = $data["UserID"];
+			$query3 = $db->prepare("CALL ChangeAttendace(?,?,?)");
+			$query3->bindParam(1,$meetingID, PDO::PARAM_INT);
+			$query3->bindParam(2,$userID, PDO::PARAM_INT);
+			$query3->bindParam(3,false, PDO::PARAM_STR);
+			unset($query3);
+		}
+
 		echo $response;
 		unset($query);
 		//get user id by email
@@ -79,18 +115,19 @@ $app->post('/meetings',
 )->add($validateSession);
 
 //test
+//put true and false stuff in
 $app->put('/meetings',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$form_data = $request->getParsedBody();	
-		$MeetingID = $form_data['MeetingID'];
+		$ProjectID = $form_data['ProjectID'];
 		$Description = $form_data['MeetingDescription'];
 		$MeetingDate = $form_data['MeetingDate'];
 		$LocationName = $form_data['LocationName'];
 		$StartTime = $form_data['StartTime'];
 		$EndTime = $form_data['EndTime'];
 
-		$query = $db->prepare("CALL EditMeeting(?,?,?,?,?,?)");
+		$query = $db->prepare("CALL CreateMeeting(?,?,?,?,?,?)");
 		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
 		$query->bindParam(2,$Description, PDO::PARAM_STR);
 		$query->bindParam(3,$MeetingDate, PDO::PARAM_STR);
@@ -102,6 +139,24 @@ $app->put('/meetings',
 		$result = $query->fetchAll();
 		$MeetingID = (int)$result[0]['MeetingID'];
 		$response = $query->fetchAll();
+		unset($query);
+
+
+		$query2 = $db->prepare("CALL getUserIDsByProject(?)");
+		$query2->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$result2=$query2->execute();
+		unset($query2);
+
+
+		foreach ($result2->fetchAll() as $data) {
+			$userID = $data["UserID"];
+			$query3 = $db->prepare("CALL ChangeAttendace(?,?,?)");
+			$query3->bindParam(1,$meetingID, PDO::PARAM_INT);
+			$query3->bindParam(2,$userID, PDO::PARAM_INT);
+			$query3->bindParam(3,false, PDO::PARAM_STR);
+			unset($query3);
+		}
+
 		echo $response;
 		unset($query);
 		//get user id by email

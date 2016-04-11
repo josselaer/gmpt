@@ -23,6 +23,17 @@
 		return $results;
 	}
 
+	function getUserIDsMeeting($query) {
+		$results = [];
+		$row = $query->fetchAll();
+		foreach($row as $data) {
+			$UserID = $data['UserID'];
+			$UserIDs = array("UserID"=>$UserID);
+			array_push($results,$UserIDs);
+		}
+		return $results;
+	}
+
 	function getMeetingsByGroup($userID,$groupID) {
 		$db = $this->GMPT;
 		return $query = $db->query("SELECT * FROM Meetings WHERE groupID = '$groupID'");
