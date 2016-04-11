@@ -45,13 +45,13 @@ BEGIN
     SELECT "True" AS status;
 END //
 
-CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `UpdateUser`(IN UserIDVal INT, UserNameVal VARCHAR(25), PasswordHashVal VARCHAR(255), FirstNameVal VARCHAR(25), LastNameVal VARCHAR(25), EmailVal VARCHAR(25))
+CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `UpdateUser`(IN UserNameVal VARCHAR(25), PasswordHashVal VARCHAR(255), FirstNameVal VARCHAR(25), LastNameVal VARCHAR(25),SaltVal VARCHAR(10), EmailVal VARCHAR(25), Token VARCHAR(25))
 BEGIN
 	UPDATE User
-    SET UserName = UserNameVal, PasswordHash = PasswordHashVal, FirstName = FirstNameVal, LastName =  LastNameVal, Email =  EmailVal
-    WHERE UserID = UserIDVal;
+    SET UserName = UserNameVal, PasswordHash = PasswordHashVal, FirstName = FirstNameVal, LastName =  LastNameVal, Salt =  SaltVal
+    WHERE Username = Token;
     SELECT "True" AS status;
-END //
+END
 
 CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `CreateSession`(IN UserIDVal VARCHAR(25), INOUT ReturnToken VARCHAR(36))
     DETERMINISTIC
