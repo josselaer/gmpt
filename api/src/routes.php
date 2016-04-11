@@ -16,7 +16,12 @@ $app->get('/meetings',
 		$result=$query->execute();
 		$response->write(json_encode(getMeetings($query)));
 		//$response = getProjects($query);
-		unset($query);	
+		unset($query);
+
+		$query2 = $db->prepare("CALL getUserIDsByProject(?)");
+		$query2->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$result2=$query2->execute();
+		
 		//echo json_encode($response);
 		return $response;
 	}
