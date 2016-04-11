@@ -78,7 +78,7 @@ angular.module('starter.controllers', [])
       }, function(response) {
         console.log("Error");
       });
-
+      $scope.message.text = "";
     }, function() {
       console.log("Error in sending message");
     });
@@ -122,30 +122,34 @@ angular.module('starter.controllers', [])
 .controller('MeetingsCtrl', function($scope, $state, $http, Meetings, Debug) {
 
 
-  $http({
+  $scope.$on("$ionicView.enter", function() {
 
-    method: "GET",
-    url: Debug.getURL("/meetings"),
-    responseType: "json"
-  }).then(function successCallback(response) {
+    $http({
 
-    console.log(Debug.getURL("/meetings"));
-    console.log(response);
-    meetings = response.data;
-    console.log(meetings);
+      method: "GET",
+      url: Debug.getURL("/meetings"),
+      responseType: "json"
+    }).then(function successCallback(response) {
 
-    Meetings.set(meetings);
-    $scope.meetings = meetings;
+      console.log(Debug.getURL("/meetings"));
+      console.log(response);
+      meetings = response.data;
+      console.log(meetings);
+
+      Meetings.set(meetings);
+      $scope.meetings = meetings;
+      
+    }, function errorCallback(response) {
+
+      console.log(Debug.getURL("/meetings"));
+      console.log(response);
+
+      alert("Failed to load groups, please try again.");
+
+    });
     
-  }, function errorCallback(response) {
-
-    console.log(Debug.getURL("/meetings"));
-    console.log(response);
-
-    alert("Failed to load groups, please try again.");
-
-
   });
+  
 
   $scope.meetings = Meetings.all();
   //console.log("current index outside function: ", Meetings.getCurr());
@@ -379,6 +383,7 @@ $scope.newMeeting = function()
     console.log("current input: " , this.email);
     this.email = selected_email;
     document.getElementById('email_input').value = selected_email.suggestion;
+    $scope.email = selected_email.suggestion;
   }
 })
 

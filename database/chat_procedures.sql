@@ -10,3 +10,17 @@ BEGIN
 	SET ReturnValues =  (SELECT * FROM Message WHERE ProjectID = ProjectIDVal);
 
 END //
+
+CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `GetUnreadMessages`(IN UserIDVal INT, MessageRoomIDVal INT)
+BEGIN
+	SELECT count(*) FROM MessageRoom NATURAL JOIN MessageReceipt NATURAL JOIN Message
+    WHERE UserID=UserIDVal AND MessageReceipt.LastRead<Message.SendTime;
+END
+
+CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `SetChatLastRead`(IN UserIDVal INT, MessageRoomIDVal INT)
+BEGIN
+	INSERT INTO MessageReceipt (UserID, MessageRoomID,LastRead)
+    VALUES (UserIDVal, MessageRoomIDVal, NOW()) 
+    ON DUPLICATE KEY UPDATE LastRead=NOW();
+	SELECT "True" AS status;
+END

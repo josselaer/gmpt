@@ -19,7 +19,7 @@ CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `AddUserToProject`(IN ProjectIDV
 BEGIN
 	DECLARE RoleIDVal INT;
 	SET RoleIDVal = (SELECT RoleID FROM Role WHERE RoleName=RoleVal);
-    INSERT INTO UserProject (RoleID, UserID, ProjectID, StateID) VALUES (RoleIDVal, UserIDVal, ProjectIDVal, 1);
+    INSERT INTO UserProject (RoleID, UserID, ProjectID, StateID) VALUES (RoleIDVal, UserIDVal, ProjectIDVal, 3);
     SELECT TRUE;
 END
 
