@@ -101,7 +101,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'MeetingsCtrl'
 
   })
-  .state('group.meetings', {
+//  .state('group.meetings', {
+//    url: '/meetings',
+//    views: {
+//      'group-meetings': {
+//        templateUrl: 'templates/group-meetings.html',
+//        controller: 'MeetingsCtrl'
+//      }
+//    }
+//  })
+  
+   .state('menu.group.meetings', {
     url: '/meetings',
     views: {
       'group-meetings': {
@@ -110,6 +120,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
   })
+  
+  
   
      .state('register', {
     url: '/register',
