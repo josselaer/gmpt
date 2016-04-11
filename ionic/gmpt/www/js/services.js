@@ -1,5 +1,69 @@
 angular.module('starter.services', [])
 
+.factory("Notifications", function(UserInfo, Debug) {
+
+  var notifications = [{
+    'groupID': 0, 
+    'number': 5
+  }, {
+    'groupID': 1, 
+    'number': 9
+  }, {
+    'groupID': 2, 
+    'number': 5
+  }];
+
+  return {
+
+    get: function() {
+      return notifications;
+    },
+    
+    set: function(not) {
+      notifications = not;
+    },
+
+    getNumberOfNotifications: function() {
+      return notifications.length;
+    },
+
+    getNumberOfGroupNotifications: function(gID) {
+
+      for (var i = 0; i < notifications.length; i++) {
+        if (notifications[i].groupID == gID) {
+          return notifications[i];
+        }
+      }
+
+      console.log("Could find group in getNumberOfGroupNotifications(): " + gID);
+      return null;
+    },
+
+    getNotifications: function() {
+
+      $http({
+        method: "GET",
+        url: Debug.getURL("/notifications"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': UserInfo.getAuthToken()
+        }
+      }).then(function successCallback(response) {
+
+        notifications = response.data.notifications;
+
+      }, function failureCallback(response) {
+
+        console.log("Failed to get notifications.");
+        console.log(response);
+
+      });
+    }
+
+  };
+
+})
+
 .factory("UserInfo", function() {
 
   user = {
@@ -43,7 +107,7 @@ angular.module('starter.services', [])
       return $http({
 
         method: "GET",
-        url: Debug.getURL("/messages/" + groupID),
+        url: Debug.getURL("/chat/" + groupID),
         headers: {
           "Content-Type": "application/json",
           "Authorization": UserInfo.getAuthToken()
@@ -55,7 +119,7 @@ angular.module('starter.services', [])
     
       }, function errorCallback(response) {
 
-        console.log(Debug.getURL("/messages/" + groupID));
+        console.log(Debug.getURL("/chat/" + groupID));
         console.log(response);
 
         alert("Failed to get chat messages, please try again. " + JSON.stringify(response));
@@ -73,7 +137,7 @@ angular.module('starter.services', [])
 
       return $http({
           method: "POST",
-          url: Debug.getURL("/messages/" + groupID),
+          url: Debug.getURL("/chat/" + groupID),
           data: messageData,
           headers: {
             "Content-Type": "application/json",
@@ -164,6 +228,8 @@ angular.module('starter.services', [])
     }
   };
 })
+
+
 
 .factory("Debug", function() {
 

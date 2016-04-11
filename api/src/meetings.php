@@ -1,7 +1,26 @@
 <?php
-	function getMeetings($userID) {
-		$db = $this->GMPT;
-		return $query = $db->query('select * from Meetings');
+	function getMeetings($query) {
+		$results = [];
+		$row = $query->fetchAll();
+		foreach($row as $data) {
+			$MeetingID = $data['MeetingID'];
+			$GroupName = $data['ProjectName'];
+			$MeetingDescription = $data['MeetingDescription'];
+			$LocationName = $data['LocationName'];
+			$MeetingDate = $data['MeetingDate'];
+			$StartTime = $data['StartTime'];
+			$EndTime = $data['EndTime'];
+
+			$meeting = array("MeetingID"=>$MeetingID,"GroupName"=>$ProjectName, "MeetingDescription"=>$MeetingDescription, "MeetingDate"=>$MeetingDate, "StartTime"=>$StartTime, "EndTime"=>$EndTime);
+			array_push($results,$meeting);
+		}
+		$resultSize =  count($results);
+		$results['meetings'] = $results;
+		for($i = 0; $i < $resultSize; $i++) {
+			$temp = (string)$i;
+			unset($results[$temp]);
+		}
+		return $results;
 	}
 
 	function getMeetingsByGroup($userID,$groupID) {

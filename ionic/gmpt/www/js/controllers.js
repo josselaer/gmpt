@@ -1,5 +1,6 @@
 angular.module('starter.controllers', [])
 
+
 .controller('StatsCtrl', function ($scope) {})
 
 
@@ -9,11 +10,14 @@ angular.module('starter.controllers', [])
   $scope.chatsctrl = {};
   $scope.messages = [];
 
+  $scope.chatsctrl.anonymous = false;
+
   $interval(function getMessages() {
     
     Chats.getGroupMessages($stateParams.groupID).then(function success(response) {
+
         $animate.enabled(false);
-        $scope.messages=[];
+        $scope.messages = [];
         $scope.messages = response;
 
         $animate.enabled(true);
@@ -24,19 +28,11 @@ angular.module('starter.controllers', [])
   }, 3000);
 
   $scope.$on("$ionicView.enter", function() {
-      $http({
 
-      method: "GET",
-      url: Debug.getURL("/messages/" + $stateParams.groupID),
-      responseType: "json",
-      headers: {
-          "Content-Type": "application/json",
-          "Authorization": UserInfo.getAuthToken()
-      }
-    }).then(function successCallback(response) {
+      Chats.getGroupMessages($stateParams.groupID).then(function successCallback(response) {
 
       console.log(response.data);
-      $scope.messages = response.data.messages;
+      $scope.messages = response;
       
     }, function errorCallback(response) {
 
@@ -48,6 +44,15 @@ angular.module('starter.controllers', [])
     });
   });
 
+  $scope.chatsctrl.toggleAnonymous = function() {
+    if ($scope.chatsctrl.anonymous == true) {
+      $scope.chatsctrl.anonymous = false;
+    }
+    else {
+      $scope.chatsctrl.anonymous = true;
+    }
+  }
+
   $scope.chatsctrl.remove = function (chat) {
     Chats.remove(chat);
   };
@@ -57,11 +62,13 @@ angular.module('starter.controllers', [])
   };
 
   $scope.chatsctrl.send = function() {
+
     console.log("Sending: " + $scope.message.text);
 
     var m = { 
       //sender: UserInfo.get().user.userName,
       text: $scope.message.text,
+      anonymous: $scope.chatsctrl.anonymous
     };
 
     Chats.sendMessage(JSON.stringify(m), $stateParams.groupID).then( function() {
@@ -75,9 +82,6 @@ angular.module('starter.controllers', [])
     }, function() {
       console.log("Error in sending message");
     });
-
-
-    
   };
 })
 
@@ -245,7 +249,7 @@ $scope.newMeeting = function()
 
         console.log("Get project auth: " + UserInfo.getAuthToken());
         console.log(Debug.getURL("/projects"));
-        console.log(response);
+        console.log(response.data);
 
         Groups.set(response.data.projects);
         $scope.groups = response.data.projects;
@@ -268,7 +272,7 @@ $scope.newMeeting = function()
   $scope.groups = Groups.all();
 })
 
-.controller('AddGroupCtrl', function ($scope, $state, $http, UserInfo, Debug) {
+.controller('AddGroupCtrl', function ($scope, $ionicConfig, $state, $http, UserInfo, Debug) {
 
   $scope.group = {};
 
@@ -277,14 +281,14 @@ $scope.newMeeting = function()
   $scope.members = [];
 
   $scope.addMember = function () {
-    //console.log("Clicked");
-    console.log("username: ", this._username, "email: ", this._email);
-    if (this._username != ' ' && this._email != ' ') {
+    console.log("email: ", this.email);
+    if (this.email != ' ') {
       $scope.members.push({
-        'email': this._email
+        'email': this.email,
+        'isProfessor': this.isProfessor
       });
-      this._username = ' ';
-      this._email = ' ';
+      this.email = ' ';
+      this.isProfessor = false;
     }
   }
 
@@ -306,7 +310,7 @@ $scope.newMeeting = function()
       users: $scope.members
     }
 
-    //console.log("Adding group: " + JSON.stringify(group));
+    console.log("Adding group: " + JSON.stringify(group));
 
     $http({
       method: "POST",
@@ -330,6 +334,52 @@ $scope.newMeeting = function()
       console.log(response);
       $state.go("groups");
     });
+  }
+  $scope.autoCompleteUpdate = function(input)
+  {
+    console.log(this.email);
+    var input_data = 
+    {
+      term: input
+    }
+    var success = false;
+    $scope.input_suggestions = [];
+    $http(
+    {
+      method: "POST",
+      url: Debug.getURL("/autocomplete"),
+      data: input_data,
+      headers: 
+      {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) 
+    {
+      console.log(response);
+      success = true;
+      return response;
+    }, function errorCallback(response) 
+    {
+      console.log("auto complete 'fail': ");
+      console.log(response);
+      alert("Failed to post autocomplete");
+      return null;
+    }).then(function redirect(response) 
+    {
+      console.log("redirecting...");
+      console.log(response);
+      $scope.input_suggestions = response.data.suggestions;
+      console.log("Input suggestions: " , $scope.input_suggestions);
+    });
+  }
+
+  $scope.selectEmail = function(selected_email)
+  {
+    console.log("current input: " , this.email);
+    this.email = selected_email;
+    document.getElementById('email_input').value = selected_email.suggestion;
+    $scope.email = selected_email.suggestion;
   }
 })
 

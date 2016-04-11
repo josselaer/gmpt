@@ -1,5 +1,5 @@
 <?php 
-$app->get('/messages/{project_id}', function($request,$response,$args) {
+$app->get('/chat/{project_id}', function($request,$response,$args) {
 		$userID = (int)$request->getAttribute('UserID');
 		$projectID = $request->getAttribute('project_id');
 		$db=$this->GMPT;
@@ -10,19 +10,55 @@ $app->get('/messages/{project_id}', function($request,$response,$args) {
 		if ($result) {
 			$messageRoomID = (int)$stmt->fetchAll()[0]["MessageRoomID"];
 			unset($stmt);
-			$stmt1 = $db->prepare("CALL GetMessages(?)");
+			
+			$returnArray = array();
+			
+			//read receipt functionality 
+			$setChatLastRead = $db->prepare("CALL SetChatLastRead(?,?)");
+			$setChatLastRead->execute(array($userID,$messageRoomID));
+			unset($setChatLastRead);
+			
+			
+			$stmt1 = $db->prepare("CALL GetMessages(?,?,?)");
 			$stmt1->bindParam(1, $messageRoomID, PDO::PARAM_INT);
+			$stmt1->bindParam(2, $userID, PDO::PARAM_INT);
+			$stmt1->bindParam(3, $projectID, PDO::PARAM_INT);
 			$resultOne = $stmt1->execute();
 			if ($resultOne) {
 				$messages = $stmt1->fetchAll();
-				$returnArray = array();
 				$returnArray["messages"] = $messages;
-				$response= $response->getBody()->write(json_encode($returnArray));
 				unset($stmt1);
 			}
 			else {
 				$response = $response->withStatus(400);
 			}
+			
+			$readArray=array();
+			
+			$getUserIDsByProjectID= $db->prepare("CALL GetUserIDsByProjectID(?)");
+			$getUserIDsByProjectID->execute(array($projectID));
+			$row= $getUserIDsByProjectID->fetchAll();
+			unset($getUserIDsByProjectID);
+			foreach($row as $data){
+				$readArray1=array();
+				$readerName=$data['FirstName'];
+				$readerID= $data['UserID'];
+				$numberOfUnread= $db->prepare("CALL GetUnreadMessages(?,?)");
+				$numberOfUnread->execute(array($readerID,$messageRoomID));
+				$unreadResult=$numberOfUnread->fetchAll();
+				$numberOfUnreadMessages=(int)$unreadResult[0]['count(*)'];
+				
+				$readArray1['firstName']=$readerName;
+				$readArray1['unreadMessageCount']=$numberOfUnreadMessages;
+				array_push($readArray,$readArray1);
+				unset($numberOfUnread);
+			}
+			
+			$returnArray['readReceipts']=$readArray;
+			
+			
+			
+			$response->getBody()->write(json_encode($returnArray));
 		}
 		else {
 			$response = $response->withStatus(400);
@@ -32,7 +68,7 @@ $app->get('/messages/{project_id}', function($request,$response,$args) {
 
 
 //test
-$app->post('/messages/{project_id}', function($request,$response,$args) {
+$app->post('/chat/{project_id}', function($request,$response,$args) {
 		$userID = (int)$request->getAttribute('UserID');
 		$projectID = $request->getAttribute('project_id');
 		$message_data = $request->getParsedBody();
