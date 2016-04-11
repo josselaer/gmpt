@@ -132,7 +132,6 @@ angular.module('starter.controllers', [])
     }).then(function successCallback(response) {
 
       console.log(Debug.getURL("/meetings"));
-      console.log(response);
       meetings = response.data;
       console.log(meetings);
 
@@ -147,7 +146,6 @@ angular.module('starter.controllers', [])
       alert("Failed to load groups, please try again.");
 
     });
-    
   });
   
 
@@ -195,6 +193,7 @@ angular.module('starter.controllers', [])
           startTime = this.startTime;
           meetingDescription = this.meetingDescription;
         }
+        /*
         $http({
           method:"POST",
           url: Debug.getURL("/meetings"),
@@ -204,6 +203,30 @@ angular.module('starter.controllers', [])
         }, function errorCallback(response) {
           alert.log("Failed to add group");
         });
+        */
+
+        $http({
+      method: "POST",
+      url: Debug.getURL("/meetings"),
+      data: group,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
+      console.log("Add meeting success");
+      console.log(response);
+      return response;
+    }, function errorCallback(response) {
+      console.log("Add meeting 'fail': ");
+      console.log(response);
+      alert("Failed to add group");
+      return null;
+    }).then(function redirect(response) {
+      console.log("redirecting...");
+      console.log(response);
+      $state.go("groups");
+    });
       }
       this.date = "";
       this.startTime = "";
