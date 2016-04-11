@@ -6,68 +6,18 @@ include 'user.php';
 include 'chat.php';
 
 //test
-/*$app->get('/meetings',
-	function($request,$response,$args) {
-		$db=$this->GMPT;
-		//$ProjectID = (int)$request->getAttribute('ProjectID');
-		$ProjectID = 58;
-		$query = $db->prepare("CALL GetMeetings(?)");
-		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
-		$query->execute();
-		//$response->write(json_encode(getMeetings($query)));
-		$response = getMeetings($query);
-		$result = $response["meetings"];
-		unset($query);
-
-		$query2 = $db->prepare("CALL getUserIDsByProject(?)");
-		$query2->bindParam(1,$ProjectID, PDO::PARAM_INT);
-		$query2->execute();
-		$result2 = $query2->fetchAll();
-		unset($query2);
-
-
-		foreach ($result as $data1) {
-			//echo json_encode($data1);
-			$meetingID = (int)$data1["MeetingID"];
-			//echo json_encode($meetingID);
-		}
-		
-		//$meetingID = 58;
-		$results = [];
-		foreach ($result2 as $data) {
-			echo $meetingID;
-			$userID = (int)$data["UserID"];
-			echo $userID;
-			$query3 = $db->prepare("CALL GetAttendace(?,?)");
-			$query3->bindParam(1,$meetingID, PDO::PARAM_INT);
-			$query3->bindParam(2,$userID, PDO::PARAM_INT);
-			$query3->execute();
-			$result3 = $query3->fetchAll();
-			echo json_encode($result3);
-			$attendace = array("UserID"=>$userID,"Attended"=>$info["Attended"]);
-			array_push($results,$attendace);
-			unset($query3);
-
-		}
-
-		//echo json_encode($response);
-		return $response;
-	}
-)->add($validateSession);*/
-
-//test
 $app->get('/meetings',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$ProjectID = (int)$request->getAttribute('ProjectID');
-		
+		//$ProjectID = 58;
 		$query = $db->prepare("CALL GetMeetings(?)");
 		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
 		$result=$query->execute();
 		//$response->write(json_encode(getMeetings($query)));
 		$response = getMeetings($query);
 		unset($query);	
-		//echo json_encode($response);
+		echo json_encode($response);
 		return $response;
 	}
 )->add($validateSession);
@@ -111,7 +61,7 @@ $app->post('/meetings',
 
 		$query->execute();
 		$result = $query->fetchAll();
-		$MeetingID = (int)$result[0]['MeetingID'];
+		//$MeetingID = (int)$result[0]['MeetingID'];
 		$response = $query->fetchAll();
 		unset($query);
 		
@@ -141,7 +91,7 @@ $app->put('/meetings',
 
 		$query->execute();
 		$result = $query->fetchAll();
-		$MeetingID = (int)$result[0]['MeetingID'];
+		//$MeetingID = (int)$result[0]['MeetingID'];
 		$response = $query->fetchAll();
 		unset($query);
 		

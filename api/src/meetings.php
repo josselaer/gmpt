@@ -1,26 +1,48 @@
 <?php
 	function getMeetings($query) {
 		$results = [];
+		$meetingIDs = [];
+		$Attendances = [];
 		$row = $query->fetchAll();
 		foreach($row as $data) {
-			$MeetingID = $data['MeetingID'];
-			$GroupName = $data['ProjectName'];
-			$MeetingDescription = $data['MeetingDescription'];
-			$LocationName = $data['LocationName'];
-			$MeetingDate = $data['MeetingDate'];
-			$StartTime = $data['StartTime'];
-			$EndTime = $data['EndTime'];
+			$meetingSize =  count($meetingIDs);
+			$MeetingID = (int)$data['MeetingID'];
+			if($meetingSize > 0) {
+				if($meetingIDs[$meetingSize-1] != $MeetingID) {
+					array_push($meetingIDs, $MeetingID);
+				}
+			}
+			else {
+				array_push($meetingIDs, $MeetingID);
+			}
 
-			$meeting = array("MeetingID"=>$MeetingID,"GroupName"=>$GroupName, "MeetingDescription"=>$MeetingDescription, "MeetingDate"=>$MeetingDate, "StartTime"=>$StartTime, "EndTime"=>$EndTime);
-			array_push($results,$meeting);
 		}
-		$resultSize =  count($results);
-		$results['meetings'] = $results;
-		for($i = 0; $i < $resultSize; $i++) {
-			$temp = (string)$i;
-			unset($results[$temp]);
+		$userNum = count($row) / count($meetingIDs);
+		$userCounter = 0;
+
+		foreach($row as $data) {
+			$UserID = (int)$data['UserID'];
+			$CheckInTime = $data['CheckInTime'];
+			$Attendance = array("UserID"=>$UserID,"CheckInTime"=>$CheckInTime);
+			array_push($Attendances, $Attendance);
+			$userCounter++;
+			if($userCounter == $userNum) {
+				$MeetingID = (int)$data['MeetingID'];
+				$GroupName = $data['ProjectName'];
+				$ProjectID = (int)$data['ProjectID'];
+				$MeetingDescription = $data['MeetingDescription'];
+				$MeetingDate = $data['MeetingDate'];
+				$LocationName = $data['LocationName'];
+				$StartTime = $data['StartTime'];
+				$EndTime = $data['EndTime'];
+				$meeting = array("MeetingID"=>$MeetingID,"GroupName"=>$GroupName, "MeetingDescription"=>$MeetingDescription, "MeetingDate"=>$MeetingDate, "StartTime"=>$StartTime, "EndTime"=>$EndTime, "Attendances"=>$Attendances);
+				array_push($results,$meeting);
+				$Attendances = [];
+				$userCounter = 0;
+			}
 		}
-		//echo json_encode($results);
+		
+		//echo json_encode($results[1]);
 		return $results;
 	}
 
