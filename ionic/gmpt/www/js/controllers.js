@@ -307,7 +307,7 @@ $scope.newMeeting = function()
   $scope.addGroup = function () {
 
     //console.log($scope.groupName);
-
+    console.log("Group Description: " + $scope.group.groupDesc);
     var group = {
       groupName: $scope.group.groupName,
       projDescription: $scope.group.groupDesc,
