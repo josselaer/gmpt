@@ -180,9 +180,9 @@ angular.module('starter.services', [])
 
 .factory("Meetings", function($http) {
 
-  meetings = [{
+  meetings = [/*{
     date: "12/3/12",
-    time_: "6:30PM",
+    startTime: "6:30PM",
     topic: "Mock Ups",
     meetingDescription: "lorum ipsum random description"
   }, {
@@ -190,7 +190,7 @@ angular.module('starter.services', [])
     time_: "8:30PM",
     topic: "Front End Design",
     meetingDescription: "lorum ipsum random description"
-  }];
+  }*/];
 
   editing = false;
 
@@ -230,7 +230,20 @@ angular.module('starter.services', [])
   };
 })
 
+.factory("GroupID", function($http) {
 
+  ID = 0;
+
+  return {
+    set: function(g) {
+      ID = g;
+    },
+    get: function()
+    {
+      return ID;
+    }
+  };
+})
 
 .factory("Debug", function() {
 

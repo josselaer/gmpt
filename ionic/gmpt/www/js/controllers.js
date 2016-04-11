@@ -5,8 +5,9 @@ angular.module('starter.controllers', [])
 
 
 .controller('ChatsCtrl', function ($scope, $http, $stateParams, $interval, $animate, 
-                                    UserInfo, Chats, Debug) {
+                                    UserInfo, Chats, GroupID, Debug) {
 
+  GroupID.set($stateParams.groupID);
   $scope.chatsctrl = {};
   $scope.messages = [];
 
@@ -72,7 +73,6 @@ angular.module('starter.controllers', [])
     };
 
     Chats.sendMessage(JSON.stringify(m), $stateParams.groupID).then( function() {
-
       Chats.getGroupMessages($stateParams.groupID).then( function(response) {
         $scope.messages = response;
       }, function(response) {
@@ -119,7 +119,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('MeetingsCtrl', function($scope, $state, $http, Meetings, Debug) {
+.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, Meetings, GroupID, Debug) {
 
 
   $scope.$on("$ionicView.enter", function() {
@@ -127,11 +127,11 @@ angular.module('starter.controllers', [])
     $http({
 
       method: "GET",
-      url: Debug.getURL("/meetings"),
+      url: Debug.getURL("/meetings/" + GroupID.get()),
       responseType: "json"
     }).then(function successCallback(response) {
 
-      console.log(Debug.getURL("/meetings"));
+      console.log(Debug.getURL("/meetings/" + GroupID.get()));
       meetings = response.data;
       console.log(meetings);
 
@@ -151,7 +151,10 @@ angular.module('starter.controllers', [])
 
   $scope.meetings = Meetings.all();
   //console.log("current index outside function: ", Meetings.getCurr());
-  $scope.currentMeeting = Meetings.get(Meetings.getCurr());
+  if($scope.meetings[0] != null)
+    $scope.currentMeeting = Meetings.get(Meetings.getCurr());
+  else
+
 
   $scope.meetingDetails = function(index)
   {
@@ -181,18 +184,24 @@ angular.module('starter.controllers', [])
       }
       else if(Meetings.getEdit() == true)
       {
+        
         $scope.meetings[Meetings.getCurr()].topic = this.topic;
         $scope.meetings[Meetings.getCurr()].date = this.date;
         $scope.meetings[Meetings.getCurr()].startTime = this.startTime;
         $scope.meetings[Meetings.getCurr()].meetingDescription = this.meetingDescription;
         Meetings.set($scope.meetings);
-        var meeting
+      }
+      var meeting
         {
-          topic = this.topic;
-          date = this.date;
-          startTime = this.startTime;
-          meetingDescription = this.meetingDescription;
+          ProjectID = GroupID.get();
+          //topic = this.topic;
+          MeetingDate = this.date;
+          StartTime = this.startTime;
+          MeetingDescription = this.meetingDescription;
+          LocationName = "Innovation Gym";
+          EndTime = "2:30 PM";
         }
+        
         /*
         $http({
           method:"POST",
@@ -208,7 +217,7 @@ angular.module('starter.controllers', [])
         $http({
       method: "POST",
       url: Debug.getURL("/meetings"),
-      data: group,
+      data: meeting,
       headers: {
         "Content-Type": "application/json",
         "Authorization": UserInfo.getAuthToken()
@@ -220,12 +229,12 @@ angular.module('starter.controllers', [])
     }, function errorCallback(response) {
       console.log("Add meeting 'fail': ");
       console.log(response);
-      alert("Failed to add group");
+      alert("Failed to add meeting");
       return null;
     }).then(function redirect(response) {
       console.log("redirecting...");
       console.log(response);
-      $state.go("groups");
+      //$state.go("groups");
     });
       }
       this.date = "";
@@ -233,9 +242,6 @@ angular.module('starter.controllers', [])
       this.topic = "";
       this.meetingDescription = "";
 
-}
-
-console.log($scope.meetings);
 }
 
 $scope.editMeeting = function(index)
@@ -248,8 +254,8 @@ $scope.editMeeting = function(index)
 $scope.newMeeting = function()
 {
   Meetings.setEdit(false);
-  Meetings.setCurr(999);
-  $scope.currentMeeting = Meetings.get(Meetings.getCurr());
+  Meetings.setCurr(0);
+  //$scope.currentMeeting = Meetings.get(Meetings.getCurr());
 }
 })
 
