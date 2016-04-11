@@ -56,6 +56,23 @@ include 'chat.php';
 )->add($validateSession);*/
 
 //test
+$app->get('/meetings',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$ProjectID = (int)$request->getAttribute('ProjectID');
+		
+		$query = $db->prepare("CALL GetMeetings(?)");
+		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$result=$query->execute();
+		//$response->write(json_encode(getMeetings($query)));
+		$response = getMeetings($query);
+		unset($query);	
+		//echo json_encode($response);
+		return $response;
+	}
+)->add($validateSession);
+
+//test
 $app->get('/meetingbyid',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
