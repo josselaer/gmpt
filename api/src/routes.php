@@ -140,6 +140,16 @@ $app->post('/projects',
 		$ProjID = (int)$q1result[0]['ProjectID'];
 		$response = $query->fetchAll();
 		unset($query);
+		
+		//getSenderEmail by ID
+		$SenderID = (int)$request->getAttribute('UserID');
+		$getSenderEmailQuery=$db->prepare("CALL GetEmailByUserID(?)");
+		$getSenderEmailQuery->execute(array($SenderID));
+		$SenderEmailResult= $getSenderEmailQuery->fetchAll();
+		$SenderEmail=$SenderEmailResult[0]['Email'];
+		
+		unset($getSenderEmailQuery);
+		
 		//get user id by email
 		$users = $form_data['users'];
 		$userIDs = [];
@@ -157,27 +167,32 @@ $app->post('/projects',
 			$query2->bindParam(1,$email,PDO::PARAM_STR);
 			$query2->execute();
 			$q2result = $query2->fetchAll();
-			$userID = $q2result[0]["UserID"];
-			unset($query2);
+			$userID=0;
+			if($query2->fetchColumn()==0){
+				unset($query2);
+				$userID=sendEmailInvite($SenderEmail,$email,$db);
+			}
+			else{
+				$userID = $q2result[0]["UserID"];
+				unset($query2);
+			}
 			array_push($userIDs,(int)$userID);
-			array_push($userRoles,$role);
+			array_push($userRoles,$role);	
 		}
 		//add user to project
-		$counter = 0;
+		$counter = 0;		
 		foreach($userIDs as $uID) {
 			$query3 = $db->prepare("CALL AddUserToProject(?,?,?)");
 			$query3->bindParam(1,$ProjID, PDO::PARAM_INT);
 			$query3->bindParam(2,$uID, PDO::PARAM_INT);
 			$query3->bindParam(3,$userRoles[$counter], PDO::PARAM_STR);
 			$query3->execute();
-			echo "Query 3";
-			echo json_encode($query3->fetchAll());
 			unset($query3);
 			$counter = $counter + 1;
 		}
 		
 		//$response = array("worked"=>true);
-		return json_encode($response);
+		return $response;
 
 	}
 )->add($validateSession);
@@ -209,16 +224,36 @@ $app->group('/project/{id}', function() {
 //test stuff
 $app->get('/goodbye', 
 	function($request,$response,$args) {
-	    $response->getBody()->write("Time to go. Goodbye!");
-		$userID = $request->getAttribute('UserID');
-			
-	    $response->getBody()->write($userID);	
-		
-		return $response;
+		$mail = new PHPMailer;
+
+		$mail->SMTPDebug = 1;                               // Enable verbose debug output
+
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = 'ssl://smtp.gmail.com:465'; // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = 'gmptDBGUI@gmail.com';                 // SMTP username
+		$mail->Password = 'gmptMaster1';                           // SMTP password
+		//$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+		//$mail->Port = 465;                                    // TCP port to connect to
+
+		$mail->setFrom('gmptDBGUI@gmail.com');
+		$mail->addAddress('spopov@smu.edu');     
+		$mail->addReplyTo('info@example.com', 'Information');
+
+		$mail->isHTML(true);                                  // Set email format to HTML
+
+		$mail->Subject = 'PLEASE';
+		$mail->Body    = 'PLEASE WORK';
+
+		if(!$mail->send()) {
+			echo 'Message could not be sent.';
+			echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+			echo 'Message has been sent';
+		}
+	
 	}
-	
-	
-)->add($validateSession);
+);
 
 
 //validate if user is correct
@@ -314,7 +349,7 @@ $app->get('/logout', function ($request, $response, $args) {
 	return $response;
 })->add($validateSession);
 
-//Edit a user: PUT @ /user endpoint
+//Edit a user WHEN HE registers: PUT @ /user endpoint
 $app->put('/user', 
 	function($request, $response,$args){
 		$form_data = $request->getParsedBody();
@@ -323,19 +358,21 @@ $app->put('/user',
 		$fName  = $form_data['firstName'];
 		$lName = $form_data['lastName'];
 		$email = $form_data['email'];
-		$db = $this->GMPT;		
+		$registrationToken= $form_data['token'];
+		$db = $this->GMPT;
 		$salt = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
 		$passwordHash = hash('sha256',$password.$salt);
 		
 		//$returnArray = array("Volvo", "BMW", "Toyota");
 		//prepare query
-		$registerQuery=$db->prepare("CALL UpdateUser (?,?,?,?,?,?)");
+		$registerQuery=$db->prepare("CALL UpdateUser (?,?,?,?,?,?,?)");
 		$registerQuery->bindValue(1, $username, PDO::PARAM_STR);
 		$registerQuery->bindValue(2, $passwordHash, PDO::PARAM_STR);
 		$registerQuery->bindValue(3, $fName, PDO::PARAM_STR);
 		$registerQuery->bindValue(4, $lName, PDO::PARAM_STR);
 		$registerQuery->bindValue(5, $salt, PDO::PARAM_STR);
 		$registerQuery->bindValue(6, $email, PDO::PARAM_STR);
+		$registerQuery->bindValue(7, $registrationToken, PDO::PARAM_STR);
 		
 		$registerQuery->execute();
 
@@ -345,7 +382,7 @@ $app->put('/user',
 		return $response;
 		
 	}
-)->add($validateSession);
+);
 
 $app->post('/autocomplete', 
 	function($request,$response, $args){
