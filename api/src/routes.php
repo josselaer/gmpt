@@ -6,34 +6,44 @@ include 'user.php';
 include 'chat.php';
 
 //test
-$app->get('/meetings',
+/*$app->get('/meetings',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
-		$ProjectID = (int)$request->getAttribute('ProjectID');
-		
+		//$ProjectID = (int)$request->getAttribute('ProjectID');
+		$ProjectID = 58;
 		$query = $db->prepare("CALL GetMeetings(?)");
 		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
-		$result=$query->execute();
-		$response->write(json_encode(getMeetings($query)));
-		//$response = getProjects($query);
+		$query->execute();
+		//$response->write(json_encode(getMeetings($query)));
+		$response = getMeetings($query);
+		$result = $response["meetings"];
 		unset($query);
 
 		$query2 = $db->prepare("CALL getUserIDsByProject(?)");
 		$query2->bindParam(1,$ProjectID, PDO::PARAM_INT);
-		$result2=$query2->execute();
+		$query2->execute();
+		$result2 = $query2->fetchAll();
 		unset($query2);
 
 
-		$meetingID = $data["MeetingID"];
+		foreach ($result as $data1) {
+			//echo json_encode($data1);
+			$meetingID = (int)$data1["MeetingID"];
+			//echo json_encode($meetingID);
+		}
+		
+		//$meetingID = 58;
 		$results = [];
-		foreach ($result2->fetchAll() as $data) {
-			$userID = $data["UserID"];
+		foreach ($result2 as $data) {
+			echo $meetingID;
+			$userID = (int)$data["UserID"];
+			echo $userID;
 			$query3 = $db->prepare("CALL GetAttendace(?,?)");
 			$query3->bindParam(1,$meetingID, PDO::PARAM_INT);
 			$query3->bindParam(2,$userID, PDO::PARAM_INT);
-			$result3=$query3->execute();
-			$info = $result3->fetchAll();
-
+			$query3->execute();
+			$result3 = $query3->fetchAll();
+			echo json_encode($result3);
 			$attendace = array("UserID"=>$userID,"Attended"=>$info["Attended"]);
 			array_push($results,$attendace);
 			unset($query3);
@@ -43,7 +53,7 @@ $app->get('/meetings',
 		//echo json_encode($response);
 		return $response;
 	}
-)->add($validateSession);
+)->add($validateSession);*/
 
 //test
 $app->get('/meetingbyid',
@@ -87,35 +97,12 @@ $app->post('/meetings',
 		$MeetingID = (int)$result[0]['MeetingID'];
 		$response = $query->fetchAll();
 		unset($query);
-
-
-		$query2 = $db->prepare("CALL getUserIDsByProject(?)");
-		$query2->bindParam(1,$ProjectID, PDO::PARAM_INT);
-		$result2=$query2->execute();
-		unset($query2);
-
-
-		foreach ($result2->fetchAll() as $data) {
-			$userID = $data["UserID"];
-			$query3 = $db->prepare("CALL ChangeAttendace(?,?,?)");
-			$query3->bindParam(1,$meetingID, PDO::PARAM_INT);
-			$query3->bindParam(2,$userID, PDO::PARAM_INT);
-			$query3->bindParam(3,false, PDO::PARAM_STR);
-			unset($query3);
-		}
-
-		echo $response;
-		unset($query);
-		//get user id by email
 		
-		//$response = array("worked"=>true);
 		return json_encode($response);
 
 	}
 )->add($validateSession);
 
-//test
-//put true and false stuff in
 $app->put('/meetings',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
@@ -140,32 +127,13 @@ $app->put('/meetings',
 		$MeetingID = (int)$result[0]['MeetingID'];
 		$response = $query->fetchAll();
 		unset($query);
-
-
-		$query2 = $db->prepare("CALL getUserIDsByProject(?)");
-		$query2->bindParam(1,$ProjectID, PDO::PARAM_INT);
-		$result2=$query2->execute();
-		unset($query2);
-
-
-		foreach ($result2->fetchAll() as $data) {
-			$userID = $data["UserID"];
-			$query3 = $db->prepare("CALL ChangeAttendace(?,?,?)");
-			$query3->bindParam(1,$meetingID, PDO::PARAM_INT);
-			$query3->bindParam(2,$userID, PDO::PARAM_INT);
-			$query3->bindParam(3,false, PDO::PARAM_STR);
-			unset($query3);
-		}
-
-		echo $response;
-		unset($query);
-		//get user id by email
 		
-		//$response = array("worked"=>true);
 		return json_encode($response);
 
 	}
 )->add($validateSession);
+
+
 
 $app->get('/projects',
 	function($request,$response,$args) {

@@ -11,7 +11,7 @@
 			$StartTime = $data['StartTime'];
 			$EndTime = $data['EndTime'];
 
-			$meeting = array("MeetingID"=>$MeetingID,"GroupName"=>$ProjectName, "MeetingDescription"=>$MeetingDescription, "MeetingDate"=>$MeetingDate, "StartTime"=>$StartTime, "EndTime"=>$EndTime);
+			$meeting = array("MeetingID"=>$MeetingID,"GroupName"=>$GroupName, "MeetingDescription"=>$MeetingDescription, "MeetingDate"=>$MeetingDate, "StartTime"=>$StartTime, "EndTime"=>$EndTime);
 			array_push($results,$meeting);
 		}
 		$resultSize =  count($results);
@@ -20,6 +20,7 @@
 			$temp = (string)$i;
 			unset($results[$temp]);
 		}
+		//echo json_encode($results);
 		return $results;
 	}
 
