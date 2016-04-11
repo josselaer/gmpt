@@ -6,7 +6,7 @@ include 'user.php';
 include 'chat.php';
 
 //test
-$app->get('/meetings',
+$app->get('/meetings/{ProjectID}',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$ProjectID = (int)$request->getAttribute('ProjectID');
