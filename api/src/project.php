@@ -63,7 +63,7 @@
 		$mail->isHTML(true);                                  // Set email format to HTML
 
 		$mail->Subject = 'GMPT Registration Invite';
-		$mail->Body    = "Your friend $senderEmail sent you a request to join him in one of his groups in GMPT!  <a href='http://52.37.56.8/registerInvite.html/?token=$registrationToken'>Register For GMPT</a> !";
+		$mail->Body    = "Your friend $senderEmail sent you a request to join him in one of his groups in GMPT!  <a href='http://52.37.56.8/gmpt/www/registerinvite.html/#/!/?token=$registrationToken'>Register For GMPT</a> !";
 
 		if(!$mail->send()) {
 			echo 'Message could not be sent.';

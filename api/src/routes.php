@@ -72,7 +72,7 @@ $app->post('/meetings',
 	}
 )->add($validateSession);
 
-$app->put('/meetings/{MeetingID}',
+$app->post('/meetings/{MeetingID}',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$form_data = $request->getParsedBody();	
@@ -163,7 +163,7 @@ $app->post('/projects',
 			$query2->execute();
 			$q2result = $query2->fetchAll();
 			$userID=0;
-			if($query2->fetchColumn()==0){
+			if($query2->rowCount()==0){
 				unset($query2);
 				$userID=sendEmailInvite($SenderEmail,$email,$db);
 			}
@@ -409,15 +409,7 @@ $app->post('/autocomplete',
 	}
 )->add($validateSession);
 
-//Get Group Totals
-$app->get('/statistics/totals/{project_id}', 
-	function($request, $response,$args){
-		$db=$this->GMPT;
-		$ProjectID = $request->getAttribute('project_id');
-		$result=getGroupTotals($db,$ProjectID);
-		echo json_encode($result);
-	}
-)->add($validateSession);
+
 /*
 //test json_encode
 //Returns all groups for the currently authenticated user

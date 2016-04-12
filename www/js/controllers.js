@@ -23,6 +23,7 @@ angular.module('app', [])
       url: "http://52.37.56.8/gmpt/api/public/user",
       data: $scope.userInfo
     }).then(function successCallback(response) {
+      console.log(response);
       console.log("Successful Registration. Welcome to gmpt!")
       
     }, function errorCallback(response) {

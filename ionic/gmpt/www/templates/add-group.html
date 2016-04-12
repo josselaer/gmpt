@@ -34,7 +34,7 @@
   </label>
     <p></p>
       <div class="list">
-        <li class="button item assertive" ng-repeat="i_suggestion in input_suggestions" ng-click="selectEmail(i_suggestion)" id="$index">{{i_suggestion.suggestion}}
+        <li class="button item assertive" ng-repeat="i_suggestion in input_suggestions | limitTo:10" ng-click="selectEmail(i_suggestion)" id="$index">{{i_suggestion.suggestion}}
         </li>
       </div>
 
