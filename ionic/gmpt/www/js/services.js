@@ -75,6 +75,8 @@ angular.module('starter.services', [])
     "userid": 0
   }
 
+  activeGroup = null;
+
   return {
     get: function() {
       return user;
@@ -110,7 +112,13 @@ angular.module('starter.services', [])
       else {
         return false;
       }
+    },
 
+    setActiveGroup: function(id) {
+      activeGroup = id;
+    },
+    getActiveGroup: function() {
+        return activeGroup;
     }
 
   }
