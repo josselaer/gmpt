@@ -5,20 +5,21 @@ include 'meetings.php';
 include 'user.php';
 include 'chat.php';
 include 'notification.php';
+include 'attendance.php';
 
 //test
-$app->get('/meetings',
+$app->get('/meetings/{ProjectID}',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$ProjectID = (int)$request->getAttribute('ProjectID');
-		
+		//$ProjectID = 58;
 		$query = $db->prepare("CALL GetMeetings(?)");
 		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
 		$result=$query->execute();
-		$response->write(json_encode(getMeetings($query)));
-		//$response = getProjects($query);
+		//$response->write(json_encode(getMeetings($query)));
+		$response = getMeetings($query);
 		unset($query);	
-		//echo json_encode($response);
+		echo json_encode($response);
 		return $response;
 	}
 )->add($validateSession);
@@ -27,7 +28,7 @@ $app->get('/meetings',
 $app->get('/meetingbyid',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
-		$Meeting = (int)$request->getAttribute('MeetingID');
+		$MeetingID = (int)$request->getAttribute('MeetingID');
 		
 		$query = $db->prepare("CALL GetMeetingByID(?)");
 		$query->bindParam(1,$MeetingID, PDO::PARAM_INT);
@@ -61,25 +62,20 @@ $app->post('/meetings',
 		$query->bindParam(6,$EndTime, PDO::PARAM_STR);
 
 		$query->execute();
-		$result = $query->fetchAll();
-		$MeetingID = (int)$result[0]['MeetingID'];
+		//$MeetingID = (int)$result[0]['MeetingID'];
 		$response = $query->fetchAll();
-		echo $response;
 		unset($query);
-		//get user id by email
 		
-		//$response = array("worked"=>true);
 		return json_encode($response);
 
 	}
 )->add($validateSession);
 
-//test
-$app->put('/meetings',
+$app->put('/meetings/{MeetingID}',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$form_data = $request->getParsedBody();	
-		$MeetingID = $form_data['MeetingID'];
+		$MeetingID = (int)$request->getAttribute('MeetingID');
 		$Description = $form_data['MeetingDescription'];
 		$MeetingDate = $form_data['MeetingDate'];
 		$LocationName = $form_data['LocationName'];
@@ -87,7 +83,7 @@ $app->put('/meetings',
 		$EndTime = $form_data['EndTime'];
 
 		$query = $db->prepare("CALL EditMeeting(?,?,?,?,?,?)");
-		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$query->bindParam(1,$MeetingID, PDO::PARAM_INT);
 		$query->bindParam(2,$Description, PDO::PARAM_STR);
 		$query->bindParam(3,$MeetingDate, PDO::PARAM_STR);
 		$query->bindParam(4,$LocationName, PDO::PARAM_STR);
@@ -95,18 +91,16 @@ $app->put('/meetings',
 		$query->bindParam(6,$EndTime, PDO::PARAM_STR);
 
 		$query->execute();
-		$result = $query->fetchAll();
-		$MeetingID = (int)$result[0]['MeetingID'];
+		//$MeetingID = (int)$result[0]['MeetingID'];
 		$response = $query->fetchAll();
-		echo $response;
 		unset($query);
-		//get user id by email
 		
-		//$response = array("worked"=>true);
 		return json_encode($response);
 
 	}
 )->add($validateSession);
+
+
 
 $app->get('/projects',
 	function($request,$response,$args) {
