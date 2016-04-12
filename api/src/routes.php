@@ -280,21 +280,16 @@ $app->post('/login', function ($request, $response, $args) {
 	
 	$validateUserQuery->bindValue(1, $username, PDO::PARAM_STR);
 	$validateUserQuery->bindValue(2, $hashedPass, PDO::PARAM_STR);
-	$validateUserQuery->execute();
-	$tokenArray=array();
-	foreach($validateUserQuery as $row){
-		$tokenArray[$username]=$row['ReturnToken'];
+	$result = $validateUserQuery->execute();
+	if ($result) {
+		$userData = $validateUserQuery->fetchAll();
+		$returnArray = array();
+		$returnArray['userData'] = $userData;
+		$response = $response->getBody()->write(json_encode($returnArray));
 	}
-	
-	//get token 
-	
-	
-	
-	//set Authorization header to token
-	$returnArray1=array();
-	$returnArray1['Authorization']=$tokenArray[$username];
-	
-	$response= $response->getBody()->write(json_encode($returnArray1));
+	else {
+		$response = $response->withStatus(400);
+	}
 
 	//return the response
 	return $response;
