@@ -48,11 +48,13 @@ $app->post('/meetings',
 		$db=$this->GMPT;
 		$form_data = $request->getParsedBody();	
 		$ProjectID = $form_data['ProjectID'];
-		$Description = $form_data['MeetingDescription'];
-		$MeetingDate = $form_data['MeetingDate'];
-		$LocationName = $form_data['LocationName'];
-		$StartTime = $form_data['StartTime'];
-		$EndTime = $form_data['EndTime'];
+		$Description = $form_data['meetingDescription'];
+		$MeetingDate = $form_data['date'];
+		//$LocationName = $form_data['LocationName'];
+		$LocationName = "Innovation Gym";
+		$StartTime = $form_data['startTime'];
+		//$EndTime = $form_data['EndTime'];
+		$EndTime = "13:30";
 
 		$query = $db->prepare("CALL CreateMeeting(?,?,?,?,?,?)");
 		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
