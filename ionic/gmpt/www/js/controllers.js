@@ -222,13 +222,12 @@ angular.module('starter.controllers', [])
       }
       var meeting
         {
+          GroupName = "TEMPORARY_VAR";
           ProjectID = GroupID.get();
-          topic = this.topic;
           MeetingDate = this.date;
           StartTime = this.startTime;
           MeetingDescription = this.meetingDescription;
-          LocationName = "Innovation Gym";
-          EndTime = "2:30 PM";
+          //EndTime = "2:30 PM";
         }
 
         $http({
