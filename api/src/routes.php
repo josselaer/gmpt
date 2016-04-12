@@ -4,6 +4,7 @@ include 'project.php';
 include 'meetings.php';
 include 'user.php';
 include 'chat.php';
+include 'stats.php';
 include 'notification.php';
 include 'attendance.php';
 
@@ -275,11 +276,18 @@ $app->post('/login', function ($request, $response, $args) {
 	$validateUserQuery->bindValue(1, $username, PDO::PARAM_STR);
 	$validateUserQuery->bindValue(2, $hashedPass, PDO::PARAM_STR);
 	$result = $validateUserQuery->execute();
+	$userData = array();
 	if ($result) {
-		$userData = $validateUserQuery->fetchAll();
-		$returnArray = array();
-		$returnArray['userData'] = $userData;
-		$response = $response->getBody()->write(json_encode($returnArray));
+		$data = $validateUserQuery->fetchAll();
+		foreach ($data as $row) {
+			$userData["userID"] = $row["userID"];
+			$userData["username"] = $row["username"];
+			$userData["token"] = $row["token"];
+			$userData["firstName"] = $row["firstName"];
+			$userData["lastName"] = $row["lastName"];
+			$userData["email"] = $row["email"];
+		}
+		$response = $response->getBody()->write(json_encode($userData));
 	}
 	else {
 		$response = $response->withStatus(400);
@@ -398,6 +406,16 @@ $app->post('/autocomplete',
 		
 		$response->write(json_encode($results));
 		
+	}
+)->add($validateSession);
+
+//Get Group Totals
+$app->get('/statistics/totals/{project_id}', 
+	function($request, $response,$args){
+		$db=$this->GMPT;
+		$ProjectID = $request->getAttribute('project_id');
+		$result=getGroupTotals($db,$ProjectID);
+		echo json_encode($result);
 	}
 )->add($validateSession);
 /*
