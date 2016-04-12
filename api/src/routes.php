@@ -281,6 +281,7 @@ $app->post('/login', function ($request, $response, $args) {
 		$data = $validateUserQuery->fetchAll();
 		foreach ($data as $row) {
 			$userData["userID"] = $row["userID"];
+			$userData["username"] = $row["username"];
 			$userData["token"] = $row["token"];
 			$userData["firstName"] = $row["firstName"];
 			$userData["lastName"] = $row["lastName"];
