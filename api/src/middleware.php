@@ -41,7 +41,7 @@ $validateSession= (function ($request,$response,$next) {
 	}
 	//if no such token, return nothing in response 
 	else{
-		return $response;
+		return $response->withStatus(404);
 	}
 		
 	

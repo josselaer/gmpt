@@ -71,7 +71,8 @@ angular.module('starter.services', [])
     "email": "helloworld@gmail.com",
     "firstName": "Aakash",
     "lastName": "Patel",
-    "auth": 0
+    "auth": 0,
+    "userid": 0
   }
 
   return {
@@ -91,6 +92,25 @@ angular.module('starter.services', [])
     },
     getAuthToken: function() {
       return user.auth;
+    },
+    login: function(userData) {
+      console.log(userData);
+      user.userName = userData.username;
+      user.email = userData.email;
+      user.firstName = userData.firstName;
+      user.lastName = userData.lastName;
+      user.auth = userData.token;
+      user.userid = userData.userID;  
+
+      console.log("Logging in with auth: " + user.auth);
+
+      if (user.auth != undefined && user.auth != null && user.auth != 0) {
+        return true;
+      }
+      else {
+        return false;
+      }
+
     }
 
   }
