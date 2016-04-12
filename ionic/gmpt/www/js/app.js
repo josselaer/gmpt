@@ -71,7 +71,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
   
     .state('menu.group.stats', {
-    url: '/stats',
+    url: '/stats/:groupID',
     views: {
         'group-stats': {
           templateUrl: 'templates/group-stats.html',

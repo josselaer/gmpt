@@ -1,7 +1,16 @@
 angular.module('starter.controllers', [])
 
 
-.controller('TabCtrl', function() {
+.controller('TabCtrl', function($scope, UserInfo) {
+
+  $scope.$on ("$ionicView.enter", function() {
+
+    $scope.groupID = 0;
+    $scope.groupID = UserInfo.getActiveGroup();
+    console.log("Group ID in TabCtrl: " + $scope.groupID);
+
+  })
+  
 
 })
 
@@ -312,6 +321,12 @@ $scope.newMeeting = function()
     });
 
   }); 
+
+    $scope.setGroup = function(id) {
+    UserInfo.setActiveGroup(id);
+
+    console.log("getActiveGroup(): " + UserInfo.getActiveGroup());
+  }
   
 
 
@@ -325,6 +340,8 @@ $scope.newMeeting = function()
   $scope.search = '';
   $scope.orderByAttribute = '';
   $scope.members = [];
+
+
 
   $scope.addMember = function () {
     console.log("email: ", $scope.email);

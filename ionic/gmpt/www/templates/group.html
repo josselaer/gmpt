@@ -8,17 +8,17 @@ navigation history that also transitions its views in and out.
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
   <!-- Dashboard Tab -->
-  <ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" ui-sref="menu.group.stats">
+  <ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" ui-sref="menu.group.stats({groupID:groupID})">
     <ion-nav-view name="group-stats"></ion-nav-view>
   </ion-tab>
 
   <!-- Chats Tab -->
-  <ion-tab title="Chat" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/group/chat">
+  <ion-tab title="Chat" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/group/chat/{{groupID}}">
     <ion-nav-view name="group-chat"></ion-nav-view>
   </ion-tab>
 
   <!-- Account Tab -->
-  <ion-tab title="Meetings" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear"  ui-sref="menu.group.meetings">
+  <ion-tab title="Meetings" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear"  ui-sref="menu.group.meetings/{{groupID}}">
     <ion-nav-view name="group-meetings"></ion-nav-view>
   </ion-tab>
 
