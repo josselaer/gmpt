@@ -51,8 +51,9 @@ angular.module('starter.controllers', [])
 
 
 .controller('ChatsCtrl', function ($scope, $http, $stateParams, $interval, $animate, 
-                                    UserInfo, Chats, Debug) {
+                                    UserInfo, Chats, GroupID, Debug) {
 
+  GroupID.set($stateParams.groupID);
   $scope.chatsctrl = {};
   $scope.messages = [];
 
@@ -118,7 +119,6 @@ angular.module('starter.controllers', [])
     };
 
     Chats.sendMessage(JSON.stringify(m), $stateParams.groupID).then( function() {
-
       Chats.getGroupMessages($stateParams.groupID).then( function(response) {
         $scope.messages = response;
       }, function(response) {
@@ -170,42 +170,67 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('MeetingsCtrl', function($scope, $state, $http, Meetings, Debug) {
+.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, Debug) {
 
+  $scope.meetings = [];
 
   $scope.$on("$ionicView.enter", function() {
 
     $http({
 
       method: "GET",
-      url: Debug.getURL("/meetings"),
-      responseType: "json"
+      url: Debug.getURL("/meetings/" + GroupID.get()),
+      responseType: "json",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
     }).then(function successCallback(response) {
-
-      console.log(Debug.getURL("/meetings"));
-      console.log(response);
-      meetings = response.data;
-      console.log(meetings);
-
-      Meetings.set(meetings);
-      $scope.meetings = meetings;
-      
+      console.log("RESPONSE: ")
+      console.log(response.data);
+      return response.data;
+      //console.log(Debug.getURL("/meetings/" + GroupID.get()));
+      var meetings_retrieved = [response.data.length];
+      /*
+      for(i = 0; i < response.data.length; i++)
+      {
+        var new_meeting = 
+        {
+          topic : response.data[0].GroupName,
+          meetingDescription : response.data[0].MeetingDescription,
+          date : response.data[0].MeetingDate,
+          startTime : response.data[0].StartTime
+        }
+        meetings_retrieved[i] = new_meeting;
+        console.log(new_meeting);
+        i++;
+      }
+      */
+      console.log("passed to set()");
+      console.log(meetings_retrieved);
+      Meetings.set(response.data);
+      //console.log(Meetings.all());
+      $scope.meetings = Meetings.all();
+      console.log("scope meetings : : :");
+      console.log($scope.meetings);
     }, function errorCallback(response) {
-
+      console.log("ERROR CALLBACK");
       console.log(Debug.getURL("/meetings"));
       console.log(response);
 
       alert("Failed to load groups, please try again.");
 
+    }).then(function(response) {
+      Meetings.set(response);
+      $scope.meetings = Meetings.all();
+      this.meetings = Meetings.all();
+      console.log("SCOPE:");
+      console.log($scope.meetings);
     });
-    
+    $scope.Meetings = Meetings.all();
   });
-  
 
-  $scope.meetings = Meetings.all();
-  //console.log("current index outside function: ", Meetings.getCurr());
-  $scope.currentMeeting = Meetings.get(Meetings.getCurr());
-
+  $scope.Meetings = Meetings.all();
   $scope.meetingDetails = function(index)
   {
     //console.log("INDEX: ", index);
@@ -234,36 +259,51 @@ angular.module('starter.controllers', [])
       }
       else if(Meetings.getEdit() == true)
       {
+        
         $scope.meetings[Meetings.getCurr()].topic = this.topic;
         $scope.meetings[Meetings.getCurr()].date = this.date;
         $scope.meetings[Meetings.getCurr()].startTime = this.startTime;
         $scope.meetings[Meetings.getCurr()].meetingDescription = this.meetingDescription;
         Meetings.set($scope.meetings);
-        var meeting
+      }
+      var meeting
         {
-          topic = this.topic;
-          date = this.date;
-          startTime = this.startTime;
-          meetingDescription = this.meetingDescription;
+          GroupName = "TEMPORARY_VAR";
+          ProjectID = GroupID.get();
+          MeetingDate = this.date;
+          StartTime = this.startTime;
+          MeetingDescription = this.meetingDescription;
+          //EndTime = "2:30 PM";
         }
+
         $http({
-          method:"POST",
-          url: Debug.getURL("/meetings"),
-          data: meeting
-        }).then(function successCallback(response) {
-          //$state.go("groups");
-        }, function errorCallback(response) {
-          alert.log("Failed to add group");
-        });
+      method: "POST",
+      url: Debug.getURL("/meetings"),
+      data: meeting,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
+      console.log("Add meeting success");
+      console.log(response);
+      return response;
+    }, function errorCallback(response) {
+      console.log("Add meeting 'fail': ");
+      console.log(response);
+      alert("Failed to add meeting");
+      return null;
+    }).then(function redirect(response) {
+      console.log("redirecting...");
+      console.log(response);
+      //$state.go("groups");
+    });
       }
       this.date = "";
       this.startTime = "";
       this.topic = "";
       this.meetingDescription = "";
 
-}
-
-console.log($scope.meetings);
 }
 
 $scope.editMeeting = function(index)
@@ -276,8 +316,8 @@ $scope.editMeeting = function(index)
 $scope.newMeeting = function()
 {
   Meetings.setEdit(false);
-  Meetings.setCurr(999);
-  $scope.currentMeeting = Meetings.get(Meetings.getCurr());
+  Meetings.setCurr(0);
+  //$scope.currentMeeting = Meetings.get(Meetings.getCurr());
 }
 })
 

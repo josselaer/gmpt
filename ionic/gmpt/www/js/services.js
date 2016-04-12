@@ -208,31 +208,33 @@ angular.module('starter.services', [])
 
 .factory("Meetings", function($http) {
 
-  meetings = [{
+  meetings = [];
+  /*
+    {
     date: "12/3/12",
-    time_: "6:30PM",
+    startTime: "6:30PM",
     topic: "Mock Ups",
     meetingDescription: "lorum ipsum random description"
   }, {
     date: "12/7/9",
-    time_: "8:30PM",
+    startTime: "8:30PM",
     topic: "Front End Design",
     meetingDescription: "lorum ipsum random description"
-  }];
+  }
+  ];
+  */
 
   editing = false;
-
   currInd = 0;
   //console.log("[1]currInd = ", currInd);
   return {
     all: function() {
-
+      console.log(meetings);
       return meetings;
     },
     set: function(g) {
       meetings = g;
-
-      console.log("Set()" + meetings);
+      console.log(meetings);
     },
     get: function(index)
     {
@@ -258,7 +260,20 @@ angular.module('starter.services', [])
   };
 })
 
+.factory("GroupID", function($http) {
 
+  ID = 0;
+
+  return {
+    set: function(g) {
+      ID = g;
+    },
+    get: function()
+    {
+      return ID;
+    }
+  };
+})
 
 .factory("Debug", function() {
 
