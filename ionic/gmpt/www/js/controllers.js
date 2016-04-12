@@ -104,7 +104,7 @@ angular.module('starter.controllers', [])
     }).then(function redirect(response) {
 
       console.log(response);
-      if (UserInfo.login(response.data.userData)) {
+      if (UserInfo.login(response.data)) {
         console.log("You logged in!")
         console.log(response);
       

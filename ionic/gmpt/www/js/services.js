@@ -95,12 +95,12 @@ angular.module('starter.services', [])
     },
     login: function(userData) {
       console.log(userData);
-      user.userName = userData[0].username;
-      user.email = userData[0].email;
-      user.firstName = userData[0].firstName;
-      user.lastName = userData[0].lastName;
-      user.auth = userData[0].token;
-      user.userid = userData[0].userID;  
+      user.userName = userData.username;
+      user.email = userData.email;
+      user.firstName = userData.firstName;
+      user.lastName = userData.lastName;
+      user.auth = userData.token;
+      user.userid = userData.userID;  
 
       console.log("Logging in with auth: " + user.auth);
 
