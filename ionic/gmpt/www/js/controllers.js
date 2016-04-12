@@ -1,6 +1,11 @@
 angular.module('starter.controllers', [])
 
 
+.controller('TabCtrl', function() {
+
+})
+
+
 .controller('StatsCtrl', function ($http, $scope, $stateParams, UserInfo, Debug) {
 
   $scope.stats  = {};
