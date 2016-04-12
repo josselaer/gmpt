@@ -72,7 +72,7 @@ $app->post('/meetings',
 	}
 )->add($validateSession);
 
-$app->put('/meetings/{MeetingID}',
+$app->post('/meetings/{MeetingID}',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$form_data = $request->getParsedBody();	
@@ -163,7 +163,7 @@ $app->post('/projects',
 			$query2->execute();
 			$q2result = $query2->fetchAll();
 			$userID=0;
-			if($query2->rowCount()()==0){
+			if($query2->rowCount()==0){
 				unset($query2);
 				$userID=sendEmailInvite($SenderEmail,$email,$db);
 			}
