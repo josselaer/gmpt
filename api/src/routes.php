@@ -4,6 +4,7 @@ include 'project.php';
 include 'meetings.php';
 include 'user.php';
 include 'chat.php';
+include 'attendance.php';
 
 //test
 $app->get('/meetings/{ProjectID}',
