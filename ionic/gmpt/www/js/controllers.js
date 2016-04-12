@@ -103,11 +103,16 @@ angular.module('starter.controllers', [])
       alert.log("Can't Login");
     }).then(function redirect(response) {
 
-      UserInfo.setAuthToken(response.data.Authorization);
-      console.log("You logged in!")
       console.log(response);
+      if (UserInfo.login(response.data)) {
+        console.log("You logged in!")
+        console.log(response);
       
-      $state.go("menu.groups");
+        $state.go("menu.groups");
+      }
+      else {
+        alert("Could not log in!" + JSON.stringify(response.data.userData));
+      }
     });
 
   }

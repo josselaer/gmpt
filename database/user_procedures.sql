@@ -74,3 +74,10 @@ BEGIN
 	WHERE 	SessionID = Token;
 	SELECT 	"True" as status;
 END //
+
+CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `getUserIDsByProject`(IN ProjectIDVal INT)
+BEGIN
+	SELECT UserID FROM User NATURAL JOIN UserProject NATURAL JOIN Project
+	WHERE ProjectID = ProjectIDVal;
+END //
+
