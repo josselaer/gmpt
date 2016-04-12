@@ -200,21 +200,23 @@ angular.module('starter.services', [])
 
 .factory("Meetings", function($http) {
 
-  meetings = [
-    /*{
+  meetings = [];
+  /*
+    {
     date: "12/3/12",
     startTime: "6:30PM",
     topic: "Mock Ups",
     meetingDescription: "lorum ipsum random description"
   }, {
     date: "12/7/9",
-    time_: "8:30PM",
+    startTime: "8:30PM",
     topic: "Front End Design",
     meetingDescription: "lorum ipsum random description"
-  }*/];
+  }
+  ];
+  */
 
   editing = false;
-
   currInd = 0;
   //console.log("[1]currInd = ", currInd);
   return {
@@ -224,8 +226,7 @@ angular.module('starter.services', [])
     },
     set: function(g) {
       meetings = g;
-
-      console.log("Set()" + meetings[0].GroupName);
+      console.log(meetings);
     },
     get: function(index)
     {

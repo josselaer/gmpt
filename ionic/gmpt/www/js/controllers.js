@@ -126,6 +126,7 @@ angular.module('starter.controllers', [])
 
 .controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, Debug) {
 
+  $scope.meetings = [];
 
   $scope.$on("$ionicView.enter", function() {
 
@@ -141,12 +142,11 @@ angular.module('starter.controllers', [])
     }).then(function successCallback(response) {
       console.log("RESPONSE: ")
       console.log(response.data);
-      console.log(Debug.getURL("/meetings/" + GroupID.get()));
-      //$scope.meetings = response.data;
+      return response.data;
+      //console.log(Debug.getURL("/meetings/" + GroupID.get()));
       var meetings_retrieved = [response.data.length];
-      i = 0;
-      console.log("TRY 1: " + response.data[0].GroupName);
-      while(response.data[i])
+      /*
+      for(i = 0; i < response.data.length; i++)
       {
         var new_meeting = 
         {
@@ -155,13 +155,19 @@ angular.module('starter.controllers', [])
           date : response.data[0].MeetingDate,
           startTime : response.data[0].StartTime
         }
-        console.log(i + " ..... " + new_meeting.topic);
+        meetings_retrieved[i] = new_meeting;
+        console.log(new_meeting);
         i++;
       }
+      */
+      console.log("passed to set()");
+      console.log(meetings_retrieved);
+      Meetings.set(response.data);
 
-      //console.log("Meeting 1 ID" + meetings_retrieved[0].GroupName);
-      Meetings.set(meetings);
-      
+      //console.log(Meetings.all());
+      $scope.meetings = Meetings.all();
+      console.log("scope meetings : : :");
+      console.log($scope.meetings);
     }, function errorCallback(response) {
       console.log("ERROR CALLBACK");
       console.log(Debug.getURL("/meetings"));
@@ -169,15 +175,22 @@ angular.module('starter.controllers', [])
 
       alert("Failed to load groups, please try again.");
 
+    }).then(function(response) {
+
+      Meetings.set(response);
+      $scope.meetings = Meetings.all();
+      console.log("SCOPE:");
+      console.log($scope.meetings);
     });
   });
-  
 
-  $scope.meetings = Meetings.all();
+  
   //console.log("current index outside function: ", Meetings.getCurr());
+  /*
   if($scope.meetings[0] != null)
     $scope.currentMeeting = Meetings.get(Meetings.getCurr());
   else
+    */
 
 
   $scope.meetingDetails = function(index)
