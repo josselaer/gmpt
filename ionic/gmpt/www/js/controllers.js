@@ -240,28 +240,28 @@ angular.module('starter.controllers', [])
     {
       if(Meetings.getEdit() == false)
       {
-        $scope.meetings.push({'date':this.date,'startTime':this.startTime,'topic':this.topic,'meetingDescription':this.meetingDescription});
+        $scope.meetings.push({'date':this.date,'startTime':this.startTime,'topic':this.topic,'meetingDescription':this.meetingDescription, 'ProjectID':GroupID.get()});
         Meetings.set($scope.meetings);
       }
       else if(Meetings.getEdit() == true)
-      {
-        
+      {     
         $scope.meetings[Meetings.getCurr()].topic = this.topic;
         $scope.meetings[Meetings.getCurr()].date = this.date;
         $scope.meetings[Meetings.getCurr()].startTime = this.startTime;
         $scope.meetings[Meetings.getCurr()].meetingDescription = this.meetingDescription;
         Meetings.set($scope.meetings);
       }
-      var meeting
+      var meeting = 
         {
-          GroupName = "TEMPORARY_VAR";
-          ProjectID = GroupID.get();
-          MeetingDate = this.date;
-          StartTime = this.startTime;
-          MeetingDescription = this.meetingDescription;
+          //GroupName = "TEMPORARY_VAR";
+          ProjectID : GroupID.get(),
+          MeetingDate : this.date,
+          StartTime : this.StartTime,
+          MeetingDescription : this.MeetingDescription
           //EndTime = "2:30 PM";
         }
-
+        console.log("MEETING");
+        console.log(meeting);
         $http({
       method: "POST",
       url: Debug.getURL("/meetings"),

@@ -55,7 +55,6 @@ $app->post('/meetings',
 		$StartTime = $form_data['startTime'];
 		//$EndTime = $form_data['EndTime'];
 		$EndTime = "13:30";
-
 		$query = $db->prepare("CALL CreateMeeting(?,?,?,?,?,?)");
 		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
 		$query->bindParam(2,$Description, PDO::PARAM_STR);
