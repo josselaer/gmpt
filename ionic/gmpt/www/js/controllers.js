@@ -119,7 +119,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, Meetings, GroupID, Debug) {
+.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, Debug) {
 
 
   $scope.$on("$ionicView.enter", function() {
