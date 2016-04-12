@@ -163,7 +163,6 @@ angular.module('starter.controllers', [])
       console.log("passed to set()");
       console.log(meetings_retrieved);
       Meetings.set(response.data);
-
       //console.log(Meetings.all());
       $scope.meetings = Meetings.all();
       console.log("scope meetings : : :");
@@ -176,21 +175,12 @@ angular.module('starter.controllers', [])
       alert("Failed to load groups, please try again.");
 
     }).then(function(response) {
-
       Meetings.set(response);
       $scope.meetings = Meetings.all();
       console.log("SCOPE:");
       console.log($scope.meetings);
     });
   });
-
-  
-  //console.log("current index outside function: ", Meetings.getCurr());
-  /*
-  if($scope.meetings[0] != null)
-    $scope.currentMeeting = Meetings.get(Meetings.getCurr());
-  else
-    */
 
 
   $scope.meetingDetails = function(index)
