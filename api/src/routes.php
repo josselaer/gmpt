@@ -276,11 +276,17 @@ $app->post('/login', function ($request, $response, $args) {
 	$validateUserQuery->bindValue(1, $username, PDO::PARAM_STR);
 	$validateUserQuery->bindValue(2, $hashedPass, PDO::PARAM_STR);
 	$result = $validateUserQuery->execute();
+	$userData = array();
 	if ($result) {
-		$userData = $validateUserQuery->fetchAll();
-		$returnArray = array();
-		$returnArray['userData'] = $userData;
-		$response = $response->getBody()->write(json_encode($returnArray));
+		$data = $validateUserQuery->fetchAll();
+		foreach ($data as $row) {
+			$userData["userID"] = $row["userID"];
+			$userData["token"] = $row["token"];
+			$userData["firstName"] = $row["firstName"];
+			$userData["lastName"] = $row["lastName"];
+			$userData["email"] = $row["email"];
+		}
+		$response = $response->getBody()->write(json_encode($userData));
 	}
 	else {
 		$response = $response->withStatus(400);
