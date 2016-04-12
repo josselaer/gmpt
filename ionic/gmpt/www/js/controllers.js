@@ -1,7 +1,39 @@
 angular.module('starter.controllers', [])
 
 
-.controller('StatsCtrl', function ($scope) {})
+.controller('StatsCtrl', function ($http, $scope, $stateParams, UserInfo, Debug) {
+
+  $scope.stats  = {};
+
+  $scope.$on("$ionicView.enter", function() {
+
+    $http({
+        method: "GET",
+        url: Debug.getURL("/statistics/totals/" + $stateParams.groupID),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': UserInfo.getAuthToken()
+        }
+      }).then(function successCallback(response) {
+
+        return response.data;
+
+      }, function failureCallback(response) {
+
+        console.log("Failed to get statistics.");
+        console.log(response);
+
+      }).then(function(response) {
+        console.log("Got stats:");
+        console.log(response);
+
+        $scope.stats = response.Totals;
+
+      });
+
+  });
+
+})
 
 
 .controller('ChatsCtrl', function ($scope, $http, $stateParams, $interval, $animate, 
