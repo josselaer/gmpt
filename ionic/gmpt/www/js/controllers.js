@@ -322,14 +322,14 @@ $scope.newMeeting = function()
   $scope.members = [];
 
   $scope.addMember = function () {
-    console.log("email: ", this.email);
-    if (this.email != ' ') {
+    console.log("email: ", $scope.email);
+    if ($scope.email != ' ') {
       $scope.members.push({
-        'email': this.email,
+        'email': $scope.email,
         'isProfessor': this.isProfessor
       });
-      this.email = ' ';
-      this.isProfessor = false;
+      $scope.email = ' ';
+      $scope.isProfessor = false;
     }
   }
 
@@ -373,7 +373,7 @@ $scope.newMeeting = function()
     }).then(function redirect(response) {
       console.log("redirecting...");
       console.log(response);
-      $state.go("groups");
+      $state.go("menu.groups");
     });
   }
   $scope.autoCompleteUpdate = function(input)
@@ -417,8 +417,8 @@ $scope.newMeeting = function()
 
   $scope.selectEmail = function(selected_email)
   {
-    console.log("current input: " , this.email);
-    this.email = selected_email;
+    console.log("current input: " , $scope.email);
+    $scope.email = selected_email;
     document.getElementById('email_input').value = selected_email.suggestion;
     $scope.email = selected_email.suggestion;
   }
