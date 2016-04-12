@@ -64,13 +64,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     abstract: true,
     views:{
     'menuContent' :{
-        templateUrl: 'templates/group.html'
+        templateUrl: 'templates/group.html',
+        controller: 'TabCtrl'
     }
    }
   })
   
     .state('menu.group.stats', {
-    url: '/stats',
+    url: '/stats/:groupID',
     views: {
         'group-stats': {
           templateUrl: 'templates/group-stats.html',
