@@ -225,7 +225,7 @@ angular.module('starter.services', [])
     set: function(g) {
       meetings = g;
 
-      console.log("Set()" + meetings);
+      console.log("Set()" + meetings[0].GroupName);
     },
     get: function(index)
     {

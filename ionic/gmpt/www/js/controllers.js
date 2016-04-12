@@ -139,20 +139,27 @@ angular.module('starter.controllers', [])
         "Authorization": UserInfo.getAuthToken()
       }
     }).then(function successCallback(response) {
-      console.log("RESPONSE: " + response.data);
+      console.log("RESPONSE: ")
+      console.log(response.data);
       console.log(Debug.getURL("/meetings/" + GroupID.get()));
       //$scope.meetings = response.data;
-      var meetings_retrieved = [];
-      meetings_retrieved = response.data;
-      meetings = meetings_retrieved;
-      /*
-      for(i = 0; i < 2; i++)
+      var meetings_retrieved = [response.data.length];
+      i = 0;
+      console.log("TRY 1: " + response.data[0].GroupName);
+      while(response.data[i])
       {
-        console.log("meeting" + i + ": " + meetings_retrieved[i].MeetingID);
+        var new_meeting = 
+        {
+          topic : response.data[0].GroupName,
+          meetingDescription : response.data[0].MeetingDescription,
+          date : response.data[0].MeetingDate,
+          startTime : response.data[0].StartTime
+        }
+        console.log(i + " ..... " + new_meeting.topic);
+        i++;
       }
-      */
-      //console.log()
-      console.log("Meeting 1 ID" + meetings_retrieved[0].GroupName);
+
+      //console.log("Meeting 1 ID" + meetings_retrieved[0].GroupName);
       Meetings.set(meetings);
       
     }, function errorCallback(response) {
