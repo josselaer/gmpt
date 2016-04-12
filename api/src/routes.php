@@ -26,7 +26,7 @@ $app->get('/meetings/{ProjectID}',
 $app->get('/meetingbyid',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
-		$Meeting = (int)$request->getAttribute('MeetingID');
+		$MeetingID = (int)$request->getAttribute('MeetingID');
 		
 		$query = $db->prepare("CALL GetMeetingByID(?)");
 		$query->bindParam(1,$MeetingID, PDO::PARAM_INT);
@@ -60,7 +60,6 @@ $app->post('/meetings',
 		$query->bindParam(6,$EndTime, PDO::PARAM_STR);
 
 		$query->execute();
-		$result = $query->fetchAll();
 		//$MeetingID = (int)$result[0]['MeetingID'];
 		$response = $query->fetchAll();
 		unset($query);
@@ -70,19 +69,19 @@ $app->post('/meetings',
 	}
 )->add($validateSession);
 
-$app->put('/meetings',
+$app->put('/meetings/{MeetingID}',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$form_data = $request->getParsedBody();	
-		$ProjectID = $form_data['ProjectID'];
+		$MeetingID = (int)$request->getAttribute('MeetingID');
 		$Description = $form_data['MeetingDescription'];
 		$MeetingDate = $form_data['MeetingDate'];
 		$LocationName = $form_data['LocationName'];
 		$StartTime = $form_data['StartTime'];
 		$EndTime = $form_data['EndTime'];
 
-		$query = $db->prepare("CALL CreateMeeting(?,?,?,?,?,?)");
-		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$query = $db->prepare("CALL EditMeeting(?,?,?,?,?,?)");
+		$query->bindParam(1,$MeetingID, PDO::PARAM_INT);
 		$query->bindParam(2,$Description, PDO::PARAM_STR);
 		$query->bindParam(3,$MeetingDate, PDO::PARAM_STR);
 		$query->bindParam(4,$LocationName, PDO::PARAM_STR);
@@ -90,7 +89,6 @@ $app->put('/meetings',
 		$query->bindParam(6,$EndTime, PDO::PARAM_STR);
 
 		$query->execute();
-		$result = $query->fetchAll();
 		//$MeetingID = (int)$result[0]['MeetingID'];
 		$response = $query->fetchAll();
 		unset($query);
