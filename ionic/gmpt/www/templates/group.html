@@ -3,10 +3,12 @@ Create tabs with an icon and label, using the tabs-positive style.
 Each tab's child <ion-nav-view> directive will have its own
 navigation history that also transitions its views in and out.
 -->
+
+
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
   <!-- Dashboard Tab -->
-  <ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/group/stats">
+  <ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" ui-sref="menu.group.stats">
     <ion-nav-view name="group-stats"></ion-nav-view>
   </ion-tab>
 
@@ -16,8 +18,17 @@ navigation history that also transitions its views in and out.
   </ion-tab>
 
   <!-- Account Tab -->
-  <ion-tab title="Meetings" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/group/meetings">
+  <ion-tab title="Meetings" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear"  ui-sref="menu.group.meetings">
     <ion-nav-view name="group-meetings"></ion-nav-view>
   </ion-tab>
 
 </ion-tabs>
+
+
+<!--ui-sref="menu.group.chat({groupID:group.ProjectID})"-->
+
+<!--<ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/group/stats">-->
+
+<!--
+
+  <ion-tab title="Meetings" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/group/meetings">-->

@@ -107,7 +107,7 @@ angular.module('starter.controllers', [])
       console.log("You logged in!")
       console.log(response);
       
-      $state.go("groups");
+      $state.go("menu.groups");
     });
 
   }
@@ -336,7 +336,7 @@ $scope.newMeeting = function()
   $scope.addGroup = function () {
 
     //console.log($scope.groupName);
-
+    console.log("Group Description: " + $scope.group.groupDesc);
     var group = {
       groupName: $scope.group.groupName,
       projDescription: $scope.group.groupDesc,
@@ -458,4 +458,10 @@ $scope.newMeeting = function()
     });
 
   }
-});
+})
+
+.controller('MenuCtrl', function ($scope, $ionicSideMenuDelegate) {
+    $scope.toggleLeftSideMenu = function() {
+      $ionicSideMenuDelegate.toggleLeft();
+   };
+})

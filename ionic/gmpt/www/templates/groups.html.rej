@@ -1,0 +1,10 @@
+diff a/ionic/gmpt/www/templates/groups.html b/ionic/gmpt/www/templates/groups.html	(rejected hunks)
+@@ -4,7 +4,7 @@
+       <ion-item class="item" ng-repeat="group in groups" type="item-text-wrap" href="#/group/chat/{{group.ProjectID}}">
+         <h2>{{group.GroupName}}</h2>
+         <h4 class=" item-text-right">Upcoming meeting: </h4>
+-        <span class="badge badge-assertive"><h2>0</h2></span>
++        <span class="badge badge-assertive"><h2>{{group.Notification}}</h2></span>
+       </ion-item>
+       
+       <ion-item class="item item-icon-left" type="item-text-wrap" href="#/addgroup">
