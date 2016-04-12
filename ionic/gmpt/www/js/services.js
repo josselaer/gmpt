@@ -200,7 +200,8 @@ angular.module('starter.services', [])
 
 .factory("Meetings", function($http) {
 
-  meetings = [/*{
+  meetings = [
+    /*{
     date: "12/3/12",
     startTime: "6:30PM",
     topic: "Mock Ups",
@@ -218,7 +219,7 @@ angular.module('starter.services', [])
   //console.log("[1]currInd = ", currInd);
   return {
     all: function() {
-
+      console.log(meetings);
       return meetings;
     },
     set: function(g) {

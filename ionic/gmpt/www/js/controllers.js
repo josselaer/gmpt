@@ -133,18 +133,30 @@ angular.module('starter.controllers', [])
 
       method: "GET",
       url: Debug.getURL("/meetings/" + GroupID.get()),
-      responseType: "json"
+      responseType: "json",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
     }).then(function successCallback(response) {
-
+      console.log("RESPONSE: " + response.data);
       console.log(Debug.getURL("/meetings/" + GroupID.get()));
-      meetings = response.data;
-      console.log(meetings);
-
+      //$scope.meetings = response.data;
+      var meetings_retrieved = [];
+      meetings_retrieved = response.data;
+      meetings = meetings_retrieved;
+      /*
+      for(i = 0; i < 2; i++)
+      {
+        console.log("meeting" + i + ": " + meetings_retrieved[i].MeetingID);
+      }
+      */
+      //console.log()
+      console.log("Meeting 1 ID" + meetings_retrieved[0].GroupName);
       Meetings.set(meetings);
-      $scope.meetings = meetings;
       
     }, function errorCallback(response) {
-
+      console.log("ERROR CALLBACK");
       console.log(Debug.getURL("/meetings"));
       console.log(response);
 
@@ -199,25 +211,13 @@ angular.module('starter.controllers', [])
       var meeting
         {
           ProjectID = GroupID.get();
-          //topic = this.topic;
+          topic = this.topic;
           MeetingDate = this.date;
           StartTime = this.startTime;
           MeetingDescription = this.meetingDescription;
           LocationName = "Innovation Gym";
           EndTime = "2:30 PM";
         }
-        
-        /*
-        $http({
-          method:"POST",
-          url: Debug.getURL("/meetings"),
-          data: meeting
-        }).then(function successCallback(response) {
-          //$state.go("groups");
-        }, function errorCallback(response) {
-          alert.log("Failed to add group");
-        });
-        */
 
         $http({
       method: "POST",
