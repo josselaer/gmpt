@@ -4,6 +4,7 @@ include 'project.php';
 include 'meetings.php';
 include 'user.php';
 include 'chat.php';
+include 'stats.php';
 include 'notification.php';
 include 'attendance.php';
 
@@ -398,6 +399,16 @@ $app->post('/autocomplete',
 		
 		$response->write(json_encode($results));
 		
+	}
+)->add($validateSession);
+
+//Get Group Totals
+$app->get('/statistics/totals/{project_id}', 
+	function($request, $response,$args){
+		$db=$this->GMPT;
+		$ProjectID = $request->getAttribute('project_id');
+		$result=getGroupTotals($db,$ProjectID);
+		echo json_encode($result);
 	}
 )->add($validateSession);
 /*
