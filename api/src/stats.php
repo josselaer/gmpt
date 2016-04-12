@@ -1,25 +1,32 @@
 <?php
-	function getGroupTotals($db,$ProjectID){
-		$GetProjectTotalMeetings= $db->prepare('CALL GetProjectTotalMeetings(?)');
-		$GetProjectTotalMeetings->execute(array($ProjectID));
-		$result= $GetProjectTotalMeetings->fetchAll();
-		$totalNumberOfMeetings= (int)$result[0]['count(*)'];
-		unset($GetProjectTotalMeetings);
-		
-		
-		$GetProjectTotalMessages=$db->prepare('CALL GetProjectTotalMessages(?)');
-		$GetProjectTotalMessages->execute(array($ProjectID));
-		$result2= $GetProjectTotalMessages->fetchAll();
-		$totalNumberOfMessages = (int) $result2[0]['count(*)'];
-		unset($getProjectTotalMessages);
-		
-		$result=array();
-		$result['totalNumOfMeetings']=$totalNumberOfMeetings;
-		$result['totalNumOfChatMessages']=$totalNumberOfMessages;
-		$result2=array();
-		$result2['Totals']=$result;
-		
-		
-		return $result2;
-	}
+
+	//Get Group Totals
+	$app->get('/statistics/totals/{project_id}', function($request, $response,$args){
+		$db=$this->GMPT;
+		$numOfMeetings = 0;
+		$numOfMessages = 0;
+		$projectID = $request->getAttribute('project_id');
+		$query = $db->prepare('CALL GetProjectTotalMeetings(?)');
+		$query->bindParam(1,$projectID);
+		$result = $query->execute();
+		$stats = array();
+		if ($result) {
+			$data = $query->fetchAll()[0];
+			$numOfMeetings = $data['totalNumOfMeetings'];
+			$stats['totalNumOfMeetings'] = $numOfMeetings;
+		}
+		unset($query);
+		$query = $db->prepare('CALL GetProjectTotalMessages(?)');
+		$query->bindParam(1,$projectID);
+		$result = $query->execute();
+		if ($result) {
+			$data = $query->fetchAll()[0];
+			$numOfMessages = $data['totalNumOfChatMessages'];
+			$stats['totalNumOfChatMessages'] = $numOfMessages;
+		}
+		$returnArray = array("Totals"=>$stats);
+		$response = $response->getBody()->write(json_encode($returnArray));
+		return $response;
+		}
+	)->add($validateSession);
 ?>

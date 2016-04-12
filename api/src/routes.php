@@ -409,15 +409,7 @@ $app->post('/autocomplete',
 	}
 )->add($validateSession);
 
-//Get Group Totals
-$app->get('/statistics/totals/{project_id}', 
-	function($request, $response,$args){
-		$db=$this->GMPT;
-		$ProjectID = $request->getAttribute('project_id');
-		$result=getGroupTotals($db,$ProjectID);
-		echo json_encode($result);
-	}
-)->add($validateSession);
+
 /*
 //test json_encode
 //Returns all groups for the currently authenticated user
