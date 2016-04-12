@@ -177,12 +177,14 @@ angular.module('starter.controllers', [])
     }).then(function(response) {
       Meetings.set(response);
       $scope.meetings = Meetings.all();
+      this.meetings = Meetings.all();
       console.log("SCOPE:");
       console.log($scope.meetings);
     });
+    $scope.Meetings = Meetings.all();
   });
 
-
+  $scope.Meetings = Meetings.all();
   $scope.meetingDetails = function(index)
   {
     //console.log("INDEX: ", index);

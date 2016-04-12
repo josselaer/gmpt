@@ -1,7 +1,9 @@
 
 <ion-view view-title="Meetings">
+
     <ion-nav-buttons side="left">
             <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="toggleLeft()"></button>
+          </ion-nav-buttons>
   <ion-content>
   	<div class="row has-header">
   		<div class="col col-90"></div>
@@ -11,8 +13,7 @@
 	</div>
 	<ion-list has-header>
 	<ion-item ng-repeat="meeting in meetings" href="#/meeting-details" ng-click="meetingDetails($index)">
-  <label>asdflkjasldkfjasd</label>
-  <!--
+  <label>{{meeting.GroupName}}</label>
 		<div class="row">
     	<div class="col col-30">
     		<p>{{meeting.GroupName}}</p>
@@ -24,7 +25,6 @@
         <p>{{meeting.MeetingDescription}}</p>
     	</div>
    		</div>
-    -->
 	</ion-item>
 	</ion-list>
 
