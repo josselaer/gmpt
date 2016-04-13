@@ -191,21 +191,6 @@ angular.module('starter.controllers', [])
       return response.data;
       //console.log(Debug.getURL("/meetings/" + GroupID.get()));
       var meetings_retrieved = [response.data.length];
-      /*
-      for(i = 0; i < response.data.length; i++)
-      {
-        var new_meeting = 
-        {
-          topic : response.data[0].GroupName,
-          meetingDescription : response.data[0].MeetingDescription,
-          date : response.data[0].MeetingDate,
-          startTime : response.data[0].StartTime
-        }
-        meetings_retrieved[i] = new_meeting;
-        console.log(new_meeting);
-        i++;
-      }
-      */
       console.log("passed to set()");
       console.log(meetings_retrieved);
       Meetings.set(response.data);
@@ -250,28 +235,31 @@ angular.module('starter.controllers', [])
 
   $scope.confirmMeeting = function()
   {  
-    if(this.date != "" && this.startTime != "" && this.topic != "" && this.meetingDescription != "")
+    if(this.MeetingDate != "" && this.StartTime != "" && this.MeetingDescription != "")
     {
       if(Meetings.getEdit() == false)
       {
-        $scope.meetings.push({'date':this.date,'startTime':this.startTime,'topic':this.topic,'meetingDescription':this.meetingDescription, 'ProjectID':GroupID.get()});
+        $scope.meetings.push({'MeetingDate':this.MeetingDate,
+          'StartTime':this.StartTime,'MeetingDescription':this.MeetingDescription,
+          'ProjectID':GroupID.get(), 'EndTime': this.EndTime});
         Meetings.set($scope.meetings);
       }
       else if(Meetings.getEdit() == true)
-      {     
-        $scope.meetings[Meetings.getCurr()].topic = this.topic;
-        $scope.meetings[Meetings.getCurr()].date = this.date;
-        $scope.meetings[Meetings.getCurr()].startTime = this.startTime;
-        $scope.meetings[Meetings.getCurr()].meetingDescription = this.meetingDescription;
+      {
+        $scope.meetings[Meetings.getCurr()].MeetingDate = this.MeetingDate;
+        $scope.meetings[Meetings.getCurr()].StartTime = this.StartTime;
+        $scope.meetings[Meetings.getCurr()].MeetingDescription = this.MeetingDescription;
+        $scope.meetings[Meetings.getCurr()].EndTime = this.EndTime;
         Meetings.set($scope.meetings);
       }
       var meeting = 
         {
           //GroupName = "TEMPORARY_VAR";
           ProjectID : GroupID.get(),
-          MeetingDate : this.date,
+          MeetingMeetingDate : this.MeetingDate,
           StartTime : this.StartTime,
           MeetingDescription : this.MeetingDescription
+
           //EndTime = "2:30 PM";
         }
         console.log("MEETING");
@@ -299,10 +287,10 @@ angular.module('starter.controllers', [])
       //$state.go("groups");
     });
       }
-      this.date = "";
-      this.startTime = "";
+      this.MeetingDate = "";
+      this.StartTime = "";
       this.topic = "";
-      this.meetingDescription = "";
+      this.MeetingDescription = "";
 
 }
 
@@ -438,7 +426,7 @@ $scope.newMeeting = function()
       $state.go("menu.groups");
     });
   }
-  $scope.autoCompleteUpdate = function(input)
+  $scope.autoCompleteUpMeetingDate = function(input)
   {
     console.log(this.email);
     var input_data = 

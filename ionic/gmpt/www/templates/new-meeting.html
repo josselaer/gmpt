@@ -5,27 +5,35 @@
 <p></p>
 <label>Meeting Topic</label>
 <p></p>
+<!--
 <label class="item item-input">
   <input ng-model="topic" type="text" placeholder={{currentMeeting().GroupName}}>
 </label>
+-->
 <p></p>
 
 <label>Description</label>
 <div class="item item-input">
-<textarea name="comment" ng-model="desc" placeholder={{currentMeeting().MeetingDescription}}>
+<textarea name="comment" ng-model="MeetingDescription" placeholder={{currentMeeting().MeetingDescription}}>
 </textarea>
 </div>
 <p></p>
 
 <label>Date</label>
 <div class="item item-input">
-  <input ng-model="date" type="text" placeholder={{currentMeeting().MeetingDate}}>
+  <input ng-model="MeetingDate" type="text" placeholder={{currentMeeting().MeetingDate}}>
 </div>
 <p></p>
-<label>Time</label>
+<label>Start Time</label>
 
 <div class="item item-input" contenteditable="true">
-  <input ng-model="startTime" type="text" placeholder={{currentMeeting().StartTime}}>
+  <input ng-model="StartTime" type="text" placeholder={{currentMeeting().StartTime}}>
+</div>
+<p></p>
+<label>End Time</label>
+
+<div class="item item-input" contenteditable="true">
+  <input ng-model="EndTime" type="text" placeholder={{currentMeeting().EndTime}}>
 </div>
 
 <div class="row">
