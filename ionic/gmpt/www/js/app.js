@@ -113,7 +113,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 //  })
   
    .state('menu.group.meetings', {
-    url: '/meetings',
+    url: '/meetings/:groupID',
     views: {
       'group-meetings': {
         templateUrl: 'templates/group-meetings.html',

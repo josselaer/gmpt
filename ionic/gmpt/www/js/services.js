@@ -154,8 +154,7 @@ angular.module('starter.services', [])
         return response;
 
       }).then(function receivedMessage(response) {
-
-        console.log(response);
+        
         return response;
       });
       
