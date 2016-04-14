@@ -35,7 +35,6 @@ angular.module('starter.services', [])
         }
       }
 
-      console.log("Could find group in getNumberOfGroupNotifications(): " + gID);
       return null;
     },
 
@@ -90,21 +89,17 @@ angular.module('starter.services', [])
     setAuthToken: function(authToken) {
       user.auth = authToken;
 
-      console.log("Set auth token: " + user.auth);
     },
     getAuthToken: function() {
       return user.auth;
     },
     login: function(userData) {
-      console.log(userData);
       user.userName = userData.username;
       user.email = userData.email;
       user.firstName = userData.firstName;
       user.lastName = userData.lastName;
       user.auth = userData.token;
       user.userid = userData.userID;  
-
-      console.log("Logging in with auth: " + user.auth);
 
       if (user.auth != undefined && user.auth != null && user.auth != 0) {
         return true;
@@ -171,8 +166,6 @@ angular.module('starter.services', [])
             "Authorization": UserInfo.getAuthToken()
           }
         }).then(function successCallback(response) {
-          console.log("You sent a message!");
-          console.log(response);
           return;
         }, function errorCallback(response) {
           console.log(response);
@@ -200,7 +193,6 @@ angular.module('starter.services', [])
     set: function(g) {
       groups = g;
 
-      console.log("Set()" + groups);
     }
   };
 })
@@ -228,12 +220,10 @@ angular.module('starter.services', [])
   //console.log("[1]currInd = ", currInd);
   return {
     all: function() {
-      console.log(meetings);
       return meetings;
     },
     set: function(g) {
       meetings = g;
-      console.log(meetings);
     },
     get: function(index)
     {
@@ -246,7 +236,6 @@ angular.module('starter.services', [])
     setCurr: function(index)
     {
       currInd = index;
-      //console.log("[2]currInd = ", currInd);
     },
     getEdit: function()
     {
