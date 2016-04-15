@@ -237,31 +237,31 @@ angular.module('starter.controllers', [])
 
   $scope.confirmMeeting = function()
   {  
-    if(this.MeetingDate != "" && this.StartTime != "" && this.meetingDescription != "")
+    if(this.meetingDate != "" && this.startTime != "" && this.meetingDescription != "")
     {
       if(Meetings.getEdit() == false)
       {
-        $scope.meetings.push({'MeetingDate':this.MeetingDate,
-          'StartTime':this.StartTime,'MeetingDescription':this.meetingDescription,
-          'ProjectID':GroupID.get(), 'EndTime': this.EndTime});
+        $scope.meetings.push({'MeetingDate':this.meetingDate,
+          'StartTime':this.startTime,'MeetingDescription':this.meetingDescription,
+          'ProjectID':GroupID.get(), 'EndTime': this.endTime});
         Meetings.set($scope.meetings);
       }
       else if(Meetings.getEdit() == true)
       {
-        $scope.meetings[Meetings.getCurr()].MeetingDate = this.MeetingDate;
-        $scope.meetings[Meetings.getCurr()].StartTime = this.StartTime;
-        $scope.meetings[Meetings.getCurr()].MeetingDescription = this.MeetingDescription;
-        $scope.meetings[Meetings.getCurr()].EndTime = this.EndTime;
+        $scope.meetings[Meetings.getCurr()].MeetingDate = this.meetingDate;
+        $scope.meetings[Meetings.getCurr()].StartTime = this.startTime;
+        $scope.meetings[Meetings.getCurr()].MeetingDescription = this.meetingDescription;
+        $scope.meetings[Meetings.getCurr()].EndTime = this.endTime;
         Meetings.set($scope.meetings);
       }
       var meeting = 
         {
           //GroupName = "TEMPORARY_VAR";
           ProjectID : GroupID.get(),
-          GroupName : this.GroupName,
-          MeetingMeetingDate : this.MeetingDate,
-          EndTime : this.EndTime,
-          StartTime : this.StartTime,
+          //GroupName : this.groupName,
+          MeetingMeetingDate : this.meetingDate,
+          EndTime : this.endTime,
+          StartTime : this.startTime,
           MeetingDescription : this.meetingDescription
 
           //EndTime = "2:30 PM";
@@ -291,10 +291,9 @@ angular.module('starter.controllers', [])
       //$state.go("groups");
     });
       }
-      this.MeetingDate = "";
-      this.StartTime = "";
-      this.EndTime = "";
-      this.topic = "";
+      this.meetingDate = "";
+      this.startTime = "";
+      this.endTime = "";
       this.meetingDescription = "";
 
 }

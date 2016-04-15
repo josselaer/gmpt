@@ -1,11 +1,12 @@
 <ion-view view-title="Meeting">
 
 <ion-content class="padding">
-<a class="button" href = "#/group/meetings/76"> Back </a>
+<a class="button" href = "#/group/meetings/"> Back </a>
+<!--
 <p></p>
 <label>Meeting Topic</label>
 <p></p>
-<!--
+
 <label class="item item-input">
   <input ng-model="topic" type="text" placeholder={{currentMeeting().GroupName}}>
 </label>
@@ -14,30 +15,30 @@
 
 <label>Description</label>
 <div class="item item-input">
-<textarea name="comment" ng-model="MeetingDescription" placeholder={{currentMeeting().meetingDescription}}>
+<textarea name="comment" ng-model="meetingDescription" placeholder={{currentMeeting().MeetingDescription}}>
 </textarea>
 </div>
 <p></p>
 
 <label>Date</label>
 <div class="item item-input">
-  <input ng-model="MeetingDate" type="text" placeholder={{currentMeeting().MeetingDate}}>
+  <input ng-model="meetingDate" type="text" placeholder={{currentMeeting().MeetingDate}}>
 </div>
 <p></p>
 <label>Start Time</label>
 
 <div class="item item-input" contenteditable="true">
-  <input ng-model="StartTime" type="text" placeholder={{currentMeeting().StartTime}}>
+  <input ng-model="startTime" type="text" placeholder={{currentMeeting().StartTime}}>
 </div>
 <p></p>
 <label>End Time</label>
 
 <div class="item item-input" contenteditable="true">
-  <input ng-model="EndTime" type="text" placeholder={{currentMeeting().EndTime}}>
+  <input ng-model="endTime" type="text" placeholder={{currentMeeting().EndTime}}>
 </div>
 
 <div class="row">
-  <a class="button button-full button-positive" ng-click="confirmMeeting()" href="#/group/meetings/76">
+  <a class="button button-full button-positive" ng-click="confirmMeeting()" href="#/group/meetings/">
     Confirm Meeting
     <ion-nav-view name="tab-dash"></ion-nav-view>
   </a>
