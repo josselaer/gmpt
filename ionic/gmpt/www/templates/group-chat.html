@@ -27,10 +27,10 @@
     <div class="footer-btn-wrap">
       <div ng-switch on="chatsctrl.anonymous">
         <div ng-switch-when="true">
-          <button class="button button-icon icon ion-ios-person-outline footer-btn" ng-click="chatsctrl.toggleAnonymous()">
+            <button class="button button-icon icon ion-ios-person-outline footer-btn" ng-click="chatsctrl.toggleAnonymous()"></button>
         </div>
         <div ng-switch-when="false">
-          <button class="button button-icon icon ion-ios-person footer-btn" ng-click="chatsctrl.toggleAnonymous()">
+            <button class="button button-icon icon ion-ios-person footer-btn" ng-click="chatsctrl.toggleAnonymous()"></button>
         </div>
 
       </div>
@@ -39,7 +39,7 @@
         <textarea class="item-input-wrapper" ng-model="message.text" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic></textarea>
     </label>
     <div class="footer-btn-wrap">
-      <button class="button button-icon icon ion-android-send footer-btn" ng-click="chatsctrl.send()">
+      <button class="button footer-btn button-small button-positive" ng-click="chatsctrl.send()">Send
       </button>
     </div>
   </ion-footer-bar>
