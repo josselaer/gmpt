@@ -172,6 +172,8 @@ angular.module('starter.controllers', [])
 
 .controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, Debug) {
 
+  $scope.group_ID = GroupID.get();
+
   $scope.meetings = [];
 
   $scope.$on("$ionicView.enter", function() {
@@ -235,12 +237,12 @@ angular.module('starter.controllers', [])
 
   $scope.confirmMeeting = function()
   {  
-    if(this.MeetingDate != "" && this.StartTime != "" && this.MeetingDescription != "")
+    if(this.MeetingDate != "" && this.StartTime != "" && this.meetingDescription != "")
     {
       if(Meetings.getEdit() == false)
       {
         $scope.meetings.push({'MeetingDate':this.MeetingDate,
-          'StartTime':this.StartTime,'MeetingDescription':this.MeetingDescription,
+          'StartTime':this.StartTime,'MeetingDescription':this.meetingDescription,
           'ProjectID':GroupID.get(), 'EndTime': this.EndTime});
         Meetings.set($scope.meetings);
       }
@@ -256,9 +258,11 @@ angular.module('starter.controllers', [])
         {
           //GroupName = "TEMPORARY_VAR";
           ProjectID : GroupID.get(),
+          GroupName : this.GroupName,
           MeetingMeetingDate : this.MeetingDate,
+          EndTime : this.EndTime,
           StartTime : this.StartTime,
-          MeetingDescription : this.MeetingDescription
+          MeetingDescription : this.meetingDescription
 
           //EndTime = "2:30 PM";
         }
@@ -289,8 +293,9 @@ angular.module('starter.controllers', [])
       }
       this.MeetingDate = "";
       this.StartTime = "";
+      this.EndTime = "";
       this.topic = "";
-      this.MeetingDescription = "";
+      this.meetingDescription = "";
 
 }
 

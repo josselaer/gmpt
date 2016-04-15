@@ -26,13 +26,14 @@
   <!--<label>{{meeting.GroupName}}</label>-->
 		<div class="row">
     	<div class="col col-30">
-    		<p>{{meeting.GroupName}}</p>
+        <p>{{meeting.MeetingDate}}</p>
     		<p>{{meeting.StartTime}}</p>
         <p>{{meeting.EndTime}}</p>
+
     		<a class="button button-icon icon ion-edit" href="#/addmeeting" ng-click="editMeeting($index)"></a>
    		</div>
     	<div class="col col-75">
-    		<header>{{meeting.GroupName}}</header>
+    		<!--<header>{{meeting.GroupName}}</header>-->
         <p>{{meeting.MeetingDescription}}</p>
     	</div>
    		</div>
