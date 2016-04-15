@@ -426,43 +426,47 @@ $scope.newMeeting = function()
       $state.go("menu.groups");
     });
   }
-  $scope.autoCompleteUpMeetingDate = function(input)
+  $scope.autoCompleteMeetingUpdate = function(input)
   {
-    console.log(this.email);
-    var input_data = 
+      console.log("autocomplete called");
+    if(input.length >= 3)
     {
-      term: input
-    }
-    var success = false;
-    $scope.input_suggestions = [];
-    $http(
-    {
-      method: "POST",
-      url: Debug.getURL("/autocomplete"),
-      data: input_data,
-      headers: 
+      console.log(this.email);
+      var input_data = 
       {
-        "Content-Type": "application/json",
-        "Authorization": UserInfo.getAuthToken()
+        term: input
       }
-    }).then(function successCallback(response) 
-    {
-      console.log(response);
-      success = true;
-      return response;
-    }, function errorCallback(response) 
-    {
-      console.log("auto complete 'fail': ");
-      console.log(response);
-      alert("Failed to post autocomplete");
-      return null;
-    }).then(function redirect(response) 
-    {
-      console.log("redirecting...");
-      console.log(response);
-      $scope.input_suggestions = response.data.suggestions;
-      console.log("Input suggestions: " , $scope.input_suggestions);
-    });
+      var success = false;
+      $scope.input_suggestions = [];
+      $http(
+      {
+        method: "POST",
+        url: Debug.getURL("/autocomplete"),
+        data: input_data,
+        headers: 
+        {
+          "Content-Type": "application/json",
+          "Authorization": UserInfo.getAuthToken()
+        }
+      }).then(function successCallback(response) 
+      {
+        console.log(response);
+        success = true;
+        return response;
+      }, function errorCallback(response) 
+      {
+        console.log("auto complete 'fail': ");
+        console.log(response);
+        alert("Failed to post autocomplete");
+        return null;
+      }).then(function redirect(response) 
+      {
+        console.log("redirecting...");
+        console.log(response);
+        $scope.input_suggestions = response.data.suggestions;
+        console.log("Input suggestions: " , $scope.input_suggestions);
+      });
+    }
   }
 
   $scope.selectEmail = function(selected_email)
