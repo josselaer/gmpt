@@ -13,13 +13,13 @@ navigation history that also transitions its views in and out.
   </ion-tab>
 
   <!-- Chats Tab -->
-  <ion-tab title="Chat" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/group/chat/{{groupID}}">
+  <ion-tab title="Chat" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/group/chat/{{groupID}}"
+  badge="notifications.Message" badge-style="badge-assertive">
     <ion-nav-view name="group-chat"></ion-nav-view>
   </ion-tab>
 
   <!-- Account Tab -->
-  <ion-tab title="Meetings" icon-off="ion-android-contacts" icon-on="ion-android-contacts"  ui-sref="menu.group.meetings({groupID:groupID})">
-
+  <ion-tab title="Meetings" icon-off="ion-android-contacts" icon-on="ion-android-contacts" badge="notifications.Meeting" badge-style="badge-assertive" ui-sref="menu.group.meetings({groupID:groupID})">
     <ion-nav-view name="group-meetings"></ion-nav-view>
   </ion-tab>
 

@@ -1,15 +1,46 @@
 angular.module('starter.controllers', [])
 
 
-.controller('TabCtrl', function($scope, UserInfo) {
+.controller('TabCtrl', function($scope, $http, UserInfo, Debug) {
 
   $scope.$on ("$ionicView.enter", function() {
 
     $scope.groupID = 0;
     $scope.groupID = UserInfo.getActiveGroup();
+    $scope.notifications = {};
 
-  })
-  
+    $http({
+      method: "GET",
+      url: Debug.getURL("/notifications/" + $scope.groupID),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
+
+      console.log("Tab GET Notifications:");
+      console.log(response);
+      return response;
+
+    }, function errorCallback(response) {
+
+      return null;
+
+    }).then(function(response) {
+
+      var not = response.data.notifications;
+
+      if (not.Meeting > 0) {
+        $scope.notifications.Meeting = not.Meeting;
+      }
+
+      if (not.Message > 0) {
+        $scope.notifications.Message = not.Message;
+      }
+
+    }); 
+
+  });
 
 })
 
