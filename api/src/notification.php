@@ -27,3 +27,28 @@ $app->get('/notifications/{project_id}',
 		return $response;
 	}
 )->add($validateSession);
+
+$app->put('/notifications/{project_id}/{notification_type}',
+	function($request,$response,$args) {
+		$db = $this->GMPT;
+		$userID = (int)$request->getAttribute('UserID');
+		$projectID = (int)$request->getAttribute('project_id');
+		$notificationType = $request->getAttribute('notification_type');
+		echo $notificationType;
+		$query = $db->prepare("CALL UpdateNotification(?,?,?);");
+		$query->bindParam(1,$userID, PDO::PARAM_INT);
+		$query->bindParam(2,$projectID, PDO::PARAM_INT);
+		$query->bindParam(3,$notificationType, PDO::PARAM_STR);
+		$result = $query->execute();
+		if ($result) {
+			$response = $response->withStatus(200);
+		}
+		else {
+			print_r($query->errorInfo());
+			$response = $response->withStatus(400);
+		}
+		unset($query);	
+	
+		return $response;
+	}
+)->add($validateSession);
