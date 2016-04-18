@@ -53,7 +53,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
    .state('group', {
     url: '/group',
     abstract: true,
-    templateUrl: 'templates/group.html'
+    templateUrl: 'templates/group.html',
+    controller: 'TabCtrl'
   })
   
     .state('group.stats', {

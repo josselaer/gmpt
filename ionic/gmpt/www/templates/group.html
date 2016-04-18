@@ -13,7 +13,7 @@ navigation history that also transitions its views in and out.
   </ion-tab>
 
   <!-- Chats Tab -->
-  <ion-tab title="Chat" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/group/chat/{{groupID}}"
+  <ion-tab title="Chat" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" ui-sref="group.chat({groupID:groupID})"
   badge="notifications.Message" badge-style="badge-assertive">
     <ion-nav-view name="group-chat"></ion-nav-view>
   </ion-tab>

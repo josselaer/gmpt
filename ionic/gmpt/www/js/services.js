@@ -111,6 +111,8 @@ angular.module('starter.services', [])
 
     setActiveGroup: function(id) {
       activeGroup = id;
+
+      console.log(activeGroup);
     },
     getActiveGroup: function() {
         return activeGroup;

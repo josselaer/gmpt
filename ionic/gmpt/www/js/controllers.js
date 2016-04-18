@@ -363,6 +363,7 @@ $scope.newMeeting = function()
   }); 
 
     $scope.setGroup = function(id) {
+      console.log("Setting group ID: " + id);
     UserInfo.setActiveGroup(id);
 
   }
