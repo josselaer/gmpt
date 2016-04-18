@@ -1,16 +1,46 @@
 angular.module('starter.controllers', [])
 
 
-.controller('TabCtrl', function($scope, UserInfo) {
+.controller('TabCtrl', function($scope, $http, UserInfo, Debug) {
 
   $scope.$on ("$ionicView.enter", function() {
 
     $scope.groupID = 0;
     $scope.groupID = UserInfo.getActiveGroup();
-    console.log("Group ID in TabCtrl: " + $scope.groupID);
+    $scope.notifications = {};
 
-  })
-  
+    $http({
+      method: "GET",
+      url: Debug.getURL("/notifications/" + $scope.groupID),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
+
+      console.log("Tab GET Notifications:");
+      console.log(response);
+      return response;
+
+    }, function errorCallback(response) {
+
+      return null;
+
+    }).then(function(response) {
+
+      var not = response.data.notifications;
+
+      if (not.Meeting > 0) {
+        $scope.notifications.Meeting = not.Meeting;
+      }
+
+      if (not.Message > 0) {
+        $scope.notifications.Message = not.Message;
+      }
+
+    }); 
+
+  });
 
 })
 
@@ -38,8 +68,6 @@ angular.module('starter.controllers', [])
         console.log(response);
 
       }).then(function(response) {
-        console.log("Got stats:");
-        console.log(response);
 
         $scope.stats = response.Totals;
 
@@ -78,7 +106,6 @@ angular.module('starter.controllers', [])
 
       Chats.getGroupMessages($stateParams.groupID).then(function successCallback(response) {
 
-      console.log(response.data);
       $scope.messages = response;
       
     }, function errorCallback(response) {
@@ -105,12 +132,10 @@ angular.module('starter.controllers', [])
   };
 
   $scope.chatsctrl.report = function(messageID) {
-    console.log("Reported message " + messageID);
+    //console.log("Reported message " + messageID);
   };
 
   $scope.chatsctrl.send = function() {
-
-    console.log("Sending: " + $scope.message.text);
 
     var m = { 
       //sender: UserInfo.get().user.userName,
@@ -137,8 +162,6 @@ angular.module('starter.controllers', [])
 
   $scope.login = function () {
 
-    console.log("LOGIN user: " + $scope.logInfo.username + " - PW: " + $scope.logInfo.password);
-
     $http({
       method: "POST",
       url:Debug.getURL("/login"),
@@ -149,10 +172,8 @@ angular.module('starter.controllers', [])
       alert.log("Can't Login");
     }).then(function redirect(response) {
 
-      console.log(response);
       if (UserInfo.login(response.data)) {
         console.log("You logged in!")
-        console.log(response);
       
         $state.go("menu.groups");
       }
@@ -188,19 +209,14 @@ angular.module('starter.controllers', [])
         "Authorization": UserInfo.getAuthToken()
       }
     }).then(function successCallback(response) {
-      console.log("RESPONSE: ")
+
+      console.log("Meetings for group " + GroupID.get() +": ");
       console.log(response.data);
+
       return response.data;
-      //console.log(Debug.getURL("/meetings/" + GroupID.get()));
-      var meetings_retrieved = [response.data.length];
-      console.log("passed to set()");
-      console.log(meetings_retrieved);
-      Meetings.set(response.data);
-      //console.log(Meetings.all());
-      $scope.meetings = Meetings.all();
-      console.log("scope meetings : : :");
-      console.log($scope.meetings);
+
     }, function errorCallback(response) {
+
       console.log("ERROR CALLBACK");
       console.log(Debug.getURL("/meetings"));
       console.log(response);
@@ -208,11 +224,11 @@ angular.module('starter.controllers', [])
       alert("Failed to load groups, please try again.");
 
     }).then(function(response) {
+
       Meetings.set(response);
       $scope.meetings = Meetings.all();
       this.meetings = Meetings.all();
-      console.log("SCOPE:");
-      console.log($scope.meetings);
+
     });
     $scope.Meetings = Meetings.all();
   });
@@ -220,14 +236,9 @@ angular.module('starter.controllers', [])
   $scope.Meetings = Meetings.all();
   $scope.meetingDetails = function(index)
   {
-    //console.log("INDEX: ", index);
+
     Meetings.setCurr(index);
     $scope.currentMeeting = Meetings.get(Meetings.getCurr());
-    console.log("current index inside function: ", Meetings.getCurr());
-    //console.log("current meeting: ", $scope.currentMeeting);
-    //return $scope.currentMeeting;
-    //$state.go('group.meetings');
-    //return $scope.currentMeeting;
   }
 
   $scope.currentMeeting = function()
@@ -266,8 +277,7 @@ angular.module('starter.controllers', [])
 
           //EndTime = "2:30 PM";
         }
-        console.log("MEETING");
-        console.log(meeting);
+
         $http({
       method: "POST",
       url: Debug.getURL("/meetings"),
@@ -277,8 +287,7 @@ angular.module('starter.controllers', [])
         "Authorization": UserInfo.getAuthToken()
       }
     }).then(function successCallback(response) {
-      console.log("Add meeting success");
-      console.log(response);
+
       return response;
     }, function errorCallback(response) {
       console.log("Add meeting 'fail': ");
@@ -334,8 +343,7 @@ $scope.newMeeting = function()
         }
       }).then(function successCallback(response) {
 
-        console.log("Get project auth: " + UserInfo.getAuthToken());
-        console.log(Debug.getURL("/projects"));
+        console.log("Get projects with auth: " + UserInfo.getAuthToken());
         console.log(response.data);
 
         Groups.set(response.data.projects);
@@ -357,7 +365,6 @@ $scope.newMeeting = function()
     $scope.setGroup = function(id) {
     UserInfo.setActiveGroup(id);
 
-    console.log("getActiveGroup(): " + UserInfo.getActiveGroup());
   }
   
 
@@ -376,7 +383,7 @@ $scope.newMeeting = function()
 
 
   $scope.addMember = function () {
-    console.log("email: ", $scope.email);
+
     if ($scope.email != ' ') {
       $scope.members.push({
         'email': $scope.email,
@@ -389,7 +396,6 @@ $scope.newMeeting = function()
 
   $scope.removeItem = function (index) {
     $scope.members.splice(index, 1);
-    console.log("delete member");
     $scope.members = $scope.members.filter(function (item) {
       return !item.done;
     })
@@ -397,15 +403,11 @@ $scope.newMeeting = function()
 
   $scope.addGroup = function () {
 
-    //console.log($scope.groupName);
-    console.log("Group Description: " + $scope.group.groupDesc);
     var group = {
       groupName: $scope.group.groupName,
       projDescription: $scope.group.groupDesc,
       users: $scope.members
     }
-
-    console.log("Adding group: " + JSON.stringify(group));
 
     $http({
       method: "POST",
@@ -416,26 +418,24 @@ $scope.newMeeting = function()
         "Authorization": UserInfo.getAuthToken()
       }
     }).then(function successCallback(response) {
-      console.log("Add group success");
-      console.log(response);
+
       return response;
+
     }, function errorCallback(response) {
       console.log("Add group 'fail': ");
       console.log(response);
       alert("Failed to add group");
       return null;
     }).then(function redirect(response) {
-      console.log("redirecting...");
-      console.log(response);
+
       $state.go("menu.groups");
     });
   }
   $scope.autoCompleteMeetingUpdate = function(input)
   {
-      console.log("autocomplete called");
-    if(input.length >= 3)
-    {
-      console.log(this.email);
+
+    if(input.length >= 3) {
+
       var input_data = 
       {
         term: input
@@ -475,7 +475,6 @@ $scope.newMeeting = function()
 
   $scope.selectEmail = function(selected_email)
   {
-    console.log("current input: " , $scope.email);
     $scope.email = selected_email;
     document.getElementById('email_input').value = selected_email.suggestion;
     $scope.email = selected_email.suggestion;
@@ -488,8 +487,6 @@ $scope.newMeeting = function()
   $scope.regInfo = {};
 
   $scope.register = function () {
-
-    console.log($scope.regInfo);
 
     $http({
       method: "POST",

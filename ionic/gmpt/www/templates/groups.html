@@ -3,18 +3,33 @@
         <ion-nav-buttons side="left">
             <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-click="toggleLeft()"></button>
         </ion-nav-buttons>
+    
+          <ion-nav-buttons side="right">
+            
+        
+        <a class="button icon ion-android-add" href="#/menu/addgroup"> New Group</a>
+        
+    </ion-nav-buttons>
+    
   <ion-content class="has-header">
     <ion-list>
       <ion-item class="item" ng-repeat="group in groups" type="item-text-wrap" ui-sref="menu.group.chat({groupID:group.ProjectID})" ng-click="setGroup(group.ProjectID)">
         <h2>{{group.GroupName}}</h2>
         <h4 class=" item-text-right">Upcoming meeting: </h4>
-        <span class="badge badge-assertive"><h2>{{group.Notification}}</h2></span>
+        <div ng-switch on="group.Notification">
+          <div ng-switch-when="0">
+            <span class="badge badge-secondary"><h2>{{group.Notification}}</h2></span>
+          </div>
+          <div ng-switch-default>
+            <span class="badge badge-assertive"><h2>{{group.Notification}}</h2></span>
+          </div>
+        </div>
       </ion-item>
       
-      <ion-item class="item item-icon-left" type="item-text-wrap" href="#/menu/addgroup">
+    <!--  <ion-item class="item item-icon-left" type="item-text-wrap" href="#/menu/addgroup">
         <h2>Create a new group</h2>
         <i class="icon ion-plus"></i>
-      </ion-item>
+      </ion-item>-->
 
     </ion-list>
   </ion-content>

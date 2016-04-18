@@ -8,8 +8,9 @@
 			$GroupName = $data['ProjectName'];
 			$Description = $data['Description'];
 			$DateCreated = $data['DateCreated'];
+			$RoleName = $data['RoleName'];
 			$Notification = $data['Notification'];
-			$project = array("ProjectID"=>$ProjectID, "GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated, "Notification"=>$Notification);
+			$project = array("ProjectID"=>$ProjectID, "GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated, "RoleName"=>$RoleName, "Notification"=>$Notification);
 			array_push($results,$project);
 		}
 		$resultSize =  count($results);
