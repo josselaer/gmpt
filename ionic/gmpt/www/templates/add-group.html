@@ -7,14 +7,19 @@
     <input ng-model="group.groupName" type="text"></input>
 </label>
 <p></p>
+
+
 <label>Description</label>
-<p></p>
-<ion-item>
-  <input class="bar" ng-model="group.groupDesc"></input>
-</ion-item>
-<p></p>
-
-
+<div class="item item-input">
+<textarea ng-model="MeetingDescription">
+</textarea>
+</div>
+<!--
+<label>Description</label>
+<textarea name="comment" ng-model="group.groupDesc">
+</textarea>
+  <input class="item item-input" ng-model="group.groupDesc"></input>
+-->
 <label>Add Team Member</label>
 <p></p>
   <div class="container">
@@ -24,7 +29,7 @@
   <label class="item item-input">
     <label class="item-input-wrapper">
     <i class="icon ion-ios7-search placeholder-icon"></i>
-    <input type="text" name="email" id="email_input" placeholder="Email" ng-change="autoCompleteUpdate(email)" ng-model="email" required>
+    <input type="text" name="email" id="email_input" placeholder="Email" ng-change="autoCompleteMeetingUpdate(email)" ng-model="email" required>
   </label>
   </label>
     <p></p>
@@ -42,7 +47,6 @@
   <p></p>
   <ul>
     <li ng-repeat="member in members">
-      <!--<span ng-class="{'done':member.done}" type = "btn btn-warning">-->
       <div class = "item item-stable">
         <div class="row">
           <label>{{member.email}}</label>
@@ -51,8 +55,6 @@
             <button ng-click="removeItem($index)" class="button ion-android-cancel"> </button> 
           </div>
         </div>
-        
-      <!--</span>-->
     </div>
     </li>
   </ul>
@@ -64,5 +66,4 @@
   </button>
 </div>
 </ion-content>
-
 </ion-view>
