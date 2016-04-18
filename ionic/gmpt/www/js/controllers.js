@@ -193,6 +193,8 @@ angular.module('starter.controllers', [])
 
 .controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, Debug) {
 
+  $scope.group_ID = GroupID.get();
+
   $scope.meetings = [];
 
   $scope.$on("$ionicView.enter", function() {
@@ -246,28 +248,33 @@ angular.module('starter.controllers', [])
 
   $scope.confirmMeeting = function()
   {  
-    if(this.date != "" && this.startTime != "" && this.topic != "" && this.meetingDescription != "")
+    if(this.meetingDate != "" && this.startTime != "" && this.meetingDescription != "")
     {
       if(Meetings.getEdit() == false)
       {
-        $scope.meetings.push({'date':this.date,'startTime':this.startTime,'topic':this.topic,'meetingDescription':this.meetingDescription, 'ProjectID':GroupID.get()});
+        $scope.meetings.push({'MeetingDate':this.meetingDate,
+          'StartTime':this.startTime,'MeetingDescription':this.meetingDescription,
+          'ProjectID':GroupID.get(), 'EndTime': this.endTime});
         Meetings.set($scope.meetings);
       }
       else if(Meetings.getEdit() == true)
-      {     
-        $scope.meetings[Meetings.getCurr()].topic = this.topic;
-        $scope.meetings[Meetings.getCurr()].date = this.date;
-        $scope.meetings[Meetings.getCurr()].startTime = this.startTime;
-        $scope.meetings[Meetings.getCurr()].meetingDescription = this.meetingDescription;
+      {
+        $scope.meetings[Meetings.getCurr()].MeetingDate = this.meetingDate;
+        $scope.meetings[Meetings.getCurr()].StartTime = this.startTime;
+        $scope.meetings[Meetings.getCurr()].MeetingDescription = this.meetingDescription;
+        $scope.meetings[Meetings.getCurr()].EndTime = this.endTime;
         Meetings.set($scope.meetings);
       }
       var meeting = 
         {
           //GroupName = "TEMPORARY_VAR";
           ProjectID : GroupID.get(),
-          MeetingDate : this.date,
-          StartTime : this.StartTime,
-          MeetingDescription : this.MeetingDescription
+          //GroupName : this.groupName,
+          MeetingMeetingDate : this.meetingDate,
+          EndTime : this.endTime,
+          StartTime : this.startTime,
+          MeetingDescription : this.meetingDescription
+
           //EndTime = "2:30 PM";
         }
 
@@ -293,9 +300,9 @@ angular.module('starter.controllers', [])
       //$state.go("groups");
     });
       }
-      this.date = "";
+      this.meetingDate = "";
       this.startTime = "";
-      this.topic = "";
+      this.endTime = "";
       this.meetingDescription = "";
 
 }
@@ -424,41 +431,46 @@ $scope.newMeeting = function()
       $state.go("menu.groups");
     });
   }
-  $scope.autoCompleteUpdate = function(input)
+  $scope.autoCompleteMeetingUpdate = function(input)
   {
 
-    var input_data = 
-    {
-      term: input
-    }
-    var success = false;
-    $scope.input_suggestions = [];
-    $http(
-    {
-      method: "POST",
-      url: Debug.getURL("/autocomplete"),
-      data: input_data,
-      headers: 
-      {
-        "Content-Type": "application/json",
-        "Authorization": UserInfo.getAuthToken()
-      }
-    }).then(function successCallback(response) 
-    {
-      success = true;
-      return response;
-    }, function errorCallback(response) 
-    {
-      console.log("auto complete 'fail': ");
-      console.log(response);
-      alert("Failed to post autocomplete");
-      return null;
-    }).then(function redirect(response) 
-    {
+    if(input.length >= 3) {
 
-      $scope.input_suggestions = response.data.suggestions;
-      console.log("Input suggestions: " , $scope.input_suggestions);
-    });
+      var input_data = 
+      {
+        term: input
+      }
+      var success = false;
+      $scope.input_suggestions = [];
+      $http(
+      {
+        method: "POST",
+        url: Debug.getURL("/autocomplete"),
+        data: input_data,
+        headers: 
+        {
+          "Content-Type": "application/json",
+          "Authorization": UserInfo.getAuthToken()
+        }
+      }).then(function successCallback(response) 
+      {
+        console.log(response);
+        success = true;
+        return response;
+      }, function errorCallback(response) 
+      {
+        console.log("auto complete 'fail': ");
+        console.log(response);
+        alert("Failed to post autocomplete");
+        return null;
+      }).then(function redirect(response) 
+      {
+        console.log("redirecting...");
+        console.log(response);
+        $scope.input_suggestions = response.data.suggestions;
+        console.log("Input suggestions: " , $scope.input_suggestions);
+      });
+    }
   }
 
   $scope.selectEmail = function(selected_email)
