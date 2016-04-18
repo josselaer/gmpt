@@ -31,10 +31,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each state's controller can be found in controllers.js
   $stateProvider
   
-    .state('login', {
+  .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
+  })
+
+  .state('account', {
+    url: '/account',
+    templateUrl: 'templates/accounts.html',
+    controller: 'AccountCtrl'
   })
   
   .state('menu.groups', {
