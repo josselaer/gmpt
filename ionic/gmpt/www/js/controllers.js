@@ -175,7 +175,7 @@ angular.module('starter.controllers', [])
       if (UserInfo.login(response.data)) {
         console.log("You logged in!")
       
-        $state.go("menu.groups");
+        $state.go("groups");
       }
       else {
         alert("Could not log in!" + JSON.stringify(response.data.userData));
@@ -421,7 +421,7 @@ $scope.newMeeting = function()
       return null;
     }).then(function redirect(response) {
 
-      $state.go("menu.groups");
+      $state.go("groups");
     });
   }
   $scope.autoCompleteUpdate = function(input)
@@ -511,8 +511,3 @@ $scope.newMeeting = function()
   }
 })
 
-.controller('MenuCtrl', function ($scope, $ionicSideMenuDelegate) {
-    $scope.toggleLeftSideMenu = function() {
-      $ionicSideMenuDelegate.toggleLeft();
-   };
-})
