@@ -51,6 +51,7 @@ $app->post('/meetings',
 		$LocationName = $form_data['LocationName'];
 		$StartTime = $form_data['StartTime'];
 		$EndTime = $form_data['EndTime'];
+		$UserID = $form_data['UserID'];
 
 		$query = $db->prepare("CALL CreateMeeting(?,?,?,?,?,?)");
 		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
@@ -67,7 +68,11 @@ $app->post('/meetings',
 		echo $response;
 		unset($query);
 		//get user id by email
-		
+		$query2 = $db->prepare("CALL CreateNotification2(?,?)");
+		$query2->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$query2->bindParam(2,"Meeting Created", PDO::PARAM_STR);
+		$query2->execute();
+
 		//$response = array("worked"=>true);
 		return json_encode($response);
 
@@ -101,7 +106,10 @@ $app->put('/meetings',
 		echo $response;
 		unset($query);
 		//get user id by email
-		
+		$query2 = $db->prepare("CALL CreateNotification2(?,?)");
+		$query2->bindParam(1,$ProjectID, PDO::PARAM_INT);
+		$query2->bindParam(2,"Meeting Edited", PDO::PARAM_STR);
+		$query2->execute();
 		//$response = array("worked"=>true);
 		return json_encode($response);
 
@@ -500,8 +508,13 @@ $app->put('/groups/{groupID}',
 $app->get('/chat/{groupID}',
 	function($request,$response,$args) {
 		$userID = $request->getAttribute('UserID');
-		$groupID = $request->getAttribute('groupID');
+		$ProjectID = $request->getAttribute('groupID');
 		return $request->body(json_encode($getChatByGroupID($userID,$groupID)));
+		$query2 = $db->prepare("CALL CreateNotification3(?,?,?)");
+		$query2->bindParam(1,$UserID, PDO::PARAM_INT);
+		$query2->bindParam(2,$ProjectID, PDO::PARAM_INT);
+		$query2->bindParam(3,"Chat", PDO::PARAM_STR);
+		$query2->execute();
 	}
 )->add($validateSession);
 
