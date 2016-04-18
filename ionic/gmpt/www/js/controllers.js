@@ -351,6 +351,7 @@ $scope.newMeeting = function()
   $scope.userName = UserInfo.get().userName;
 
   $scope.$on("$ionicView.enter", function() {
+            
     $http({
 
         method: "GET",
