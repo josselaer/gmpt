@@ -58,9 +58,7 @@ angular.module('starter.controllers', [])
       }
 
     }); 
-
   });
-
 })
 
 
@@ -91,9 +89,7 @@ angular.module('starter.controllers', [])
         $scope.stats = response.Totals;
 
       });
-
   });
-
 })
 
 
@@ -106,7 +102,7 @@ angular.module('starter.controllers', [])
 
   $scope.chatsctrl.anonymous = false;
 
-  $interval(function getMessages() {
+  var chatRefresh = $interval(function getMessages() {
     
     Chats.getGroupMessages($stateParams.groupID).then(function success(response) {
 
@@ -118,6 +114,8 @@ angular.module('starter.controllers', [])
       }, function error(response) {
         console.log("Error");
       });
+
+    console.log("Chat Interval Go");
 
   }, 3000);
 
@@ -135,6 +133,13 @@ angular.module('starter.controllers', [])
       alert("Failed to get chat messages, please try again. " + response);
 
     });
+  });
+
+  $scope.$on("$ionicView.leave", function() {
+
+    console.log("canceling");
+    chatRefresh.cancel();
+
   });
 
   $scope.chatsctrl.toggleAnonymous = function() {
@@ -351,6 +356,9 @@ $scope.newMeeting = function()
   $scope.userName = UserInfo.get().userName;
 
   $scope.$on("$ionicView.enter", function() {
+
+    $scope.setGroup(0);
+
     $http({
 
         method: "GET",

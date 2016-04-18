@@ -58,6 +58,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // setup an abstract state for the tabs directive
    .state('group', {
     url: '/group',
+    cache: false,
     abstract: true,
     templateUrl: 'templates/group.html',
     controller: 'TabCtrl'
