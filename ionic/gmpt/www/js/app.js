@@ -37,40 +37,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'LoginCtrl'
   })
   
-  .state('menu.groups', {
-      url: "/groups",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/groups.html",
-          controller: 'GroupsCtrl'
-        }
-      }
-    })
-  
-   .state('menu.addgroup', {
-      url: "/addgroup",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/add-group.html",
-          controller: 'AddGroupCtrl'
-        }
-      }
-    })
-  
-
-  // setup an abstract state for the tabs directive
-    .state('menu.group', {
-    url: '/group',
-    abstract: true,
-    views:{
-    'menuContent' :{
-        templateUrl: 'templates/group.html',
-        controller: 'TabCtrl'
-    }
-   }
+  .state('groups', {
+    url: '/groups',
+    templateUrl: 'templates/groups.html',
+    controller: 'GroupsCtrl'
   })
   
-    .state('menu.group.stats', {
+ .state('addgroup', {
+    url: '/addgroup',
+    templateUrl: 'templates/add-group.html',
+    controller: 'AddGroupCtrl'
+  })
+
+  // setup an abstract state for the tabs directive
+   .state('group', {
+    url: '/group',
+    abstract: true,
+    templateUrl: 'templates/group.html'
+  })
+  
+    .state('group.stats', {
     url: '/stats/:groupID',
     views: {
         'group-stats': {
@@ -80,7 +66,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
-  .state('menu.group.chat', {
+  .state('group.chat', {
       url: '/chat/:groupID',
       views: {
         'group-chat': {
@@ -102,17 +88,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'MeetingsCtrl'
 
   })
-//  .state('group.meetings', {
-//    url: '/meetings',
-//    views: {
-//      'group-meetings': {
-//        templateUrl: 'templates/group-meetings.html',
-//        controller: 'MeetingsCtrl'
-//      }
-//    }
-//  })
-  
-   .state('menu.group.meetings', {
+
+   .state('group.meetings', {
     url: '/meetings/:groupID',
     views: {
       'group-meetings': {
@@ -130,12 +107,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'RegisterCtrl'
   })
   
-    .state('menu', {
-    url: '/menu',
-    abstract: true,
-    templateUrl: 'templates/menu.html',
-      controller: "MenuCtrl"
-  })
+
   
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
