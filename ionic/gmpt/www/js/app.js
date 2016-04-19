@@ -90,6 +90,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'MeetingsCtrl'
 
   })
+  .state('editmeeting', {
+    url: '/editmeeting',
+    templateUrl: 'templates/edit-meeting.html',
+    controller: 'MeetingsCtrl'
+
+  })
   .state('meeting-details', {
     url: '/meeting-details',
     templateUrl: 'templates/meeting-details.html',

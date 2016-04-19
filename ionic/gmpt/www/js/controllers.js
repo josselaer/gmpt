@@ -269,20 +269,21 @@ angular.module('starter.controllers', [])
 
   $scope.confirmMeeting = function()
   {  
+    if (this.meetingDate != "" && this.meetingDescription != "" && this.startTime == "" && this.endTime == "")
+    {
       if(Meetings.getEdit() == false)
       {
         console.log("$scope.meetings: ");
         console.log($scope.meetings);
         console.log("Meetings: ");
         console.log(Meetings.all());
-        /*$scope.meetings.push({'MeetingDate':$scope.meetingDate,
+        $scope.meetings.push({'MeetingDate':$scope.meetingDate,
           'StartTime':$scope.startTime,'MeetingDescription':$scope.meetingDescription,
           'ProjectID':GroupID.get(), 'EndTime': $scope.endTime});
         Meetings.set($scope.meetings);
-        */
 
-      //}
-      /*
+      }
+      
       else if(Meetings.getEdit() == true)
       {
         $scope.meetings[Meetings.getCurr()].MeetingDate = this.meetingDate;
@@ -291,7 +292,7 @@ angular.module('starter.controllers', [])
         $scope.meetings[Meetings.getCurr()].EndTime = this.endTime;
         Meetings.set($scope.meetings);
       }
-      */
+      
       console.log("at this point in time, weve clicked confirm meeting, lets see the scope variables: ");
       console.log("meetingDate v");
       console.log(this.meetingDate);
@@ -303,10 +304,10 @@ angular.module('starter.controllers', [])
         {
           ProjectID : GroupID.get(),
           MeetingDate : this.meetingDate,
+          LocationName : this.locationName,
           EndTime : this.endTime,
           StartTime : this.startTime,
           MeetingDescription : this.meetingDescription
-          //EndTime = "11:00:00";
         }
         console.log("next is meeting object: ");
         console.log(new_meeting);
@@ -337,11 +338,7 @@ angular.module('starter.controllers', [])
       this.startTime = "";
       this.endTime = "";
       this.meetingDescription = "";
-    }
-    else
-    {
-      console.log("EDIT = TRUE")
-    }
+}
 }
 
 $scope.editMeeting = function(index)
