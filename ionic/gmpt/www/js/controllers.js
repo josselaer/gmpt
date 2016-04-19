@@ -187,22 +187,18 @@ angular.module('starter.controllers', [])
   $scope.login = function () {
     var data = $scope.logInfo;
 
-    alert(JSON.stringify(data));
     $http({
       method: "POST",
       url:Debug.getURL("/login"),
       data: data
     }).then(function successCallback(response) {
-      alert("Login successCallback" + JSON.stringify(response));
       return response;
     }, function errorCallback(response) {
       alert("Can't Login" +  JSON.stringify(response));
     }).then(function redirect(response) {
 
       if (UserInfo.login(response.data)) {
-        console.log("You logged in!")
-      
-        alert("Supposed to redirect");
+
         $scope.go("/groups");
       }
       else {
@@ -273,7 +269,8 @@ angular.module('starter.controllers', [])
 
   $scope.confirmMeeting = function()
   {  
-    if (this.meetingDate != "" && this.meetingDescription != "" && this.startTime == "" && this.endTime == "")
+    console.log("confirmMeeting Called");
+    if ($scope.meetingDate != "" && $scope.meetingDescription != "" && $scope.startTime != "" && $scope.endTime != "")
     {
       if(Meetings.getEdit() == false)
       {
@@ -336,7 +333,7 @@ angular.module('starter.controllers', [])
       console.log("redirecting RESPONSE:...");
       console.log(response);
 
-      //$state.go("groups");
+      $state.go("group.meetings(UserInfo.getActiveGroup())");
     });
       this.meetingDate = "";
       this.startTime = "";
