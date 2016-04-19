@@ -491,6 +491,8 @@ $scope.newMeeting = function()
       users: $scope.members
     }
 
+    console.log(JSON.stringify(group));
+
     $http({
       method: "POST",
       url: Debug.getURL("/projects"),
