@@ -21,9 +21,9 @@
 		$userCounter = 0;
 
 		foreach($row as $data) {
-			$UserID = (int)$data['UserID'];
+			$UserName = $data['UserName'];
 			$CheckInTime = $data['CheckInTime'];
-			$Attendance = array("UserID"=>$UserID,"CheckInTime"=>$CheckInTime);
+			$Attendance = array("UserName"=>$UserName,"CheckInTime"=>$CheckInTime);
 			array_push($Attendances, $Attendance);
 			$userCounter++;
 			if($userCounter == $userNum) {
