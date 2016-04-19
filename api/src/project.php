@@ -1,8 +1,9 @@
 <?php
 
-	function getProjects($query) {
+	function getProjects($query,$db) {
 		$results = [];
 		$row = $query->fetchAll();
+		unset($query);
 		foreach($row as $data) {
 			$ProjectID = $data['ProjectID'];
 			$GroupName = $data['ProjectName'];
@@ -10,7 +11,17 @@
 			$DateCreated = $data['DateCreated'];
 			$RoleName = $data['RoleName'];
 			$Notification = $data['Notification'];
-			$project = array("ProjectID"=>$ProjectID, "GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated, "RoleName"=>$RoleName, "Notification"=>$Notification);
+			
+			//unset($query);
+			$lastMeeting=array();
+			$getLastMeetingQuery = $db->query("CALL GetLastMeeting($ProjectID)");
+			echo json_encode($getLastMeetingQuery);
+			foreach ($getLastMeetingQuery as $r1){
+				$lastMeeting['LastMeetingDate']=$r1['MeetingDate'];
+				$lastMeeting['LastMeetingDescription']=$r1['MeetingDescription'];
+			}
+			unset($getLastMeetingQuery);
+		$project = array("ProjectID"=>$ProjectID, "GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated, "RoleName"=>$RoleName, "Notification"=>$Notification, "LastMeetingDate"=>$lastMeeting['LastMeetingDate'], "LastMeetingDescription" => $lastMeeting['LastMeetingDescription']);
 			array_push($results,$project);
 		}
 		$resultSize =  count($results);
