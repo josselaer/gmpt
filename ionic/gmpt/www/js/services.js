@@ -194,7 +194,25 @@ angular.module('starter.services', [])
     },
     set: function(g) {
       groups = g;
+    },
+    activeMeeting: function() {
 
+      var now = new Date();
+
+      for (var i = 0; i < groups.length; i++) {
+
+        if (groups[i].NextMeetingDate != null) {
+
+          var meetingDate = new Date(groups[i].NextMeetingDate);
+
+          if (now.getDay() === meetingDate.getDay() && now.getMonth() === now.getMonth()) {
+            console.log("There is a meeting today!");
+
+            return {active: true, id: groups[i].MeetingID};
+          }
+        }
+      }
+      return false;
     }
   };
 })
