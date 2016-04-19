@@ -2,40 +2,39 @@
 
 <ion-content class="padding">
 <a class="button" href = "#/group/meetings/"> Back </a>
-<!--
-<p></p>
-<label>Meeting Topic</label>
-<p></p>
 
-<label class="item item-input">
-  <input ng-model="topic" type="text" placeholder={{currentMeeting().GroupName}}>
-</label>
--->
 <p></p>
 
 <label>Description</label>
 <div class="item item-input">
-<textarea name="comment" ng-model="meetingDescription" placeholder={{currentMeeting().MeetingDescription}}>
+<textarea name="comment" ng-model="meetingDescription">
 </textarea>
 </div>
 <p></p>
 
 <label>Date</label>
 <div class="item item-input">
-  <input ng-model="meetingDate" type="text" placeholder={{currentMeeting().MeetingDate}}>
+  <input ng-model="meetingDate" type="text">
 </div>
 <p></p>
 <label>Start Time</label>
 
-<div class="item item-input" contenteditable="true">
-  <input ng-model="startTime" type="text" placeholder={{currentMeeting().StartTime}}>
+<div class="item item-input">
+  <input ng-model="startTime" type="text">
 </div>
 <p></p>
 <label>End Time</label>
 
-<div class="item item-input" contenteditable="true">
-  <input ng-model="endTime" type="text" placeholder={{currentMeeting().EndTime}}>
+<div class="item item-input">
+  <input ng-model="endTime" type="text">
 </div>
+
+<label>Location Name</label>
+<div class="item item-input">
+<textarea name="comment" ng-model="locationName">
+</textarea>
+</div>
+<p></p>
 
 <div class="row">
   <a class="button button-full button-positive" ng-click="confirmMeeting()" href="#/group/meetings/">
