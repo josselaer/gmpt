@@ -1,8 +1,5 @@
 <ion-view view-title="Meeting">
-
-<ion-content class="padding">
-<a class="button" href = "#/group/meetings/"> Back </a>
-
+<ion-content>
 <p></p>
 
 <label>Description</label>
@@ -40,8 +37,17 @@
   <a class="button button-full button-positive" ng-click="confirmMeeting()" href="#/group/meetings/">
     Confirm Meeting
     <ion-nav-view name="tab-dash"></ion-nav-view>
-  </a>
-</div>
+  </a>  
+   
+    </div>
+    
+    <div class="row">
+
+        <button class="button button-secondary" ui-sref="group.meetings">
+            Cancel
+        </button>
+        
+    </div>
 </ion-content>
 
 </ion-view>
