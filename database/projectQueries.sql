@@ -34,3 +34,12 @@ CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `AutocompleteUserEmail`(IN Term 
 BEGIN
 	SELECT Email FROM User WHERE Email LIKE Term;
 END
+
+CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `RemoveUserFromProject`(IN ProjectIDVal INT, UserIDVal INT)
+BEGIN
+	DELETE FROM UserProject 
+	WHERE UserID = UserIDVal 
+	AND ProjectID=ProjectIDVal;
+END
+
+
