@@ -89,6 +89,26 @@ angular.module('starter.controllers', [])
         $scope.stats = response.Totals;
 
       });
+
+    $http({
+      method: "GET",
+      url : Debug.getURL("/statstics/loginCount/" + $stateParams.groupID),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
+
+      console.log(response);
+      return response;
+
+    }, function failureCallback(response) {
+      //alert("Could not get member statistics");
+    }).then(function (response) {
+
+      $scope.stats.members = response.data.members;
+
+    });
   });
 })
 
@@ -138,7 +158,7 @@ angular.module('starter.controllers', [])
   $scope.$on("$ionicView.leave", function() {
 
     console.log("canceling");
-    chatRefresh.cancel();
+    $interval.cancel(chatRefresh);
 
   });
 
@@ -253,6 +273,7 @@ angular.module('starter.controllers', [])
 
     });
     $scope.meetings = Meetings.all();
+
   });
 
   $scope.meetingDetails = function(index)
@@ -366,7 +387,7 @@ $scope.newMeeting = function()
 
   $scope.userName = UserInfo.get().userName;
 
-  $scope.activeMeeting = false;
+  $scope.activeMeeting = {active: false, id: null};
 
   $scope.$on("$ionicView.enter", function() {
 
@@ -389,6 +410,8 @@ $scope.newMeeting = function()
         Groups.set(response.data.projects);
         $scope.groups = response.data.projects;
 
+        $scope.activeMeeting = Groups.activeMeeting();
+
       }, function errorCallback(response) {
 
         console.log(Debug.getURL("/projects"));
@@ -407,9 +430,29 @@ $scope.newMeeting = function()
     UserInfo.setActiveGroup(id);
 
   }
+
+  $scope.checkin = function() {
+
+    $http({
+      method: "POST",
+      url: Debug.getURL("/attendance/" + $scope.activeMeeting.id),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
+      console.log("Checking response:");
+      console.log(response);
+      return response;
+    }, function errorCallback(response) {
+      alert("Checkin failed");
+      return null;
+    }).then(function() {
+      $scope.activeMeeting = {active: false, id: null};
+    });
+
+  };
   
-
-
   $scope.groups = Groups.all();
 })
 
@@ -420,8 +463,6 @@ $scope.newMeeting = function()
   $scope.search = '';
   $scope.orderByAttribute = '';
   $scope.members = [];
-
-
 
   $scope.addMember = function () {
 
@@ -450,6 +491,8 @@ $scope.newMeeting = function()
       users: $scope.members
     }
 
+    console.log(JSON.stringify(group));
+
     $http({
       method: "POST",
       url: Debug.getURL("/projects"),
@@ -459,7 +502,8 @@ $scope.newMeeting = function()
         "Authorization": UserInfo.getAuthToken()
       }
     }).then(function successCallback(response) {
-
+      console.log("Adding Group...");
+      console.log(response);
       return response;
 
     }, function errorCallback(response) {
