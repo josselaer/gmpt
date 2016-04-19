@@ -217,8 +217,6 @@ angular.module('starter.controllers', [])
 
 .controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, Debug) {
 
-  $scope.group_ID = GroupID.get();
-
   $scope.meetings = [];
 
   $scope.$on("$ionicView.enter", function() {
@@ -254,15 +252,14 @@ angular.module('starter.controllers', [])
       this.meetings = Meetings.all();
 
     });
-    $scope.Meetings = Meetings.all();
+    $scope.meetings = Meetings.all();
   });
 
-  $scope.Meetings = Meetings.all();
   $scope.meetingDetails = function(index)
   {
 
     Meetings.setCurr(index);
-    $scope.currentMeeting = Meetings.get(Meetings.getCurr());
+    $scope.current_Meeting = Meetings.get(Meetings.getCurr());
   }
 
   $scope.currentMeeting = function()
@@ -272,15 +269,20 @@ angular.module('starter.controllers', [])
 
   $scope.confirmMeeting = function()
   {  
-    if(this.meetingDate != "" && this.startTime != "" && this.meetingDescription != "")
-    {
       if(Meetings.getEdit() == false)
       {
-        $scope.meetings.push({'MeetingDate':this.meetingDate,
-          'StartTime':this.startTime,'MeetingDescription':this.meetingDescription,
-          'ProjectID':GroupID.get(), 'EndTime': this.endTime});
+        console.log("$scope.meetings: ");
+        console.log($scope.meetings);
+        console.log("Meetings: ");
+        console.log(Meetings.all());
+        /*$scope.meetings.push({'MeetingDate':$scope.meetingDate,
+          'StartTime':$scope.startTime,'MeetingDescription':$scope.meetingDescription,
+          'ProjectID':GroupID.get(), 'EndTime': $scope.endTime});
         Meetings.set($scope.meetings);
-      }
+        */
+
+      //}
+      /*
       else if(Meetings.getEdit() == true)
       {
         $scope.meetings[Meetings.getCurr()].MeetingDate = this.meetingDate;
@@ -289,23 +291,30 @@ angular.module('starter.controllers', [])
         $scope.meetings[Meetings.getCurr()].EndTime = this.endTime;
         Meetings.set($scope.meetings);
       }
-      var meeting = 
+      */
+      console.log("at this point in time, weve clicked confirm meeting, lets see the scope variables: ");
+      console.log("meetingDate v");
+      console.log(this.meetingDate);
+      console.log("startTime v");
+      console.log(this.startTime);
+      console.log("endTime v");
+      console.log(this.endTime);
+      var new_meeting = 
         {
-          //GroupName = "TEMPORARY_VAR";
           ProjectID : GroupID.get(),
-          //GroupName : this.groupName,
-          MeetingMeetingDate : this.meetingDate,
+          MeetingDate : this.meetingDate,
           EndTime : this.endTime,
           StartTime : this.startTime,
           MeetingDescription : this.meetingDescription
-
-          //EndTime = "2:30 PM";
+          //EndTime = "11:00:00";
         }
+        console.log("next is meeting object: ");
+        console.log(new_meeting);
 
         $http({
       method: "POST",
       url: Debug.getURL("/meetings"),
-      data: meeting,
+      data: new_meeting,
       headers: {
         "Content-Type": "application/json",
         "Authorization": UserInfo.getAuthToken()
@@ -314,21 +323,25 @@ angular.module('starter.controllers', [])
 
       return response;
     }, function errorCallback(response) {
-      console.log("Add meeting 'fail': ");
-      console.log(response);
+      //console.log("Add meeting 'fail': ");
+      //console.log(response);
       alert("Failed to add meeting");
       return null;
     }).then(function redirect(response) {
-      console.log("redirecting...");
+      console.log("redirecting RESPONSE:...");
       console.log(response);
+
       //$state.go("groups");
     });
-      }
       this.meetingDate = "";
       this.startTime = "";
       this.endTime = "";
       this.meetingDescription = "";
-
+    }
+    else
+    {
+      console.log("EDIT = TRUE")
+    }
 }
 
 $scope.editMeeting = function(index)
@@ -341,9 +354,9 @@ $scope.editMeeting = function(index)
 $scope.newMeeting = function()
 {
   Meetings.setEdit(false);
-  Meetings.setCurr(0);
-  //$scope.currentMeeting = Meetings.get(Meetings.getCurr());
+  //Meetings.setCurr(1);
 }
+
 })
 
 .controller('AddMeetingCtrl', function($scope, $state, $http, Debug) 
