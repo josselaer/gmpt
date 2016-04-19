@@ -5,8 +5,11 @@
   The Friends service returns an array of friend data
 -->
 <ion-view view-title="Meeting Details">
+    
+    <ion-nav-buttons side="left">
+             <a ui-sref="group.meetings" class="button icon-left ion-chevron-left button-clear button-dark">Meetings</a>
+       </ion-nav-buttons>
   <ion-content class="padding">
-    <a class="button" href = "#/group/meetings"> Back </a>
     <p></p>
     <label><b>{{currentMeeting().GroupName}}</b></label>
     <div class="card">

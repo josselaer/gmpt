@@ -1,4 +1,10 @@
 /* Empty. Add your own CSS if you like */
+#loginscreen{
+    
+    background-image: url("../img/railroadinwoods.jpg");
+     background-repeat: no-repeat;
+    background-size: contain;
+}
 
 .center {
     margin-left: auto;
@@ -89,7 +95,7 @@ img.profile-pic.right {
 }
 
 .bar.item-input-inset .item-input-wrapper input {
-  position:absolute;
+  position:relative;
   width: 100% !important;
 }
 
