@@ -355,7 +355,11 @@ $scope.newMeeting = function()
 
   $scope.userName = UserInfo.get().userName;
 
+  $scope.activeMeeting = false;
+
   $scope.$on("$ionicView.enter", function() {
+
+    console.log(UserInfo.getAuthToken());
     
     $http({
 

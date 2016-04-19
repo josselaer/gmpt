@@ -9,10 +9,29 @@
   </ion-nav-buttons>
     
   <ion-content class="has-header">
+
+    <div ng-switch="activeMeeting">
+
+      <div ng-switch-when="true">
+        <button class="button button-full button-positive">Hey, there's a meeting going on. Check in here!</button>
+      </div>
+      <div ng-switch-default>
+      </div>
+
+    </div>
+
     <ion-list>
       <ion-item class="item" ng-repeat="group in groups" type="item-text-wrap" ui-sref="group.chat({groupID:group.ProjectID})" ng-click="setGroup(group.ProjectID)">
         <h2>{{group.GroupName}}</h2>
-        <h4 class=" item-text-right">Upcoming meeting: </h4>
+
+        <div ng-switch on="group.NextMeetingDate">
+          <div ng-switch-when="null">
+            <h4 class="item-text-right">No upcoming meetings.</h4>
+          </div>
+          <div ng-switch-default>
+            <h4 class=" item-text-right">Upcoming meeting: {{group.NextMeetingDate}} at {{group.NextMeetingTime}}</h4>
+          </div>
+        
         <div ng-switch on="group.Notification">
           <div ng-switch-when="0">
             <span class="badge badge-secondary"><h2>{{group.Notification}}</h2></span>
