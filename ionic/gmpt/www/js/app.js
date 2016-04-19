@@ -40,7 +40,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   .state('account', {
     url: '/account',
     templateUrl: 'templates/accounts.html',
-    controller: 'AccountCtrl'
+    controller: 'AccountCtrl' 
   })
   
   .state('groups', {
@@ -49,14 +49,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'GroupsCtrl'
   })
   
- .state('addgroup', {
+  .state('addgroup', {
     url: '/addgroup',
     templateUrl: 'templates/add-group.html',
     controller: 'AddGroupCtrl'
   })
 
   // setup an abstract state for the tabs directive
-   .state('group', {
+  .state('group', {
     url: '/group',
     cache: false,
     abstract: true,
@@ -64,7 +64,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'TabCtrl'
   })
   
-    .state('group.stats', {
+  .state('group.stats', {
     url: '/stats/:groupID',
     views: {
         'group-stats': {
@@ -72,7 +72,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           controller: 'StatsCtrl'
         }
       }
-    })
+  })
 
   .state('group.chat', {
       url: '/chat/:groupID',
@@ -90,12 +90,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'MeetingsCtrl'
 
   })
+
   .state('editmeeting', {
     url: '/editmeeting',
     templateUrl: 'templates/edit-meeting.html',
     controller: 'MeetingsCtrl'
 
   })
+
   .state('meeting-details', {
     url: '/meeting-details',
     templateUrl: 'templates/meeting-details.html',
@@ -103,7 +105,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   })
 
-   .state('group.meetings', {
+  .state('group.meetings', {
     url: '/meetings/:groupID',
     views: {
       'group-meetings': {
@@ -113,15 +115,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
   
-  
-  
-     .state('register', {
+  .state('register', {
     url: '/register',
     templateUrl: 'templates/register.html',
     controller: 'RegisterCtrl'
   })
-  
-
   
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');

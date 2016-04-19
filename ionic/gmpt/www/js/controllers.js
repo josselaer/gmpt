@@ -185,21 +185,25 @@ angular.module('starter.controllers', [])
   $scope.logInfo = {};
 
   $scope.login = function () {
+    var data = $scope.logInfo;
 
+    alert(JSON.stringify(data));
     $http({
       method: "POST",
       url:Debug.getURL("/login"),
-      data: $scope.logInfo
+      data: data
     }).then(function successCallback(response) {
+      alert("Login successCallback" + JSON.stringify(response));
       return response;
     }, function errorCallback(response) {
-      alert.log("Can't Login");
+      alert("Can't Login" +  JSON.stringify(response));
     }).then(function redirect(response) {
 
       if (UserInfo.login(response.data)) {
         console.log("You logged in!")
       
-        $state.go("groups");
+        alert("Supposed to redirect");
+        $scope.go("/groups");
       }
       else {
         alert("Could not log in!" + JSON.stringify(response.data.userData));
@@ -365,7 +369,11 @@ $scope.newMeeting = function()
 
   $scope.userName = UserInfo.get().userName;
 
+  $scope.activeMeeting = false;
+
   $scope.$on("$ionicView.enter", function() {
+
+    console.log(UserInfo.getAuthToken());
     
     $http({
 
