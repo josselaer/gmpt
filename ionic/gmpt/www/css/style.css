@@ -3,7 +3,8 @@
     
     background-image: url("../img/railroadinwoods.jpg");
      background-repeat: no-repeat;
-    background-size: contain;
+    background-size :cover;
+    width: 100%;
 }
 
 .center {
