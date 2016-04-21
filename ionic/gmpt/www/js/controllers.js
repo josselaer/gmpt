@@ -301,7 +301,7 @@ angular.module('starter.controllers', [])
         console.log(Meetings.all());
         $scope.meetings.push({'MeetingDate':$scope.meetingDate,
           'StartTime':$scope.startTime,'MeetingDescription':$scope.meetingDescription,
-          'ProjectID':GroupID.get(), 'EndTime': $scope.endTime});
+          'ProjectID':GroupID.get(), 'EndTime': $scope.endTime, 'LocationName': $scope.locationName});
         Meetings.set($scope.meetings);
 
       }
