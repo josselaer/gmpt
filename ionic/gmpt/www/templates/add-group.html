@@ -4,7 +4,7 @@
 <label>Group Name</label>
 <p></p>
 <label class="item item-input">
-    <input ng-model="group.groupName" type="text"></input>
+    <input ng-model="group.groupName" type="text">
 </label>
 <p></p>
 
@@ -32,13 +32,13 @@
     <input type="text" name="email" id="email_input" placeholder="Email" ng-change="autoCompleteMeetingUpdate(email)" ng-model="email" required>
   </label>
   </label>
-    <p></p>
+    
       <div class="list">
         <li class="button item assertive" ng-repeat="i_suggestion in input_suggestions | limitTo:10" ng-click="selectEmail(i_suggestion)" id="$index">{{i_suggestion.suggestion}}
         </li>
       </div>
 
-  <ion-checkbox ng-model="isProfessor">Professor</ion-checkbox>
+  <ion-checkbox ng-model="isProfessor">Add as Professor?</ion-checkbox>
 
   <p></p>
   <button class="button button-assertive" ng-disabled="frm.$invalid">
@@ -55,12 +55,11 @@
             <button ng-click="removeItem($index)" class="button ion-android-cancel"> </button> 
           </div>
         </div>
-    </div>
     </li>
   </ul>
 </div>
 <div>
-  <button class="button button-positive" ng-click="addGroup()" href="#/tab/dash">
+  <button class="button" id="gmptbtn" ng-click="addGroup()" href="#/tab/dash">
     Create Group
     <ion-nav-view name="tab-dash"></ion-nav-view>
   </button>

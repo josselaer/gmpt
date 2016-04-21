@@ -1,7 +1,7 @@
 <ion-view view-title="Chat">
     
       <ion-nav-buttons side="left">
-             <a ui-sref="groups" class="button icon-left ion-chevron-left button-clear button-dark">Groups</a>
+             <a ui-sref="groups" class="button icon-left ion-chevron-left button-clear button-dark" id="makewhite">Groups</a>
        </ion-nav-buttons>
   
   <ion-content>
@@ -41,7 +41,7 @@
         <input class="item-input-wrapper" ng-model="message.text" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic></input>
     </label>
     <div class="footer-btn-wrap">
-      <button class="button footer-btn button-small button-positive" ng-click="chatsctrl.send()">Send
+      <button class="button footer-btn button-small button-positive" ng-click="chatsctrl.send()" id="gmptbtn">Send
       </button>
     </div>
   </ion-footer-bar>

@@ -1,10 +1,45 @@
 /* Empty. Add your own CSS if you like */
-#loginscreen{
-    
-    background-image: url("../img/railroadinwoods.jpg");
-     background-repeat: no-repeat;
-    background-size: cover;
-    width:100%;
+
+a {
+    text-decoration: none !important;
+}
+
+.navbar {
+    background-color: #303F9F !important;
+    color: white !important;
+}
+
+#makewhite {
+    color: white !important;
+}
+
+.title {
+    color: white !important;
+}
+
+#workicon {
+    font-size: 10rem;
+    color: white;
+}
+
+#inputscreen {
+    background-color: #303F9F;
+}
+
+#gmptbtn {
+    background-color: #FF5252;
+    color: white;
+}
+
+#gmptMessage {
+    font-size: 2rem;
+    color: white;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+#registerbtn {
+    color: white;
 }
 
 .center {
@@ -13,95 +48,100 @@
     display: block;
 }
 
-#logo{
-    
-    max-width:100%;
+#logo {
+    max-width: 100%;
     height: 10em;
-    
 }
 
 #message-input {
-	position:relative;
-	width:75%;
-	padding:0px;
-	padding-left:10px;
+    position: relative;
+    width: 75%;
+    padding: 0px;
+    padding-left: 10px;
 }
 
 #chat-anon {
-	margin:0px;
+    margin: 0px;
 }
 
 .checkbox-text-small {
-	font-size:80%;
-	padding:0px;
-	margin:0px;
+    font-size: 80%;
+    padding: 0px;
+    margin: 0px;
 }
+
 .timestamp {
-	opacity:40%;
-	padding-top:5px;
+    opacity: 40%;
+    padding-top: 5px;
 }
+
 
 /* allows the bar-footer to be elastic /*
 /* optionally set a max-height */
+
+
 /* maxlength on the textarea will prevent /*
 /* it from getting too large also */
+
 .bar-footer {
-  overflow: visible !important;
+    overflow: visible !important;
 }
 
 .bar-footer textarea {
-  resize: none;
-  height: 25px;
+    resize: none;
+    height: 25px;
 }
 
+
 /* fixes an ios bug bear */
+
 button.ion-android-send {
-  padding-top: 2px;
+    padding-top: 2px;
 }
+
 
 /* add this to keep your footer buttons down 
 at the bottom as the textarea resizes */
+
 .footer-btn-wrap {
-  position: relative; 
-  height: 100%; 
-  width: 50px; 
-  top: 7px;
+    position: relative;
+    height: 100%;
+    width: 50px;
+    top: 7px;
 }
 
 .footer-btn {
-  position: absolute !important; 
-  bottom: 0;
+    position: absolute !important;
+    bottom: 0;
 }
 
 img.profile-pic {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  position: absolute;
-  bottom: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 10px;
 }
 
 img.profile-pic.left {
-  left: 10px;
+    left: 10px;
 }
 
 img.profile-pic.right {
-  right: 10px;
+    right: 10px;
 }
 
 .ion-email {
-  float: right;
-  font-size: 32px;
-  vertical-align: middle;
+    float: right;
+    font-size: 32px;
+    vertical-align: middle;
 }
 
 .bar.item-input-inset .item-input-wrapper input {
-  position:relative;
-  width: 100% !important;
+    position: relative;
+    width: 100% !important;
 }
 
 .report:hover {
-  color:red;
-
+    color: red;
 }
-
