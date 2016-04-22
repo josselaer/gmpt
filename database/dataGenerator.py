@@ -40,7 +40,7 @@ meetingDescription2 = ["website", "app", "paper", "interview", "case study", "pr
 #update projectDescriptions
 for i in range(50):
     desc = random.choice(projectDescription)
-    file.write("UPDATE Project SET Description = " + "\"" +desc + "\"" + " WHERE ProjectID = " + str(i+1))
+    file.write("UPDATE Project SET Description = " + "\"" + desc + "\"" + " WHERE ProjectID = " + str(i+1) + ";")
     file.write('\n')
 
 file.write('\n')
@@ -50,7 +50,7 @@ file.write('\n')
 #update chats
 for i in range(50):
     chat = random.choice(chats)
-    file.write("UPDATE Message SET MessageText = " + "\"" + chat + "\"" + " WHERE MessageID = " + str(i+1))
+    file.write("UPDATE Message SET MessageText = " + "\"" + chat + "\"" + " WHERE MessageID = " + str(i+1) + ";")
     file.write('\n')
 
 file.write('\n')
@@ -75,7 +75,7 @@ for i in range(50):
         endT = startTime + timedelta(hours=2)
     endTime = ""
     endTime = `endT.hour` + ":" + `endT.minute`
-    file.write("UPDATE Meeting SET MeetingDescription = " + fullDesc + ", LocationName = " + "\"" + location + "\"" + ", MeetingDate = " + mDate + ", StartTime = " + "\"" + stime + "\"" + ", EndTime = " + "\"" + endTime + "\"" + " WHERE MeetingID = " + str(i+1))
+    file.write("UPDATE Meeting SET MeetingDescription = " + fullDesc + ", LocationName = " +  location  + ", MeetingDate = " + mDate + ", StartTime = " + "\"" + stime + "\"" + ", EndTime = " + "\"" + endTime + "\"" + " WHERE MeetingID = " + str(i+1) + ";")
     file.write('\n')
 
 file.write('\n')
