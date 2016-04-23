@@ -1,40 +1,36 @@
-
 <ion-view hide-nav-bar="true">
-    
-    
-    
+
     <ion-content class="padding" id="inputscreen">
-<!--        <img src="img/logo.png" class="center" id="logo">-->
+
         <div class="col text-center" id="workicon"><i class="ion-clipboard"></i></div>
-        
-        
+
         <div class='col text-center' id="gmptMessage">GMPT</div>
-        
-<div class="card card-5">
-    <div class="item item-text-wrap">
-        <label class="item item-input">
 
-            <input type="text" placeholder="Username" ng-model="logInfo.username">
-        </label>
-    </div>
-</div>
-        
-                <div class="card card-5">
-  <div class="item item-text-wrap">
-                  <label class="item item-input">
+        <div class="card card-5">
+            <label class="item item-input">
 
-                <input type="password" placeholder="Password" ng-model="logInfo.password"> 
-      </label>
-  </div>
-</div>
-        
-        
-        
-        <button class="button button-block button-positive card-3" ng-click="login()" id="gmptbtn">Login</button>
-      
-        <button class="button button-secondary card-3" ui-sref="register">
-            New User?
-        </button>
-           
+                <input type="text" placeholder="Username" ng-model="logInfo.username">
+            </label>
+        </div>
+
+        <div class="card card-5">
+            <label class="item item-input">
+
+                <input type="password" placeholder="Password" ng-model="logInfo.password">
+            </label>
+        </div>
+
+        <div class="row text-center">
+
+            <div class="col col-50">
+                <button class="button button-block button-positive card-3" ng-click="login()" id="gmptbtn">Login</button>
+            </div>
+
+            <div class="col col-50">
+                <button class="button button-block button-secondary card-3" ui-sref="register">New User?</button>
+            </div>
+
+        </div>
+
     </ion-content>
 </ion-view>
