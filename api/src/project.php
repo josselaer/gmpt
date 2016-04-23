@@ -19,9 +19,10 @@
 				$lastMeeting['NextMeetingDate']=$r1['MeetingDate'];
 				$lastMeeting['StartTime']= $r1['StartTime'];
 				$lastMeeting['MeetingID']= $r1['MeetingID'];
+				$lastMeeting['MeetingDescription']=$r1['MeetingDescription'];
 			}
 			unset($getLastMeetingQuery);
-		$project = array("ProjectID"=>$ProjectID, "GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated, "RoleName"=>$RoleName, "Notification"=>$Notification, "NextMeetingDate"=>$lastMeeting['NextMeetingDate'], "NextMeetingTime" => $lastMeeting['StartTime'], "MeetingID"=>$lastMeeting['MeetingID']);
+		$project = array("ProjectID"=>$ProjectID, "GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated, "RoleName"=>$RoleName, "Notification"=>$Notification, "NextMeetingDate"=>$lastMeeting['NextMeetingDate'], "NextMeetingTime" => $lastMeeting['StartTime'], "MeetingID"=>$lastMeeting['MeetingID'], "NextMeetingDescription"=>$lastMeeting['MeetingDescription']);
 			array_push($results,$project);
 		}
 		$resultSize =  count($results);
