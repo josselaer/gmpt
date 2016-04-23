@@ -3,7 +3,7 @@
 <label>Group Name</label>
 <p></p>
 <label class="item item-input">
-    <input ng-model="group.groupName" type="text"></input>
+    <input ng-model="group.groupName" type="text">
 </label>
 <p></p>
 
@@ -32,7 +32,6 @@
         </label>
         <span style="padding-left:20px">
       </label>
-
       <div class="list" ng-show="email">
         <li class="button item assertive" ng-repeat="i_suggestion in input_suggestions | limitTo:10" ng-click="selectEmail(i_suggestion)" id="$index">{{i_suggestion.suggestion}}
         </li>
@@ -57,7 +56,6 @@
             <button ng-click="removeItem($index)" class="button ion-android-cancel"> </button> 
           </div>
         </div>
-    </div>
     </li>
   </ul>
 </div>

@@ -227,12 +227,9 @@ angular.module('starter.controllers', [])
     });
 
   }
-
-  $scope.go = function (path) {
+   $scope.go = function (path) {
     $location.path(path);
   };
-
-
 })
 
 .controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, Debug) {
