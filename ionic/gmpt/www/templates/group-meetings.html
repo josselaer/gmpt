@@ -26,16 +26,15 @@
 	<ion-item ng-repeat="meeting in meetings" href="#/meeting-details" ng-click="meetingDetails($index)">
   <!--<label>{{meeting.GroupName}}</label>-->
 		<div class="row">
-    	<div class="col col-75">
-        <p>{{meeting.MeetingDescription}}</p>
-        <p>{{meeting.LocationName}}</p>
+    	<div class="col col-50">
+        <div class="h4">{{meeting.MeetingDescription}}</div>
+        At {{meeting.LocationName}} on {{meeting.MeetingDate | date:'shortDate'}}<br/>
+        from {{meeting.StartTime | date:'shortTime'}} to {{meeting.EndTime | date:'shortTime'}}
 
     		
    		</div>
-      <div class="col col-25">
-        <a class="button button-icon icon ion-edit" href="#/editmeeting" ng-click="editMeeting($index)"></a>
-        <p>{{meeting.MeetingDate | date:'shortDate'}}</p>
-        <p>{{meeting.StartTime | date:'shortTime'}} - {{meeting.EndTime | date:'shortTime'}}</p>
+      <div class="col col-50 right">
+        <span class="pull-right"><a class="button button-icon icon ion-edit" href="#/editmeeting" ng-click="editMeeting($index)"></a></span><br/>
       </div>
    		</div>
 	</ion-item>
