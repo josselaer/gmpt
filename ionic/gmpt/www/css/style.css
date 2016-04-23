@@ -145,3 +145,30 @@ img.profile-pic.right {
 .report:hover {
     color: red;
 }
+
+
+.stats-text {
+    
+    text-align:center;
+    vertical-align: center;
+    color: lightblue !important;
+    font-size:4rem;
+
+}
+.stats-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #303F9F;
+    width: 8rem;
+    text-align: center !important;
+    height: 8rem;
+
+    border-radius:4rem;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -5,7 +5,19 @@
        </ion-nav-buttons>
     
   <ion-content class="padding">
-    <div class="h3">Number of team meetings: {{stats.totalNumOfMeetings}}  </div>
-    <div class="h3">Number of messages sent: {{stats.totalNumOfChatMessages}}  </div>
-    </ion-content>
+  	<div class="row">
+  		<div class="col center">
+    		<div class="stats-badge"><div class="stats-text">{{stats.totalNumOfMeetings}}</div></div>
+    	</div>
+    	<div class="col center">
+    		<div class="stats-badge"><div class="stats-text">{{stats.totalNumOfChatMessages}}</div></div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col"><div class="h3 text-center">Team Meetings</div>
+    	</div>
+    	<div class="col"><div class="h3 text-center">Team Messages</div>
+    	</div>
+    </div>
+  </ion-content>
 </ion-view>

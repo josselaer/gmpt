@@ -12,7 +12,7 @@
         <div ng-switch="activeMeeting.active">
 
             <div ng-switch-when="true">
-                <button class="button button-full button-positive" ng-click="checkin()">Check in to </button>
+                <button class="button button-full button-positive" ng-click="checkin()">Check in to {{activeMeeting.desc}}</button>
             </div>
             <div ng-switch-default>
             </div>

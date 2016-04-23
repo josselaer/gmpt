@@ -92,7 +92,7 @@ angular.module('starter.controllers', [])
 
     $http({
       method: "GET",
-      url : Debug.getURL("/statstics/loginCount/" + $stateParams.groupID),
+      url : Debug.getURL("/statistics/loginCount/" + $stateParams.groupID),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': UserInfo.getAuthToken()
