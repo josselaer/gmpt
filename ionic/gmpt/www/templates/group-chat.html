@@ -8,14 +8,16 @@
     <ion-list>
       <ion-item class="item-remove-animate item-icon-right item-text-wrap" ng-repeat="message in messages | orderBy : message.timeDate : true">
         <div ng-switch on="message.anonymous">
+
           <div ng-switch-when="true">
             <h2>Anonymous Message:</h2> {{message.text}}
-            <p class="timestamp">{{message.timeDate | date:'short'}}</p>
+            <span class="timestamp">{{message.timeDate | date:'short'}}</span>
           </div>
+
           <div ng-switch-default>
+
             <div class="row"><h2>{{message.sender}}:</h2>
-              <span class="pull-right">{{message.timeDate | date:'shortTime'}}
-                <br/>{{message.timeDate | date:'shortDate'}}</span>
+              <span class="pull-right">{{message.timeDate | date:'shortTime'}} {{message.timeDate | date:'shortDate'}}</span>
             </div>
             <div class="row">
               {{message.text}}
