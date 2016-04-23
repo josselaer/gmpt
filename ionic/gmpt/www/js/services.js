@@ -139,7 +139,7 @@ angular.module('starter.services', [])
         }
       }).then(function successCallback(response) {
 
-        return response.data.messages;
+        return response.data;
     
       }, function errorCallback(response) {
 

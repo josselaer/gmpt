@@ -9,8 +9,8 @@
 <p></p>
 
 <label>Date</label>
-<div class="item item-input">
-  <input ng-model="meetingDate" type="text">
+<div class="item item-button">
+  <button class="button button-primary" ng-model="meetingDate" ng-click="openPicker()">Date</button> {{meetingDate | date:'shortDate'}}
 </div>
 <p></p>
 
