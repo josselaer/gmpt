@@ -236,13 +236,15 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, ionicDatePicker, UserInfo, Meetings, GroupID, Debug) {
+.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, ionicDatePicker, 
+                                      UserInfo, Meetings, GroupID, Debug) {
 
   $scope.meetings = [];
 
   var datePickerObj = {
       callback: function (val) {  //Mandatory
         console.log('Return value from the datepicker popup is : ' + val, new Date(val));
+        $scope.meetingDate = new Date(val);
       },
       from: new Date(2016, 1, 1), //Optional
       to: new Date(2020, 10, 30), //Optional
