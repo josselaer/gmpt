@@ -4,15 +4,19 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a class="button icon ion-android-add" id="gmptbtn" href="#/addgroup">New</a>
+        <a class="button icon ion-android-add card-4" id="gmptbtn" href="#/addgroup">New</a>
     </ion-nav-buttons>
 
-    <ion-content class="has-header">
+   <ion-content class="has-header">
+       
+       
 
         <div ng-switch="activeMeeting.active">
 
             <div ng-switch-when="true">
-                <button class="button button-full button-positive" ng-click="checkin()">Check in to {{activeMeeting.desc}}</button>
+
+                 <button class="button button-full button-positive card-5" ng-click="checkin()" id="gmptbtn">Check in to {{activeMeeting.desc}} <i class="fa fa-check-square-o" aria-hidden="true"></i></button>
+
             </div>
             <div ng-switch-default>
             </div>
@@ -35,8 +39,9 @@
                         <div ng-switch-when="0">
                         </div>
                         <div ng-switch-default>
-                            <span class="badge badge-assertive"><h2>{{group.Notification}}</h2></span>
+                            <span class="badge badge-assertive">{{group.Notification}}</span>
                         </div>
+                    </div>
                     </div>
             </ion-item>
 

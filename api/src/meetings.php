@@ -35,7 +35,7 @@
 				$LocationName = $data['LocationName'];
 				$StartTime = $data['StartTime'];
 				$EndTime = $data['EndTime'];
-				$meeting = array("MeetingID"=>$MeetingID,"GroupName"=>$GroupName, "MeetingDescription"=>$MeetingDescription, "MeetingDate"=>$MeetingDate, "StartTime"=>$StartTime, "EndTime"=>$EndTime, "Attendances"=>$Attendances);
+				$meeting = array("MeetingID"=>$MeetingID,"GroupName"=>$GroupName, "LocationName"=>$LocationName,"MeetingDescription"=>$MeetingDescription, "MeetingDate"=>$MeetingDate, "StartTime"=>$StartTime, "EndTime"=>$EndTime, "Attendances"=>$Attendances);
 				array_push($results,$meeting);
 				$Attendances = [];
 				$userCounter = 0;
