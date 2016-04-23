@@ -10,13 +10,16 @@
         <div ng-switch on="message.anonymous">
           <div ng-switch-when="true">
             <h2>Anonymous Message:</h2> {{message.text}}
-            <p class="timestamp">{{message.timeDate}}</p>
-            <i class="report icon ion-flag icon-accessory"  ng-click="chatsctrl.report({{message.id}})"></i>
+            <p class="timestamp">{{message.timeDate | date:'short'}}</p>
           </div>
           <div ng-switch-default>
-            <h2>{{message.sender}}:</h2> {{message.text}}
-            <p class="timestamp">{{message.timeDate}}</p>
-            <i class="report icon ion-flag icon-accessory "  ng-click="chatsctrl.report({{message.id}})"></i>
+            <div class="row"><h2>{{message.sender}}:</h2>
+              <span class="pull-right">{{message.timeDate | date:'short'}}</span>
+            </div>
+            <div class="row">
+              {{message.text}}
+            </div>
+           
           </div>
         </div>
       </ion-item>
@@ -24,7 +27,6 @@
   </ion-content>
 
  
-
   <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
     <div class="footer-btn-wrap">
       <div ng-switch on="chatsctrl.anonymous">

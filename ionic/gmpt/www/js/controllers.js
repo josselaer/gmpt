@@ -135,14 +135,12 @@ angular.module('starter.controllers', [])
         console.log("Error");
       });
 
-    console.log("Chat Interval Go");
-
   }, 3000);
 
   $scope.$on("$ionicView.enter", function() {
 
       Chats.getGroupMessages($stateParams.groupID).then(function successCallback(response) {
-
+        console.log(response);
       $scope.messages = response;
       
     }, function errorCallback(response) {
@@ -269,6 +267,26 @@ angular.module('starter.controllers', [])
       //this.meetings = Meetings.all();
 
     });
+
+    $http({
+      method: "PUT",
+      url: Debug.getURL("/notifications/" + GroupID.get() + "/Meeting"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
+
+      console.log("Updated Meetings notifications.");
+      console.log(response);
+
+    }, function errorCallback(response) {
+
+      console.log("Failed to update Meetings notifications.");
+      console.log(response);
+
+    });
+
     $scope.meetings = Meetings.all();
 
   });
