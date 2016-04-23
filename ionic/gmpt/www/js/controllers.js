@@ -228,8 +228,6 @@ angular.module('starter.controllers', [])
       }
       else {
         $scope.loginFail = true;
-        console.log(response);
-        alert("Could not log in!" + JSON.stringify(response.data.userData));
       }
     });
 
