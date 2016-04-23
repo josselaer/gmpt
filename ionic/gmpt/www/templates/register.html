@@ -55,7 +55,6 @@
         <div class="card">
             <div class="item item-text-wrap">
                 <label class="item item-input">
-
                     <span class="input-label">First Name</span>
                     <input type="text" ng-model="regInfo.firstName" required>
                 </label>
@@ -66,7 +65,6 @@
         <div class="card">
             <div class="item item-text-wrap">
                 <label class="item item-input">
-
                     <span class="input-label">Last Name</span>
                     <input type="text" ng-model="regInfo.lastName" required>
                 </label>
@@ -76,11 +74,34 @@
         <div class="card">
             <div class="item item-text-wrap">
                 <label class="item item-input">
-                    <span class="input-label">Password</span>
-                    <input type="password" placeholder="2-30 Characters" ng-model="regInfo.password" required>
+                    <span class="input-label">Email</span>
+                    <input type="email" placeholder="email@blah.whatever" ng-model="regInfo.email" required>
                 </label>
             </div>
         </div>
+
+        <div class="card">
+            <div class="item item-text-wrap">
+                <label class="item item-input">
+                    <span class="input-label">Password</span>
+                    <input type="password" placeholder="6-30 Characters" ng-model="regInfo.password" required>
+                </label>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="item item-text-wrap">
+                <label class="item item-input">
+                    <span class="input-label">Confirm Password</span>
+                    <input type="password" placeholder="6-30 Characters" ng-model="regInfo.confPassword" required>
+                </label>
+            </div>
+        </div>
+
+        <div ng-if="regInfo.password != regInfo.confPassword">
+            <div class="text-center login-fail">Your passwords don't match!</div>
+        </div>
+
 
         <!--
             <label class="item item-input">
@@ -88,15 +109,7 @@
                 <input type="password" placeholder="2-30 Characters" ng-model="regInfo.passwordCopy" required>
             </label>
 -->
-        <div class="card">
-            <div class="item item-text-wrap">
-                <label class="item item-input">
-                    <span class="input-label">Email</span>
-                    <input type="email" placeholder="email@blah.whatever" ng-model="regInfo.email" required>
-                </label>
-            </div>
-        </div>
-
+        
         <button class="button button-block button-positive" ng-click="register()" id="gmptbtn">Submit</button>
         
         <div class="row">

@@ -9,24 +9,30 @@
         
         
         <div class='col text-center' id="gmptMessage">GMPT</div>
-        
-<div class="card card-5">
-    <div class="item item-text-wrap">
-        <label class="item item-input">
 
-            <input type="text" placeholder="Username" ng-model="logInfo.username">
-        </label>
-    </div>
-</div>
+        <div ng-switch on="loginFail">
+            <div ng-switch-when="true" class="text-center login-fail">
+              Login failed, please try again.
+            </div>
+            <div ng-switch-default></div>
+        </div>
         
-                <div class="card card-5">
-  <div class="item item-text-wrap">
-                  <label class="item item-input">
+        <div class="card card-5">
+            <div class="item item-text-wrap">
+                <label class="item item-input">
 
-                <input type="password" placeholder="Password" ng-model="logInfo.password"> 
-      </label>
-  </div>
-</div>
+                    <input type="text" placeholder="Username" ng-model="logInfo.username">
+                </label>
+            </div>
+        </div>
+        
+        <div class="card card-5">
+            <div class="item item-text-wrap">
+              <label class="item item-input">
+
+              <input type="password" placeholder="Password" ng-model="logInfo.password"></label>
+          </div>
+        </div>
         
         
         
