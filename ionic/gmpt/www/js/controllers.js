@@ -238,7 +238,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, Debug, ionicDatePicker, CalculateTime) {
+.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, RevertTime, Debug, ionicDatePicker, CalculateTime) {
 
 
   $scope.startTimeHour = "12:00";

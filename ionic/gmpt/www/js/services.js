@@ -384,6 +384,74 @@ angular.module('starter.services', [])
   }
 })
 
+.factory("RevertTime", function()
+{
+  revertedHours = "";
+  revertedCycle = "";
+  return{
+    getHour: function(militaryTime)
+    {
+      var hourString = "";
+      var hourExtension = "";
+      i = 0;
+      while(i < 2)
+      {
+        hourString += militaryTime[i];
+        i++;
+      }
+      i++;
+      while(i < 5)
+      {
+        hourExtension += militaryTime[i];
+        i++;
+      }
+      var hourInt = parseInt(hourString, 10);
+      var tempString = "";
+      if(hourInt >= 13)
+      {
+        tempString = (hourInt - 12).toString();
+        tempString.concat(":");
+        tempString.concat(hourExtension);
+        tempString.concat(":");
+        tempString.concat("00");
+      }
+      revertedHours = tempString;
+      console.log("REVERTED HOURS: from - to: ");
+      console.log(militaryTime);
+      console.log(revertedHours);
+      return revertedHours;
+    },
+    
+    getCycle: function(militaryTime)
+    {
+      var hourString = "";
+      var hourExtension = "";
+      i = 0;
+      while(i < 2)
+      {
+        hourString += militaryTime[i];
+        i++;
+      }
+      var hourInt = parseInt(hourString, 10);
+      var tempString = "";
+      if(hourInt >= 12)
+      {
+        revertedCycle = "PM";
+      }
+      else
+      {
+        revertedCycle = "AM";
+      }
+      /*
+      console.log("REVERTED HOURS: from - to: ");
+      console.log(militaryTime);
+      console.log(revertedHours);
+      */
+      return revertedCycle;
+    }
+  }
+})
+
 .factory("Debug", function() {
 
   debug = false;
