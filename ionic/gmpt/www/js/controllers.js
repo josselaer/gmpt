@@ -230,8 +230,13 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, Debug) {
+.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, Debug, CalculateTime) {
 
+  $scope.startTimeHour = "12:00";
+  $scope.startTimeCycle = "PM";
+  $scope.endTimeHour = "1:00";
+  $scope.endTimeCycle = "PM";
+  
   $scope.meetings = [];
 
   $scope.$on("$ionicView.enter", function() {
@@ -306,8 +311,27 @@ angular.module('starter.controllers', [])
   $scope.confirmMeeting = function()
   {  
     console.log("confirmMeeting Called");
-    if ($scope.meetingDate != "" && $scope.meetingDescription != "" && $scope.startTime != "" && $scope.endTime != "")
+    if ($scope.meetingDate != "" && $scope.meetingDescription != "")
     {
+      
+      var start_time = CalculateTime.calcNewTime(this.startTimeHour,this.startTimeCycle);
+      var end_time = CalculateTime.calcNewTime(this.endTimeHour,this.endTimeCycle);
+      $scope.startTime = start_time;
+      this.startTime = start_time;
+      $scope.endTime = end_time;
+      this.endTime = end_time;
+      console.log("start time vars: (hours then cycle)");
+      console.log(this.startTimeHour);
+      console.log(this.startTimeCycle);
+      console.log("start time AFTER CALCULATION");
+      console.log(start_time);
+      console.log("end time vars: (hours then cycle)");
+      console.log(this.endTimeHour);
+      console.log(this.endTimeCycle);
+      console.log("end time AFTER CALCULATION");
+      console.log(end_time);
+      //var start_time = $scope.startTimeHour;
+
       if(Meetings.getEdit() == false)
       {
         console.log("$scope.meetings: ");
@@ -315,8 +339,8 @@ angular.module('starter.controllers', [])
         console.log("Meetings: ");
         console.log(Meetings.all());
         $scope.meetings.push({'MeetingDate':$scope.meetingDate,
-          'StartTime':$scope.startTime,'MeetingDescription':$scope.meetingDescription,
-          'ProjectID':GroupID.get(), 'EndTime': $scope.endTime, 'LocationName': $scope.locationName});
+          'StartTime':start_time,'MeetingDescription':$scope.meetingDescription,
+          'ProjectID':GroupID.get(), 'EndTime': end_time, 'LocationName': $scope.locationName});
         Meetings.set($scope.meetings);
 
       }
@@ -344,8 +368,8 @@ angular.module('starter.controllers', [])
           ProjectID : GroupID.get(),
           MeetingDate : this.meetingDate,
           LocationName : this.locationName,
-          EndTime : this.endTime,
-          StartTime : this.startTime,
+          EndTime : end_time,
+          StartTime : start_time,
           MeetingDescription : this.meetingDescription
         }
         console.log("next is meeting object: ");

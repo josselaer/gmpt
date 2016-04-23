@@ -283,6 +283,107 @@ angular.module('starter.services', [])
   };
 })
 
+.factory("CalculateTime", function() 
+{
+  convertedTime = "";
+  return {
+    calcNewTime: function(hour,cycle)
+    {
+      if(cycle == "PM")
+      {
+        switch(hour)
+        {
+          case "1:00":
+            convertedTime = "13:00:00";
+            break;
+          case "1:30":
+            convertedTime = "13:30:00";
+            break;
+          case "2:00":
+            convertedTime = "14:00:00";
+            break;
+          case "2:30":
+            convertedTime = "14:30:00";
+            break;
+          case "3:00":
+            convertedTime = "15:00:00";
+            break;
+          case "3:30":
+            convertedTime = "15:30:00";
+            break;
+          case "4:00":
+            convertedTime = "16:00:00";
+            break;
+          case "4:30":
+            convertedTime = "16:30:00";
+            break;
+          case "5:00":
+            convertedTime = "17:00:00";
+            break;
+          case "5:30":
+            convertedTime = "17:30:00";
+            break;
+          case "6:00":
+            convertedTime = "18:00:00";
+            break;
+          case "6:30":
+            convertedTime = "18:30:00";
+            break;
+          case "7:00":
+            convertedTime = "19:00:00";
+            break;
+          case "7:30":
+            convertedTime = "19:30:00";
+            break;
+          case "8:00":
+            convertedTime = "20:00:00";
+            break;
+          case "8:30":
+            convertedTime = "20:30:00";
+            break;
+          case "9:00":
+            convertedTime = "21:00:00";
+            break;
+          case "9:30":
+            convertedTime = "21:30:00";
+            break;
+          case "10:00":
+            convertedTime = "22:00:00";
+            break;
+          case "10:30":
+            convertedTime = "22:30:00";
+            break;
+          case "11:00":
+            convertedTime = "23:00:00";
+            break;
+          case "11:30":
+            convertedTime = "23:30:00";
+            break;
+          default:
+            convertedTime = hour;
+            break;
+        }
+      }
+      else if(cycle == "AM")
+      {
+        switch(hour)
+        {
+          case "12:00":
+            convertedTime = "00:00:00";
+            break;
+          case "12:30":
+            convertedTime = "00:30:00";
+            break;
+          default:
+            convertedTime = hour;
+            break;
+        }
+      }
+      return convertedTime;
+    }
+  }
+})
+
 .factory("Debug", function() {
 
   debug = false;
