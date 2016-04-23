@@ -202,6 +202,8 @@ angular.module('starter.controllers', [])
 
   $scope.logInfo = {};
 
+  $scope.loginFail = false;
+
   $scope.login = function () {
     var data = $scope.logInfo;
 
@@ -220,7 +222,7 @@ angular.module('starter.controllers', [])
         $scope.go("/groups");
       }
       else {
-        alert("Could not log in!" + JSON.stringify(response.data.userData));
+        $scope.loginFail = true;
       }
     });
 
@@ -623,17 +625,20 @@ $scope.newMeeting = function()
 
   $scope.register = function () {
 
-    $http({
-      method: "POST",
-      url:Debug.getURL("/user"),
-      data: $scope.regInfo
-    }).then(function successCallback(response) {
-      console.log("Successful Registration. Welcome to gmpt!")
-      $state.go("login");
-    }, function errorCallback(response) {
-      alert.log("Couldn't Register");
-    });
+    if ($scope.regInfo.password == $scope.regInfo.confPassword && $scope.regInfo.password.length > 5) {
 
+      $http({
+        method: "POST",
+        url:Debug.getURL("/user"),
+        data: $scope.regInfo
+      }).then(function successCallback(response) {
+        console.log("Successful Registration. Welcome to gmpt!")
+        $state.go("login");
+      }, function errorCallback(response) {
+        alert.log("Couldn't Register");
+      });
+
+    }
   }
 })
 
