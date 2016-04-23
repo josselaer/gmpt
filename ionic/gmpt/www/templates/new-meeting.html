@@ -11,7 +11,7 @@
 
 <label>Date</label>
 <div class="item item-button">
-  <button ng-model="meetingDate" ng-click="openPicker()">
+  <button class="button button-primary" ng-model="meetingDate" ng-click="openPicker()">Date</button> {{meetingDate | date:'shortDate'}}
 </div>
 <p></p>
 <label>Start Time</label>

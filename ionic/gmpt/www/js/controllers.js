@@ -128,7 +128,9 @@ angular.module('starter.controllers', [])
     Chats.getGroupMessages($stateParams.groupID).then(function success(response) {
 
         $animate.enabled(false);
-        $scope.messages = response.messages.data;
+        console.log("Messages: ");
+        console.log(response);
+        $scope.messages = response.messages;
         $scope.readReceipts = response.readReceipts;
 
         $animate.enabled(true);
@@ -143,7 +145,8 @@ angular.module('starter.controllers', [])
 
       Chats.getGroupMessages($stateParams.groupID).then(function successCallback(response) {
         console.log(response);
-      $scope.messages = response;
+      $scope.messages = response.messages;
+      $scope.readReceipts = response.readReceipts;
       
     }, function errorCallback(response) {
 
