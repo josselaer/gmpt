@@ -32,11 +32,11 @@
         </label>
         <span style="padding-left:20px">
       </label>
-      <div class="list" ng-show="email">
+      <div class="list" ng-show="show_suggestions" id="autocomplete_list">
         <li class="button item assertive" ng-repeat="i_suggestion in input_suggestions | limitTo:10" ng-click="selectEmail(i_suggestion)" id="$index">{{i_suggestion.suggestion}}
         </li>
       </div>
-  <ion-checkbox ng-model="isProfessor">Professor</ion-checkbox>
+  <ion-checkbox ng-model="isProfessor">Add As Professor</ion-checkbox>
 </div>
 </div>
   <div class = "col col-35">
@@ -46,29 +46,33 @@
   </button>
   </form>
   <p></p>
-  <ul>
+</div>
+</div>
+</div>
+<ul>
     <li ng-repeat="member in members">
       <div class = "item item-stable">
         <div class="row">
+          <div class ="col col-90">
           <label>{{member.email}}</label>
         </div>
-          <div class="col-offset-75">
+          <div class="col col-20">
             <button ng-click="removeItem($index)" class="button ion-android-cancel"> </button> 
           </div>
         </div>
+      </div>
     </li>
   </ul>
-</div>
 <!--<div>-->
-  <button class="button button-positive" ng-click="addGroup()" href="#/tab/dash">
+  <button class="button button-full button-positive" ng-click="addGroup()" href="#/tab/dash">
     Create Group
     <ion-nav-view name="tab-dash"></ion-nav-view>
   </button>
-    </div>
+    
 
-<br>
+<!--<br>-->
 <div>
-      <button class="button" ui-sref="groups">
+      <button class="button button-full button-energized" ui-sref="groups">
     Cancel
   </button>
     
