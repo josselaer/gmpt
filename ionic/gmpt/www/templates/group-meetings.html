@@ -32,10 +32,10 @@
 
     		
    		</div>
-      <div class="col col-30">
+      <div class="col col-25">
         <a class="button button-icon icon ion-edit" href="#/editmeeting" ng-click="editMeeting($index)"></a>
-        <p>{{meeting.MeetingDate}}</p>
-        <p>{{meeting.StartTime}} - {{meeting.EndTime}}</p>
+        <p>{{meeting.MeetingDate | date:'shortDate'}}</p>
+        <p>{{meeting.StartTime | date:'shortTime'}} - {{meeting.EndTime | date:'shortTime'}}</p>
       </div>
    		</div>
 	</ion-item>

@@ -208,7 +208,7 @@ angular.module('starter.services', [])
           if (now.getDay() === meetingDate.getDay() && now.getMonth() === now.getMonth()) {
             console.log("There is a meeting today!");
 
-            return {active: true, id: groups[i].MeetingID};
+            return {active: true, id: groups[i].MeetingID, desc: groups[i].NextMeetingDescription};
           }
         }
       }
