@@ -121,7 +121,6 @@ $app->get('/projects',
 )->add($validateSession);
 
 
-//test
 $app->post('/projects',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
@@ -146,6 +145,59 @@ $app->post('/projects',
 		
 		unset($getSenderEmailQuery);
 		
+		//get user id by email
+		$users = $form_data['users'];
+		$userIDs = [];
+		$userRoles = [];
+		foreach ($users as $user) {
+			$email = $user['email'];
+			$isProfessor = $user['isProfessor'];
+			if($isProfessor == true) {
+				$role = "Teacher";
+			}
+			else {
+				$role = "Student";
+			}
+			$query2 = $db->prepare("CALL GetUserIDByEmail(?)");
+			$query2->bindParam(1,$email,PDO::PARAM_STR);
+			$query2->execute();
+			$q2result = $query2->fetchAll();
+			$userID=0;
+			if($query2->rowCount()==0){
+				unset($query2);
+				$userID=sendEmailInvite($SenderEmail,$email,$db);
+			}
+			else{
+				$userID = $q2result[0]["UserID"];
+				unset($query2);
+			}
+			array_push($userIDs,(int)$userID);
+			array_push($userRoles,$role);	
+		}
+		//add user to project
+		$counter = 0;		
+		foreach($userIDs as $uID) {
+			$query3 = $db->prepare("CALL AddUserToProject(?,?,?)");
+			$query3->bindParam(1,$ProjID, PDO::PARAM_INT);
+			$query3->bindParam(2,$uID, PDO::PARAM_INT);
+			$query3->bindParam(3,$userRoles[$counter], PDO::PARAM_STR);
+			$query3->execute();
+			unset($query3);
+			$counter = $counter + 1;
+		}
+		
+		//$response = array("worked"=>true);
+		return $response;
+
+	}
+)->add($validateSession);
+
+//test
+$app->post('/projects/add',
+	function($request,$response,$args) {
+		$db=$this->GMPT;
+		$form_data = $request->getParsedBody();	
+		$GroupName = $form_data['ProjectID'];
 		//get user id by email
 		$users = $form_data['users'];
 		$userIDs = [];
