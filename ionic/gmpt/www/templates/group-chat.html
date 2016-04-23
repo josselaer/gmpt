@@ -14,7 +14,8 @@
           </div>
           <div ng-switch-default>
             <div class="row"><h2>{{message.sender}}:</h2>
-              <span class="pull-right">{{message.timeDate | date:'short'}}</span>
+              <span class="pull-right">{{message.timeDate | date:'shortTime'}}
+                <br/>{{message.timeDate | date:'shortDate'}}</span>
             </div>
             <div class="row">
               {{message.text}}
