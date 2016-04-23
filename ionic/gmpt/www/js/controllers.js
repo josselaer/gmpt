@@ -269,6 +269,26 @@ angular.module('starter.controllers', [])
       this.meetings = Meetings.all();
 
     });
+
+    $http({
+      method: "PUT",
+      url: Debug.getURL("/notifications/" + GroupID.get() + "/Meeting"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
+
+      console.log("Updated Meetings notifications.");
+      console.log(response);
+
+    }, function errorCallback(response) {
+
+      console.log("Failed to update Meetings notifications.");
+      console.log(response);
+
+    });
+
     $scope.meetings = Meetings.all();
 
   });
