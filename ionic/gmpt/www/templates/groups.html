@@ -1,6 +1,6 @@
 <ion-view view-title="Groups">
     <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="button button-icon icon ion-ios-person" ui-sref="account" id="makewhite"> Account</button>
+        <button menu-toggle="left" class="button button-icon icon ion-ios-person" ui-sref="account" id="makewhite">Account</button>
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
@@ -12,7 +12,7 @@
         <div ng-switch="activeMeeting.active">
 
             <div ng-switch-when="true">
-                <button class="button button-full button-positive" ng-click="checkin()">Hey, there's a meeting going on. Check in here!</button>
+                <button class="button button-full button-positive" ng-click="checkin()">Check in to </button>
             </div>
             <div ng-switch-default>
             </div>
@@ -28,12 +28,11 @@
                         <h4 class="item-text-right">No upcoming meetings.</h4>
                     </div>
                     <div ng-switch-default>
-                        <h4 class=" item-text-right">Upcoming meeting: {{group.NextMeetingDate}} at {{group.NextMeetingTime}}</h4>
+                        <h4 class=" item-text-right">Meeting on {{group.NextMeetingDate | date:'shortDate'}} at {{group.NextMeetingDate | date:'shortTime'}}</h4>
                     </div>
 
                     <div ng-switch on="group.Notification">
                         <div ng-switch-when="0">
-                            <span class="badge badge-secondary"><h2>{{group.Notification}}</h2></span>
                         </div>
                         <div ng-switch-default>
                             <span class="badge badge-assertive"><h2>{{group.Notification}}</h2></span>
