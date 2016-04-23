@@ -135,14 +135,12 @@ angular.module('starter.controllers', [])
         console.log("Error");
       });
 
-    console.log("Chat Interval Go");
-
   }, 3000);
 
   $scope.$on("$ionicView.enter", function() {
 
       Chats.getGroupMessages($stateParams.groupID).then(function successCallback(response) {
-
+        console.log(response);
       $scope.messages = response;
       
     }, function errorCallback(response) {
