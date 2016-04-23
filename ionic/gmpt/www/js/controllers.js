@@ -269,7 +269,7 @@ angular.module('starter.controllers', [])
 
       Meetings.set(response);
       $scope.meetings = Meetings.all();
-      this.meetings = Meetings.all();
+      //this.meetings = Meetings.all();
 
     });
     $scope.meetings = Meetings.all();
@@ -308,10 +308,10 @@ angular.module('starter.controllers', [])
       
       else if(Meetings.getEdit() == true)
       {
-        $scope.meetings[Meetings.getCurr()].MeetingDate = this.meetingDate;
-        $scope.meetings[Meetings.getCurr()].StartTime = this.startTime;
-        $scope.meetings[Meetings.getCurr()].MeetingDescription = this.meetingDescription;
-        $scope.meetings[Meetings.getCurr()].EndTime = this.endTime;
+        $scope.meetings[Meetings.getCurr()].MeetingDate = $scope.meetingDate;
+        $scope.meetings[Meetings.getCurr()].StartTime = $scope.startTime;
+        $scope.meetings[Meetings.getCurr()].MeetingDescription = $scope.meetingDescription;
+        $scope.meetings[Meetings.getCurr()].EndTime = $scope.endTime;
         Meetings.set($scope.meetings);
       }
       
@@ -322,6 +322,8 @@ angular.module('starter.controllers', [])
       console.log(this.startTime);
       console.log("endTime v");
       console.log(this.endTime);
+      console.log("locationName v");
+      console.log(this.locationName);
       var new_meeting = 
         {
           ProjectID : GroupID.get(),
@@ -333,7 +335,6 @@ angular.module('starter.controllers', [])
         }
         console.log("next is meeting object: ");
         console.log(new_meeting);
-
         $http({
       method: "POST",
       url: Debug.getURL("/meetings"),
@@ -356,10 +357,11 @@ angular.module('starter.controllers', [])
 
       $state.go("group.meetings(UserInfo.getActiveGroup())");
     });
-      this.meetingDate = "";
-      this.startTime = "";
-      this.endTime = "";
-      this.meetingDescription = "";
+      $scope.meetingDate = "";
+      $scope.startTime = "";
+      $scope.endTime = "";
+      $scope.meetingDescription = "";
+      $scope.locationName = "";
 }
 }
 

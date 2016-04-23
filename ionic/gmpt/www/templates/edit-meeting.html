@@ -37,6 +37,11 @@
   <input ng-model="endTime" type="text" placeholder={{currentMeeting().EndTime}}>
 </div>
 
+<div class="item item-input" contenteditable="true">
+  <input ng-model="locationName" type="text" placeholder={{currentMeeting().LocationName}}>
+</div>
+<p></p>
+
 <div class="row">
   <a class="button button-full button-positive" ng-click="confirmMeeting()" href="#/group/meetings/">
     Confirm Meeting
