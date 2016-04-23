@@ -482,8 +482,8 @@ $scope.newMeeting = function()
   $scope.orderByAttribute = '';
   $scope.members = [];
 
-  $scope.addMember = function () {
-
+  $scope.addMember = function () 
+  {
     if ($scope.email != ' ') {
       $scope.members.push({
         'email': $scope.email,
@@ -491,6 +491,9 @@ $scope.newMeeting = function()
       });
       $scope.email = ' ';
       $scope.isProfessor = false;
+      document.getElementById('email_input').value = "";
+      this.show_suggestions = false;
+      //document.getElementById('autocomplete_list').style.visibility = "hidden";
     }
   }
 
@@ -536,10 +539,10 @@ $scope.newMeeting = function()
   }
   $scope.autoCompleteMeetingUpdate = function(input)
   {
-
-    if(input.length >= 3) 
+    if(input && input.length >= 3) 
     {
       this.show_suggestions = true;
+      //document.getElementById('autocomplete_list').style.visibility = "visible";
       var input_data = 
       {
         term: input

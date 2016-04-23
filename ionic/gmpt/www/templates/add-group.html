@@ -32,7 +32,7 @@
         </label>
         <span style="padding-left:20px">
       </label>
-      <div class="list" ng-show="show_suggestions">
+      <div class="list" ng-show="show_suggestions" id="autocomplete_list">
         <li class="button item assertive" ng-repeat="i_suggestion in input_suggestions | limitTo:10" ng-click="selectEmail(i_suggestion)" id="$index">{{i_suggestion.suggestion}}
         </li>
       </div>
@@ -53,7 +53,7 @@
     <li ng-repeat="member in members">
       <div class = "item item-stable">
         <div class="row">
-          <div class ="col col-80">
+          <div class ="col col-90">
           <label>{{member.email}}</label>
         </div>
           <div class="col col-20">
