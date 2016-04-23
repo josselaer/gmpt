@@ -475,6 +475,7 @@ $scope.newMeeting = function()
 
 .controller('AddGroupCtrl', function ($scope, $ionicConfig, $state, $http, UserInfo, Debug) {
 
+  $scope.show_suggestions = false;
   $scope.group = {};
 
   $scope.search = '';
@@ -536,8 +537,9 @@ $scope.newMeeting = function()
   $scope.autoCompleteMeetingUpdate = function(input)
   {
 
-    if(input.length >= 3) {
-
+    if(input.length >= 3) 
+    {
+      this.show_suggestions = true;
       var input_data = 
       {
         term: input
@@ -572,6 +574,10 @@ $scope.newMeeting = function()
         $scope.input_suggestions = response.data.suggestions;
         console.log("Input suggestions: " , $scope.input_suggestions);
       });
+    }
+    else
+    {
+      this.show_suggestions = false;
     }
   }
 
