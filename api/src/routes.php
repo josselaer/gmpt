@@ -462,6 +462,34 @@ $app->post('/autocomplete',
 	}
 )->add($validateSession);
 
+$app->post('/projects/{project_id}', function($request,$response, $args) {
+	$db = $this->GMPT;
+	$form_data = $request->getParsedBody();
+	if (array_key_exists('projDescription', $form_data) && array_key_exists('groupName', $form_data)) {
+		$projectID = $args['project_id'];
+		$projectName = $form_data['groupName'];
+		$projectDescription = $form_data['projDescription'];
+		$query = $db->prepare('CALL UpdateProject(?,?,?)');
+		$query->bindParam(1,$projectID, PDO::PARAM_INT);
+		$query->bindParam(2,$projectName, PDO::PARAM_STR);
+		$query->bindParam(3,$projectDescription, PDO::PARAM_STR);
+		$result = $query->execute();
+		if ($result) {
+			$response = $response->withStatus(200);
+		}
+		else {
+			$response = $response->withStatus(400);
+			$response = $response->getBody()->write(json_encode($query->errorInfo()));
+		}
+	}
+	else {
+		$response = $response->withStatus(200);
+		$response = $response->getBody()->write(json_encode(array("error"=>True, "errorInfo"=>"Proper Arguments not found")));
+	}
+	return $response;
+
+})->add($validateSession);
+
 
 /*
 //test json_encode

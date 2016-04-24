@@ -44,7 +44,7 @@ $app->put('/notifications/{project_id}/{notification_type}',
 			$response = $response->withStatus(200);
 		}
 		else {
-			print_r($query->errorInfo());
+		    $errorArray = $query->errorInfo();
 			$response = $response->withStatus(400);
 		}
 		unset($query);	
