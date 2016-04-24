@@ -436,6 +436,15 @@ $scope.editMeeting = function(index)
   Meetings.setEdit(true);
   Meetings.setCurr(index);
   $scope.currentMeeting = Meetings.get(Meetings.getCurr());
+  console.log("CURRENT MEETING AT THIS POINT");
+  console.log($scope.currentMeeting);
+  console.log("and now the document at hand: ");
+  console.log($scope.document);
+  /*
+  $scope.document.getElementById('meeting__meetingDescription').value = $scope.currentMeeting.MeetingDescription;
+  $scope.document.getElementById('meeting__meetingDate').value = $scope.currentMeeting.MeetingDate;
+  $scope.document.getElementById('meeting__startTimeHour').value = RevertTime.getHours($scope.currentMeeting.StartTime);
+  */
 }
 
 $scope.newMeeting = function()
