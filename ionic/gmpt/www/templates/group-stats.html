@@ -27,6 +27,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col">
                 <div class="h3 text-center">Team Meetings</div>
@@ -36,23 +37,69 @@
             </div>
         </div>
 
-        <div class="bar gmptMainColor">
+        <div class="bar gmptMainColor" id="statBar">
 
             <input type="text" placeholder="   Team Member" id="statSearchByTeamMember">
 
             <div>
-                <i class="fa fa-sort-desc" aria-hidden="true" id="makewhite"></i>
 
-                <i class="fa fa-sort-asc" aria-hidden="true" id="makewhite"></i>
+                <i class="fa fa-sort-desc" aria-hidden="true" id="statDesc"></i>
+
             </div>
 
-            <select class="pull-right">
-                <option value="SentMsgs">Messages Sent</option>
-                <option value="Attendance">Meetings Attended</option>
-            </select>
+            <div>
+
+                <i class="fa fa-sort-asc" aria-hidden="true" id="statAsc"></i>
+
+            </div>
+
+            <div>
+
+                <select class="pull-right">
+                    <option value="SentMsgs">Messages Sent</option>
+                    <option value="Attendance">Meetings Attended</option>
+                </select>
+
+            </div>
 
         </div>
 
+        <div>
+
+            <ion-list id="teamList">
+
+                <ion-item>
+                    <div class="row">
+                        
+                        <div class="col col-30"></div>
+                       
+                        <div class="col col-30">
+                            <div class="stats-text-small stats-badge-small center">35</div>
+                            
+                            </div>
+                        
+                        <div class=" col col-30">
+                            <div class="stats-text-small stats-badge-small center">55</div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col col-30">
+                        Team Member
+                            </div>
+                         <div class="col col-30">
+                       Meetings Attended
+                            </div>
+                         <div class="col col-30">
+                        Messages Sent
+                            </div>
+                    </div>
+                </ion-item>
+
+            </ion-list>
+
+        </div>
 
     </ion-content>
 </ion-view>
