@@ -525,7 +525,26 @@ $app->delete('/users/project/{project_id}', function($request,$response, $args) 
 
 })->add($validateSession);
 
+$app->delete('/meetings/{meetingID}', function($request,$response, $args) {
+	$db = $this->GMPT;
+	$form_data = $request->getParsedBody();
+	
+	$MeetingID = (int)$request->getAttribute('meetingID');
+	
+	$query = $db->prepare("CALL DeleteMeeting(?)");
+	$query->bindParam(1,$MeetingID, PDO::PARAM_INT);
+	$result = $query->execute();
+	if ($result) {
+		$response = $response->withStatus(200);
+	}
+	else {
+		$response = $response->withStatus(400);
+		$response = $response->getBody()->write(json_encode($query->errorInfo()));
+	}
+	echo $response;
 
+
+})->add($validateSession);
 
 /*
 //test json_encode
