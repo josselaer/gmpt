@@ -400,7 +400,7 @@ $app->get('/logout', function ($request, $response, $args) {
 })->add($validateSession);
 
 //Edit a user WHEN HE registers: PUT @ /user endpoint
-$app->put('/user', 
+$app->post('/update/user', 
 	function($request, $response,$args){
 		$form_data = $request->getParsedBody();
 		$username = $form_data['username'];
