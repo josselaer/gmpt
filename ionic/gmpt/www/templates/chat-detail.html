@@ -1,0 +1,44 @@
+<<<<<<< HEAD:ionic/gmpt/www/templates/meeting-details.html
+<ion-view view-title="Meeting Details">
+
+    <ion-nav-buttons side="left">
+        <a ui-sref="group.meetings" class="button button-icon icon" id="makewhite">Meetings</a>
+    </ion-nav-buttons>
+
+
+    <ion-content class="padding">
+
+
+        <div class="card text-center"><b>{{currentMeeting().GroupName}} : {{currentMeeting().MeetingDescription}}</b>
+            <p>{{currentMeeting().MeetingDate}}</p>
+            <p>{{currentMeeting().StartTime}}</p>
+
+        </div>
+
+        <div class="card">
+            
+            <label class='text-center' id="centerlabel"><b>Attendance</b></label>
+            <p>{{currentMeeting().MeetingDate}}</p>
+            <p>{{currentMeeting().StartTime}}</p>
+            <p>{{currentMeeting().MeetingDescription}}</p>
+
+        </div>
+
+    </ion-content>
+
+=======
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="{{chat.name}}">
+  <ion-content class="padding">
+    <img ng-src="{{chat.face}}" style="width: 64px; height: 64px">
+    <p>
+      {{chat.lastText}}
+    </p>
+  </ion-content>
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8:ionic/gmpt/www/templates/chat-detail.html
+</ion-view>

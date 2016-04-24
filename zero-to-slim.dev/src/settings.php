@@ -13,16 +13,22 @@ return [
             'name' => 'slim-app',
             'path' => __DIR__ . '/../logs/app.log',
         ],
-<<<<<<< HEAD
-        'GMPT' => [
-            'username' =>'gmpt_master_user',
-            'password' => 'gmptMaster1',
-            'host' => 'gmpt-dev.cze344fgq3d6.us-west-2.rds.amazonaws.com',
-            'dbname' => 'GMPT',
+
+        'ToDoList' => [
+            'username' => 'testuser',
+            'password' => 'test',
+            'host' => 'localhost',
+            'dbname' => 'ToDoList',
+            'db' => 'mysql'
+        ],
+
+        'Recommender' => [
+            'username' =>'testuser',
+            'password' => 'test',
+            'host' => 'localhost',
+            'dbname' => 'Recommender',
             'db' => 'mysql',
         
         ],
-=======
->>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
     ],
 ];

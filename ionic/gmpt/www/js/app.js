@@ -30,12 +30,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
+<<<<<<< HEAD
   
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
+=======
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
 
   .state('account', {
     url: '/account',
@@ -56,6 +59,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
 
   // setup an abstract state for the tabs directive
+<<<<<<< HEAD
   .state('group', {
     url: '/group',
     cache: false,
@@ -71,18 +75,35 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           templateUrl: 'templates/group-stats.html',
           controller: 'StatsCtrl'
         }
+=======
+    .state('tab', {
+    url: '/tab',
+    abstract: true,
+    templateUrl: 'templates/tabs.html'
+  })
+
+  // Each tab has its own nav history stack:
+
+  .state('tab.dash', {
+    url: '/dash',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/tab-dash.html',
+        controller: 'DashCtrl'
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
       }
   })
 
-  .state('group.chat', {
-      url: '/chat/:groupID',
+  .state('tab.chats', {
+      url: '/chats/',
       views: {
-        'group-chat': {
-          templateUrl: 'templates/group-chat.html',
+        'tab-chats': {
+          templateUrl: 'templates/tab-chats.html',
           controller: 'ChatsCtrl'
         }
       }
     })
+<<<<<<< HEAD
   
   .state('addmeeting', {
     url: '/addmeeting',
@@ -107,12 +128,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   .state('group.meetings', {
     url: '/meetings/:groupID',
+=======
+    .state('tab.chat-detail', {
+      url: '/chats/:chatId',
+      views: {
+        'tab-chats': {
+          templateUrl: 'templates/chat-detail.html',
+          controller: 'ChatDetailCtrl'
+        }
+      }
+    })
+
+  .state('tab.account', {
+    url: '/account',
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
     views: {
-      'group-meetings': {
-        templateUrl: 'templates/group-meetings.html',
-        controller: 'MeetingsCtrl'
+      'tab-account': {
+        templateUrl: 'templates/tab-account.html',
+        controller: 'AccountCtrl'
       }
     }
+<<<<<<< HEAD
   })
   
   .state('register', {
@@ -120,6 +156,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     templateUrl: 'templates/register.html',
     controller: 'RegisterCtrl'
   })
+=======
+  });
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
 
   .state('group.settings', {
       url: '/settings/:groupID',
@@ -132,6 +171,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
   
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/groups');
 
 });

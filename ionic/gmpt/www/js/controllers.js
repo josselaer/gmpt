@@ -1,5 +1,6 @@
 angular.module('starter.controllers', [])
 
+<<<<<<< HEAD
 .controller('SettingsCtrl', function($scope, $state, $stateParams, $http, UserInfo, Debug) {
 
   $scope.isProfessor = false;
@@ -524,12 +525,38 @@ $scope.newMeeting = function()
 .controller('AddMeetingCtrl', function($scope, $state, $http, Debug) 
 {
 
+=======
+.controller('DashCtrl', function($scope) {})
+
+.controller('ChatsCtrl', function($scope, Chats) {
+  // With the new view caching in Ionic, Controllers are only called
+  // when they are recreated or on app start, instead of every page change.
+  // To listen for when this page is active (for example, to refresh data),
+  // listen for the $ionicView.enter event:
+  //
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
+
+  $scope.chats = Chats.all();
+  $scope.remove = function(chat) {
+    Chats.remove(chat);
+  };
 })
 
-.controller('GroupsCtrl', function ($scope, $http, UserInfo, Groups, Debug) {
+.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+  $scope.chat = Chats.get($stateParams.chatId);
+})
 
-  $scope.userName = UserInfo.get().userName;
+.controller('AccountCtrl', function($scope) {
+  $scope.settings = {
+    enableFriends: true
+  }
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
+})
 
+.controller ('GroupsCtrl', function($scope, $http, Groups, Debug) {
+
+<<<<<<< HEAD
   $scope.activeMeeting = {active: false, id: null};
 
   $scope.$on("$ionicView.enter", function() {
@@ -537,16 +564,16 @@ $scope.newMeeting = function()
     console.log(UserInfo.getAuthToken());
     
     $http({
+=======
+  $http({
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
 
         method: "GET",
-        url: Debug.getURL("/projects"),
-    //    responseType: "json",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": UserInfo.getAuthToken()
-        }
+        url: Debug.getURL("/groups"),
+        responseType: "json"
       }).then(function successCallback(response) {
 
+<<<<<<< HEAD
         console.log("Get projects with auth: " + UserInfo.getAuthToken());
         console.log(response.data);
 
@@ -555,18 +582,32 @@ $scope.newMeeting = function()
 
         $scope.activeMeeting = Groups.activeMeeting();
 
+=======
+        console.log(Debug.getURL("/groups"));
+        console.log(response);
+        groups = response.data;
+        console.log(groups);
+
+        Groups.set(groups);
+        $scope.groups = groups;
+    
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
       }, function errorCallback(response) {
 
-        console.log(Debug.getURL("/projects"));
+        console.log(Debug.getURL("/groups"));
         console.log(response);
 
         alert("Failed to load groups, please try again.");
 
         return null;
 
+<<<<<<< HEAD
     });
 
   }); 
+=======
+      });
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
 
     $scope.setGroup = function(id) {
       console.log("Setting group ID: " + id);
@@ -599,11 +640,16 @@ $scope.newMeeting = function()
   $scope.groups = Groups.all();
 })
 
+<<<<<<< HEAD
 .controller('AddGroupCtrl', function ($scope, $ionicConfig, $state, $http, UserInfo, Debug) {
+=======
+.controller('AddGroupCtrl', function($scope, $state, $http, Debug) {
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
 
   $scope.show_suggestions = false;
   $scope.group = {};
 
+<<<<<<< HEAD
   $scope.search = '';
   $scope.orderByAttribute = '';
   $scope.members = [];
@@ -634,25 +680,29 @@ $scope.newMeeting = function()
 
   $scope.addGroup = function () {
 
+=======
+  $scope.addGroup = function() {
+
+    console.log($scope.group.groupName);
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
     var group = {
       groupName: $scope.group.groupName,
-      projDescription: $scope.group.groupDesc,
-      users: $scope.members
+      description: $scope.group.groupDesc
     }
 
+<<<<<<< HEAD
     group.users.push({email:UserInfo.get().email, isProfessor:false});
 
     console.log(JSON.stringify(group));
 
+=======
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
     $http({
-      method: "POST",
-      url: Debug.getURL("/projects"),
-      data: group,
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": UserInfo.getAuthToken()
-      }
+      method:"POST",
+      url: Debug.getURL("/groups"),
+      data: group
     }).then(function successCallback(response) {
+<<<<<<< HEAD
       console.log("Adding Group...");
       console.log(response);
       return response;
@@ -768,3 +818,13 @@ $scope.newMeeting = function()
   }
 })
 
+=======
+      $state.go("groups");
+    }, function errorCallback(response) {
+      alert.log("Failed to add group");
+    });
+  }
+  
+
+});
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8

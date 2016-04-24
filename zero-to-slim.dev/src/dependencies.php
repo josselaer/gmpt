@@ -17,10 +17,9 @@ $container['logger'] = function ($c) {
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], Monolog\Logger::DEBUG));
     return $logger;
 };
-<<<<<<< HEAD
 
-$container['GMPT'] = function ($c) {
-	$settings = $c->get('settings')['GMPT'];
+$container['ToDoList'] = function ($c) {
+	$settings = $c->get('settings')['ToDoList'];
 
 	$connString = $settings['db'] . ':host=' . $settings['host'];
 	$connString .= ';dbname=' . $settings['dbname'] . ';charset=utf8mb4';
@@ -29,5 +28,16 @@ $container['GMPT'] = function ($c) {
 
 	return $db;
 };
-=======
->>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
+
+$container['Recommender'] = function ($c){
+    $settings = $c->get('settings')['Recommender'];
+    
+    $connString = $settings['db'] . ':host=' . $settings['host'];
+    $connString .= ';dbname=' .$settings['dbname'] . ';charset=utf8mb4';
+    
+    $db = new PDO($connString, $settings['username'], $settings['password']);
+    
+    return $db;
+    
+    
+};

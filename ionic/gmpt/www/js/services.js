@@ -1,5 +1,6 @@
 angular.module('starter.services', [])
 
+<<<<<<< HEAD
 .factory("Notifications", function(UserInfo, Debug) {
 
   var notifications = [{
@@ -73,19 +74,46 @@ angular.module('starter.services', [])
     "auth": 0,
     "userid": 0
   }
+=======
+.factory('Chats', function() {
+  // Might use a resource here that returns a JSON array
+
+  // Some fake testing data
+  var chats = [{
+    id: 0,
+    name: 'Ben Sparrow',
+    lastText: 'You on your way?',
+    face: 'img/ben.png'
+  }, {
+    id: 1,
+    name: 'Max Lynx',
+    lastText: 'Hey, it\'s me',
+    face: 'img/max.png'
+  }, {
+    id: 2,
+    name: 'Adam Bradleyson',
+    lastText: 'I should buy a boat',
+    face: 'img/adam.jpg'
+  }, {
+    id: 3,
+    name: 'Perry Governor',
+    lastText: 'Look at my mukluks!',
+    face: 'img/perry.png'
+  }, {
+    id: 4,
+    name: 'Mike Harrington',
+    lastText: 'This is wicked good ice cream.',
+    face: 'img/mike.png'
+  }];
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
 
   activeGroup = null;
 
   return {
-    get: function() {
-      return user;
+    all: function() {
+      return chats;
     },
-    set: function(userData) {
-      user.userName = userData.userName;
-      user.email = userData.email;
-      user.firstName = userData.firstName;
-      user.lastName = userData.lastName;
-    },
+<<<<<<< HEAD
     setAuthToken: function(authToken) {
       user.auth = authToken;
 
@@ -179,13 +207,35 @@ angular.module('starter.services', [])
 
     getDefaultMessages: function() {
       return chats;
+=======
+    remove: function(chat) {
+      chats.splice(chats.indexOf(chat), 1);
+    },
+    get: function(chatId) {
+      for (var i = 0; i < chats.length; i++) {
+        if (chats[i].id === parseInt(chatId)) {
+          return chats[i];
+        }
+      }
+      return null;
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
     }
   };
 })
 
 .factory("Groups", function($http) {
 
-  groups = [];
+  groups = [{
+    id: 1,
+    name: "GMPT",
+    nextMeeting: "Sunday 12:00 PM",
+    notifications: 9
+  }, {
+    id: 2,
+    name: "Software Engineering",
+    nextMeeting: "Thursday 12:00 PM",
+    notifications: 2
+  }];
 
   return {
     all: function() {
@@ -217,6 +267,7 @@ angular.module('starter.services', [])
   };
 })
 
+<<<<<<< HEAD
 .factory("Meetings", function($http) {
 
   meetings = [];
@@ -283,13 +334,15 @@ angular.module('starter.services', [])
   };
 })
 
+=======
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
 .factory("Debug", function() {
 
-  debug = false;
+  debug = true;
 
-  apiaryURL = "http://private-f963fa-gmpt.apiary-mock.com";
+  apiaryURL = "http://private-anon-af0e45a81-gmpt.apiary-mock.com";
 
-  prodURL = "http://52.37.56.8/gmpt/api/public";
+  prodURL = null;
 
   return {
     getURL: function(endpoint) {
@@ -302,5 +355,3 @@ angular.module('starter.services', [])
   }
 
 });
-
-

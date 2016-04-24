@@ -2,6 +2,7 @@
 // Application middleware
 
 // e.g: $app->add(new \Slim\Csrf\Guard);
+<<<<<<< HEAD
 $mw = (function ($request, $response, $next) {
 	
 
@@ -48,3 +49,5 @@ $validateSession= (function ($request,$response,$next) {
 	
 });
 ?>
+=======
+>>>>>>> 49418717eeb0872c668b38bc9db82a491ecc75a8
