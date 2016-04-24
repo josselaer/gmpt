@@ -34,6 +34,28 @@ CREATE TABLE `Attendance` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `Invite`
+--
+
+DROP TABLE IF EXISTS `Invite`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Invite` (
+  `InviteID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) NOT NULL,
+  `ProjectID` int(11) NOT NULL,
+  `InviteTimestamp` datetime DEFAULT CURRENT_TIMESTAMP,
+  `RegisterIndicator` tinyint(1) DEFAULT '0',
+  `InviteToken` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`InviteID`),
+  KEY `UserID` (`UserID`),
+  KEY `ProjectID` (`ProjectID`),
+  CONSTRAINT `Invite_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `User` (`UserID`),
+  CONSTRAINT `Invite_ibfk_2` FOREIGN KEY (`ProjectID`) REFERENCES `Project` (`ProjectID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `Meeting`
 --
 
@@ -51,7 +73,7 @@ CREATE TABLE `Meeting` (
   PRIMARY KEY (`MeetingID`),
   KEY `ProjectID` (`ProjectID`),
   CONSTRAINT `Meeting_ibfk_1` FOREIGN KEY (`ProjectID`) REFERENCES `Project` (`ProjectID`)
-) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,7 +131,7 @@ CREATE TABLE `MessageRoom` (
   PRIMARY KEY (`MessageRoomID`),
   KEY `ProjectID` (`ProjectID`),
   CONSTRAINT `MessageRoom_ibfk_1` FOREIGN KEY (`ProjectID`) REFERENCES `Project` (`ProjectID`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +155,7 @@ CREATE TABLE `Notification` (
   CONSTRAINT `Notification_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `User` (`UserID`),
   CONSTRAINT `Notification_ibfk_2` FOREIGN KEY (`ProjectID`) REFERENCES `Project` (`ProjectID`),
   CONSTRAINT `Notification_ibfk_3` FOREIGN KEY (`NotificationTypeID`) REFERENCES `NotificationType` (`NotificationTypeID`)
-) ENGINE=InnoDB AUTO_INCREMENT=433 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=440 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +200,7 @@ CREATE TABLE `Project` (
   `Description` varchar(255) DEFAULT NULL,
   `DateCreated` date DEFAULT NULL,
   PRIMARY KEY (`ProjectID`)
-) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,4 +322,4 @@ CREATE TABLE `UserProjectState` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-24 13:43:46
+-- Dump completed on 2016-04-24 14:20:51
