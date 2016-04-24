@@ -490,6 +490,33 @@ $app->post('/projects/{project_id}', function($request,$response, $args) {
 
 })->add($validateSession);
 
+$app->delete('/users/project/{project_id}', function($request,$response, $args) {
+	$db = $this->GMPT;
+	$form_data = $request->getParsedBody();
+	if (array_key_exists('project_id', $args)) {
+		$projectID = $args['project_id'];
+		$userID = (int)$request->getAttribute('UserID');
+		$query = $db->prepare('CALL DeleteUserProject(?,?)');
+		$query->bindParam(1,$userID, PDO::PARAM_INT);
+		$query->bindParam(2,$projectID, PDO::PARAM_STR);
+		$result = $query->execute();
+		if ($result) {
+			$response = $response->withStatus(200);
+		}
+		else {
+			$response = $response->withStatus(400);
+			$response = $response->getBody()->write(json_encode($query->errorInfo()));
+		}
+	}
+	else {
+		$response = $response->withStatus(200);
+		$response = $response->getBody()->write(json_encode(array("error"=>True, "errorInfo"=>"Proper Arguments not found")));
+	}
+	return $response;
+
+})->add($validateSession);
+
+
 
 /*
 //test json_encode
