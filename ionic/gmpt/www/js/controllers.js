@@ -92,7 +92,7 @@ angular.module('starter.controllers', [])
 
     $http({
       method: "GET",
-      url : Debug.getURL("/statistics/loginCount/" + $stateParams.groupID),
+      url : Debug.getURL("/statistics/attendanceRate/" + $stateParams.groupID),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': UserInfo.getAuthToken()
@@ -106,7 +106,7 @@ angular.module('starter.controllers', [])
       //alert("Could not get member statistics");
     }).then(function (response) {
 
-      $scope.stats.members = response.data.members;
+      $scope.stats.attRate = response;
 
     });
   });
