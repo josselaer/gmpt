@@ -347,11 +347,10 @@ angular.module('starter.controllers', [])
         console.log('Return value from the datepicker popup is : ' + val, new Date(val));
         $scope.meetingDate = new Date(val);
       },
-      from: new Date(2016, 1, 1), //Optional
-      to: new Date(2020, 10, 30), //Optional
+      from: new Date(), //Optional
+      to: new Date(2022, 10, 30), //Optional
       inputDate: new Date(),      //Optional
-      mondayFirst: true,          //Optional
-      disableWeekdays: [0],       //Optional
+      mondayFirst: false,          //Optional
       closeOnSelect: false,       //Optional
       templateType: 'popup'       //Optional
   };
