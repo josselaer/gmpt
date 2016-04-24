@@ -1,19 +1,23 @@
 /* Empty. Add your own CSS if you like */
+.gmptMainColor{  
+        background-color: #303F9F !important;
+}
+
 
 a {
     text-decoration: none !important;
 }
 
 #centerlabel{
-    
     display: block;
     text-align: center;
     line-height: 150%;
 }
 
-.navbar {
-    background-color: #303F9F !important;
-    color: white !important;
+#statSearchByTeamMember{   
+    
+/*    margin-left: 1rem;*/
+    width:8em;
 }
 
 /*
@@ -178,7 +182,6 @@ img.profile-pic.right {
     color: red;
 }
 
-
 .stats-text {
     
     text-align:center;
@@ -195,7 +198,6 @@ img.profile-pic.right {
     width: 8rem;
     text-align: center !important;
     height: 8rem;
-
     border-radius:4rem;
 }
 

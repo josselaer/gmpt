@@ -19,8 +19,8 @@ angular.module('app', [])
     console.log($scope.userInfo);
 
     $http({
-      method: "PUT",
-      url: "http://52.37.56.8/gmpt/api/public/user",
+      method: "POST",
+      url: "http://52.37.56.8/gmpt/api/public/update/user",
       data: $scope.userInfo
     }).then(function successCallback(response) {
       console.log(response);
