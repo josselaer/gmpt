@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col center">
                 <div class="stats-badge">
-                    <div class="stats-text">23</div>
+                    <div class="stats-text">{{stats.totalNumOfMeetings}}</div>
                 </div>
             </div>
             <!--
@@ -23,7 +23,7 @@
 -->
             <div class="col center">
                 <div class="stats-badge">
-                    <div class="stats-text">69</div>
+                    <div class="stats-text">{{stats.totalNumOfChatMessages}}</div>
                 </div>
             </div>
         </div>
@@ -66,15 +66,16 @@
 
         <div>
 
+            <div ng-if="showMemberStats == false">Your group has not had any meetings.</div>
             <ion-list id="teamList">
 
-                <ion-item>
+                <ion-item ng-repeat="member in stats.attRate">
                     <div class="row">
                         
-                        <div class="col col-30"></div>
+                        <div class="col col-30">{{member.username}}</div>
                        
                         <div class="col col-30">
-                            <div class="stats-text-small stats-badge-small center">35</div>
+                            <div class="stats-text-small stats-badge-small center">{{member.attendanceRate}}%</div>
                             
                             </div>
                         
@@ -89,7 +90,7 @@
                         Team Member
                             </div>
                          <div class="col col-30">
-                       Meetings Attended
+                       Attendance Rate
                             </div>
                          <div class="col col-30">
                         Messages Sent

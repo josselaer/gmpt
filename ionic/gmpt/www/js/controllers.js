@@ -165,6 +165,7 @@ angular.module('starter.controllers', [])
 .controller('StatsCtrl', function ($http, $scope, $stateParams, UserInfo, Debug) {
 
   $scope.stats  = {};
+  $scope.showMemberStats = false;
 
   $scope.$on("$ionicView.enter", function() {
 
@@ -188,27 +189,39 @@ angular.module('starter.controllers', [])
 
         $scope.stats = response.Totals;
 
+        console.log($scope.stats);
+
+        $http({
+          method: "GET",
+          url : Debug.getURL("/statistics/attendanceRate/" + $stateParams.groupID),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': UserInfo.getAuthToken()
+          }
+        }).then(function successCallback(response) {
+
+          console.log(response);
+          return response.data;
+
+        }, function failureCallback(response) {
+          //alert("Could not get member statistics");
+        }).then(function (response) {
+
+          if (response.attendanceRate.length > 0) {
+            $scope.stats.attRate = response.attendanceRate;
+
+            for (var i = 0; i < $scope.stats.attRate.length; i++) {
+              $scope.stats.attRate[i].attendanceRate = Math.floor($scope.stats.attRate[i].attendanceRate);
+            }
+            $scope.showMemberStats = true;
+          }
+
+          console.log($scope.stats.attRate);
+        });
+
       });
 
-    $http({
-      method: "GET",
-      url : Debug.getURL("/statistics/attendanceRate/" + $stateParams.groupID),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': UserInfo.getAuthToken()
-      }
-    }).then(function successCallback(response) {
 
-      console.log(response);
-      return response;
-
-    }, function failureCallback(response) {
-      //alert("Could not get member statistics");
-    }).then(function (response) {
-
-      $scope.stats.attRate = response.attendanceRate;
-
-    });
   });
 })
 
