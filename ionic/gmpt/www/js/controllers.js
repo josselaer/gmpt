@@ -435,6 +435,7 @@ $scope.editMeeting = function(index)
   Meetings.setEdit(true);
   Meetings.setCurr(index);
   $scope.currentMeeting = Meetings.get(Meetings.getCurr());
+  this.meetingDescription = "LOL";
   console.log("CURRENT MEETING TO BE EDITED");
   console.log($scope.currentMeeting);
 }
@@ -444,7 +445,11 @@ $scope.newMeeting = function()
   Meetings.setEdit(false);
   //Meetings.setCurr(1);
 }
-
+  if(Meetings.getEdit() == true)
+  {
+    $scope.meetingDescription = $scope.currentMeeting().MeetingDescription;
+    $scope.locationName = $scope.currentMeeting().LocationName;
+  }
 })
 
 .controller('AddMeetingCtrl', function($scope, $state, $http, Debug) 

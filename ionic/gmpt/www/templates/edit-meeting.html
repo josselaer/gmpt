@@ -4,20 +4,20 @@
 
 <label>Meeting Topic</label>
 <div class="item item-input">
-  <input ng-model="meetingDescription" type="text" id="meeting__meetingDescription" placeholder = {{currentMeeting().MeetingDescription}}>
+  <input ng-model="meetingDescription" type="text" id="meeting__meetingDescription">
 </div>
 <p></p>
 
 <label>Date</label>
 <div class="item item-button">
-  <button class="button button-primary" ng-model="meetingDate" id="meeting__meetingDate" ng-click="openPicker()" placeholder = {{currentMeeting().MeetingDate}}>Date</button> {{meetingDate | date:'shortDate'}}
+  <button class="button button-primary" ng-model="meetingDate" id="meeting__meetingDate" ng-click="openPicker()">Date</button> {{meetingDate | date:'shortDate'}}
 </div>
 <p></p>
 
 <label>Start Time</label>
 
 <label class="item-input item-select padding-vertical">
-    <select ng-model="startTimeHour" id="meeting__startTimeHour" placeholder={{currentMeeting().StartTime}}>
+    <select ng-model="startTimeHour" id="meeting__startTimeHour">
       <option selected>{{RevertTime.getHour(currentMeeting().StartTime)}}<option>
       <option>12:00</option>
       <option>12:30</option>
@@ -96,7 +96,7 @@
 
 <label>Location Name</label>
 <div class="item item-input">
-  <input ng-model="locationName" type="text" id="meeting__locationName" placeholder={{currentMeeting().LocationName}}>
+  <input ng-model="locationName" type="text" id="meeting__locationName">
 </div>
 <p></p>
 
