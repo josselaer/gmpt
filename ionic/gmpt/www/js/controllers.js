@@ -1,5 +1,105 @@
 angular.module('starter.controllers', [])
 
+.controller('SettingsCtrl', function($scope, $state, $stateParams, $http, UserInfo, Debug) {
+
+  $scope.isProfessor = false;
+  $scope.email = "";
+
+  $scope.addMember = function () 
+  {
+
+    var payload = {
+      ProjectID: $stateParams.groupID,
+      user: {
+        email: $scope.email, 
+        isProfessor: $scope.isProfessor
+      }
+    };
+
+    console.log(payload);
+
+    $http({
+      method: "POST",
+      url: Debug.getURL("/projects/add"),
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
+      console.log("Add member success: ");
+      console.log(response);
+
+    }, function errorCallback(response) {
+      console.log("Failed adding member: ");
+      console.log(response);
+
+    }).then(function (response) {
+
+      $scope.isProfessor = false;
+      $scope.email = "";
+      document.getElementById('email_input').value = "";
+
+    });
+    
+  }
+
+  $scope.autoCompleteMeetingUpdate = function(input)
+  {
+    if(input && input.length >= 3) 
+    {
+      this.show_suggestions = true;
+      //document.getElementById('autocomplete_list').style.visibility = "visible";
+      var input_data = 
+      {
+        term: input
+      }
+      var success = false;
+      $scope.input_suggestions = [];
+      $http(
+      {
+        method: "POST",
+        url: Debug.getURL("/autocomplete"),
+        data: input_data,
+        headers: 
+        {
+          "Content-Type": "application/json",
+          "Authorization": UserInfo.getAuthToken()
+        }
+      }).then(function successCallback(response) 
+      {
+        console.log(response);
+        success = true;
+        return response;
+      }, function errorCallback(response) 
+      {
+        console.log("auto complete 'fail': ");
+        console.log(response);
+        alert("Failed to post autocomplete");
+        return null;
+      }).then(function redirect(response) 
+      {
+        console.log("redirecting...");
+        console.log(response);
+        $scope.input_suggestions = response.data.suggestions;
+        console.log("Input suggestions: " , $scope.input_suggestions);
+      });
+    }
+    else
+    {
+      this.show_suggestions = false;
+    }
+  }
+
+  $scope.selectEmail = function(selected_email)
+  {
+    $scope.email = selected_email;
+    document.getElementById('email_input').value = selected_email.suggestion;
+    $scope.email = selected_email.suggestion;
+  }
+
+})
+
 .controller('AccountCtrl', function($scope, $state, $http, UserInfo, Debug) {
 
   $scope.logout = function () {
@@ -106,7 +206,7 @@ angular.module('starter.controllers', [])
       //alert("Could not get member statistics");
     }).then(function (response) {
 
-      $scope.stats.attRate = response;
+      $scope.stats.attRate = response.attendanceRate;
 
     });
   });
@@ -507,17 +607,19 @@ $scope.newMeeting = function()
   $scope.search = '';
   $scope.orderByAttribute = '';
   $scope.members = [];
+  $scope.email = "";
 
   $scope.addMember = function () 
   {
-    if ($scope.email != ' ') {
+    if (document.getElementById('email_input').value != ' ') {
+      console.log("Adding email: " + document.getElementById('email_input').value);
       $scope.members.push({
-        'email': $scope.email,
+        'email': document.getElementById('email_input').value,
         'isProfessor': this.isProfessor
       });
       $scope.email = ' ';
       $scope.isProfessor = false;
-      document.getElementById('email_input').value = "";
+      //document.getElementById('email_input').value = "";
       this.show_suggestions = false;
       //document.getElementById('autocomplete_list').style.visibility = "hidden";
     }
@@ -537,6 +639,8 @@ $scope.newMeeting = function()
       projDescription: $scope.group.groupDesc,
       users: $scope.members
     }
+
+    group.users.push({email:UserInfo.get().email, isProfessor:false});
 
     console.log(JSON.stringify(group));
 
@@ -587,7 +691,7 @@ $scope.newMeeting = function()
         }
       }).then(function successCallback(response) 
       {
-        console.log(response);
+        //console.log(response);
         success = true;
         return response;
       }, function errorCallback(response) 
@@ -598,10 +702,10 @@ $scope.newMeeting = function()
         return null;
       }).then(function redirect(response) 
       {
-        console.log("redirecting...");
-        console.log(response);
+        //console.log("redirecting...");
+        //console.log(response);
         $scope.input_suggestions = response.data.suggestions;
-        console.log("Input suggestions: " , $scope.input_suggestions);
+        //console.log("Input suggestions: " , $scope.input_suggestions);
       });
     }
     else
@@ -658,7 +762,7 @@ $scope.newMeeting = function()
       $state.go("login");
     }, function errorCallback(response) {
       alert.log("Can't logout. You can never leave!");
-        console.error;
+      console.error;
     });
 
   }

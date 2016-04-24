@@ -120,6 +120,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     templateUrl: 'templates/register.html',
     controller: 'RegisterCtrl'
   })
+
+  .state('group.settings', {
+      url: '/settings/:groupID',
+      views: {
+        'group-settings': {
+          templateUrl: 'templates/group-settings.html',
+          controller: 'SettingsCtrl'
+        }
+      }
+  });
   
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
