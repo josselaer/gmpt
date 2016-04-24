@@ -21,7 +21,7 @@
 -->
 <p></p>
   <!--<div class="container">-->
-<form name="frm" ng-submit="addMember()">
+<form name="frm" ng-submit="addMember()">>
   <label>Add Team Member</label>
   <div class = "row">
     <div class = "col col-80">
@@ -36,7 +36,7 @@
         <li class="button item assertive" ng-repeat="i_suggestion in input_suggestions | limitTo:10" ng-click="selectEmail(i_suggestion)" id="$index">{{i_suggestion.suggestion}}
         </li>
       </div>
-  <ion-checkbox ng-model="isProfessor">Add As Professor</ion-checkbox>
+  <ion-checkbox ng-model="isProfessor">Add as Professor</ion-checkbox>
 </div>
 </div>
   <div class = "col col-35">
