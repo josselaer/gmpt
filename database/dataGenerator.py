@@ -38,9 +38,9 @@ meetingDescription1 = ["Plan or Design", "Start", "Work on", "Finish"]
 meetingDescription2 = ["website", "app", "paper", "interview", "case study", "presentation", "group homework", "project"]
 
 #update projectDescriptions
-for i in range(50):
+for i in range(1,11):
     desc = random.choice(projectDescription)
-    file.write("UPDATE Project SET Description = " + "\"" + desc + "\"" + " WHERE ProjectID = " + str(i+1) + ";")
+    file.write("UPDATE Project SET Description = " + "\"" + desc + "\"" + " WHERE ProjectID = " + str(i) + ";")
     file.write('\n')
 
 file.write('\n')
@@ -48,9 +48,9 @@ file.write('\n')
 file.write('\n')
 
 #update chats
-for i in range(50):
+for i in range(1,102):
     chat = random.choice(chats)
-    file.write("UPDATE Message SET MessageText = " + "\"" + chat + "\"" + " WHERE MessageID = " + str(i+1) + ";")
+    file.write("UPDATE Message SET MessageText = " + "\"" + chat + "\"" + " WHERE MessageID = " + str(i) + ";")
     file.write('\n')
 
 file.write('\n')
@@ -60,7 +60,7 @@ file.write('\n')
 oddEven = [1,2]
 
 #update meetings
-for i in range(50):
+for i in range(3,55):
     desc1 = random.choice(meetingDescription1)
     desc2 = random.choice(meetingDescription2)
     fullDesc = "\"" + desc1 + " " + desc2 + "\""
@@ -75,7 +75,7 @@ for i in range(50):
         endT = startTime + timedelta(hours=2)
     endTime = ""
     endTime = `endT.hour` + ":" + `endT.minute`
-    file.write("UPDATE Meeting SET MeetingDescription = " + fullDesc + ", LocationName = " +  location  + ", MeetingDate = " + mDate + ", StartTime = " + "\"" + stime + "\"" + ", EndTime = " + "\"" + endTime + "\"" + " WHERE MeetingID = " + str(i+1) + ";")
+    file.write("UPDATE Meeting SET MeetingDescription = " + fullDesc + ", LocationName = " +  location  + ", MeetingDate = " + mDate + ", StartTime = " + "\"" + stime + "\"" + ", EndTime = " + "\"" + endTime + "\"" + " WHERE MeetingID = " + str(i) + ";")
     file.write('\n')
 
 file.write('\n')
@@ -89,7 +89,7 @@ file.write('\n')
     _salt = "1jo5OFAVDpC6xaEgt8sSuHcOSzo1SnkEVF5jHwD39SJegUlvz8nBLNeJBK6StVPCKzNNxUpOToQojUW304fW5gjniSqWejeBxo6Xtlgb0qIWW4vYoRYIIPRph8YwiW1mSxZ6sahYlfruDA52wtwPw82I9EVnEul7jRMbbFGFD2NDNW3AinEFt5sqMa84tKK0V9JJyRe4FY7yFTOVjSMV41WF2srbI3k0QVGoEaQ7r0tijCBnXil4QVwQ0ya1FW3g"
     _hash = "d528cbceddde5d3cbc0f6f3b841a48e10d35fd84eea400959a2bc450c19d1a2f"
     names = []
-    
+   
     
     for i in range(100):
     name =  random.choice(firstNames) + random.choice(lastNames)+ str(i)
