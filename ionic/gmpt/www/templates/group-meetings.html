@@ -29,7 +29,7 @@
     	<div class="col col-50">
         <div class="h4">{{meeting.MeetingDescription}}</div>
         At {{meeting.LocationName}} on {{meeting.MeetingDate | date:'shortDate'}}<br/>
-        from {{meeting.StartTime | date:'shortTime'}} to {{meeting.EndTime | date:'shortTime'}}
+        from {{RevertTime.getHour(meeting.StartTime)}} {{RevertTime.getCycle(meeting.StartTime)}} to {{RevertTime.getHour(meeting.EndTime)}} {{RevertTime.getCycle(meeting.EndTime)}}
 
     		
    		</div>

@@ -238,7 +238,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, RevertTime, Debug, ionicDatePicker, CalculateTime) {
+.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, TempEditStorage, Meetings, GroupID, RevertTime, Debug, ionicDatePicker, CalculateTime) {
 
   $scope.RevertTime = RevertTime;
   $scope.startTimeHour = "12:00";
@@ -358,6 +358,7 @@ angular.module('starter.controllers', [])
       console.log(end_time);
       //var start_time = $scope.startTimeHour;
 
+      var url_string = "/meetings";
       if(Meetings.getEdit() == false)
       {
         console.log("$scope.meetings: ");
@@ -368,18 +369,22 @@ angular.module('starter.controllers', [])
           'StartTime':start_time,'MeetingDescription':$scope.meetingDescription,
           'ProjectID':GroupID.get(), 'EndTime': end_time, 'LocationName': $scope.locationName});
         Meetings.set($scope.meetings);
-
+        url_string = "/meetings";
       }
       
       else if(Meetings.getEdit() == true)
       {
-        $scope.meetings[Meetings.getCurr()].MeetingDate = $scope.meetingDate;
-        $scope.meetings[Meetings.getCurr()].StartTime = $scope.startTime;
-        $scope.meetings[Meetings.getCurr()].MeetingDescription = $scope.meetingDescription;
-        $scope.meetings[Meetings.getCurr()].EndTime = $scope.endTime;
+        var saved_index = TempEditStorage.getMeetingIndex();
+        $scope.meetings[saved_index].MeetingDate = this.meetingDate;
+        $scope.meetings[saved_index].StartTime = start_time;
+        $scope.meetings[saved_index].MeetingDescription = this.meetingDescription;
+        $scope.meetings[saved_index].EndTime = end_time;
         Meetings.set($scope.meetings);
+        url_string = "/meetings";
+        url_string += "/";
+        url_string += $scope.meetings[saved_index].MeetingID;
       }
-      
+      /*
       console.log("at this point in time, weve clicked confirm meeting, lets see the scope variables: ");
       console.log("meetingDate v");
       console.log(this.meetingDate);
@@ -389,6 +394,7 @@ angular.module('starter.controllers', [])
       console.log(this.endTime);
       console.log("locationName v");
       console.log(this.locationName);
+      */
       var new_meeting = 
         {
           ProjectID : GroupID.get(),
@@ -396,13 +402,14 @@ angular.module('starter.controllers', [])
           LocationName : this.locationName,
           EndTime : end_time,
           StartTime : start_time,
-          MeetingDescription : this.meetingDescription
+          MeetingDescription : this.meetingDescription,
+          MeetingID : $scope.currentMeeting().MeetingID
         }
         console.log("next is meeting object: ");
         console.log(new_meeting);
         $http({
       method: "POST",
-      url: Debug.getURL("/meetings"),
+      url: Debug.getURL(url_string),
       data: new_meeting,
       headers: {
         "Content-Type": "application/json",
@@ -436,6 +443,7 @@ $scope.editMeeting = function(index)
   Meetings.setCurr(index);
   $scope.currentMeeting = Meetings.get(Meetings.getCurr());
   this.meetingDescription = "LOL";
+  TempEditStorage.setMeetingIndex(index);
   console.log("CURRENT MEETING TO BE EDITED");
   console.log($scope.currentMeeting);
 }

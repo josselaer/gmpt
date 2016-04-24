@@ -456,6 +456,21 @@ angular.module('starter.services', [])
   }
 })
 
+.factory("TempEditStorage", function()
+{
+  var index_save = 0;
+  return{
+    setMeetingIndex: function(ind)
+    {
+      index_save = ind;
+    },
+    getMeetingIndex: function()
+    {
+      return index_save;
+    }
+  }
+})
+
 .factory("Debug", function() {
 
   debug = false;
