@@ -92,7 +92,7 @@ angular.module('starter.controllers', [])
 
     $http({
       method: "GET",
-      url : Debug.getURL("/statistics/loginCount/" + $stateParams.groupID),
+      url : Debug.getURL("/statistics/attendanceRate/" + $stateParams.groupID),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': UserInfo.getAuthToken()
@@ -106,7 +106,7 @@ angular.module('starter.controllers', [])
       //alert("Could not get member statistics");
     }).then(function (response) {
 
-      $scope.stats.members = response.data.members;
+      $scope.stats.attRate = response;
 
     });
   });
@@ -119,7 +119,8 @@ angular.module('starter.controllers', [])
   GroupID.set($stateParams.groupID);
   $scope.chatsctrl = {};
   $scope.messages = [];
-
+  $scope.readReceipts = {};
+ 
   $scope.chatsctrl.anonymous = false;
 
   var chatRefresh = $interval(function getMessages() {
@@ -127,10 +128,13 @@ angular.module('starter.controllers', [])
     Chats.getGroupMessages($stateParams.groupID).then(function success(response) {
 
         $animate.enabled(false);
-        $scope.messages = [];
-        $scope.messages = response;
+        console.log("Messages: ");
+        console.log(response);
+        $scope.messages = response.messages;
+        $scope.readReceipts = response.readReceipts;
 
         $animate.enabled(true);
+
       }, function error(response) {
         console.log("Error");
       });
@@ -141,7 +145,8 @@ angular.module('starter.controllers', [])
 
       Chats.getGroupMessages($stateParams.groupID).then(function successCallback(response) {
         console.log(response);
-      $scope.messages = response;
+      $scope.messages = response.messages;
+      $scope.readReceipts = response.readReceipts;
       
     }, function errorCallback(response) {
 
@@ -232,9 +237,28 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, Meetings, GroupID, Debug) {
+.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, ionicDatePicker, 
+                                      UserInfo, Meetings, GroupID, Debug) {
 
   $scope.meetings = [];
+
+  var datePickerObj = {
+      callback: function (val) {  //Mandatory
+        console.log('Return value from the datepicker popup is : ' + val, new Date(val));
+        $scope.meetingDate = new Date(val);
+      },
+      from: new Date(2016, 1, 1), //Optional
+      to: new Date(2020, 10, 30), //Optional
+      inputDate: new Date(),      //Optional
+      mondayFirst: true,          //Optional
+      disableWeekdays: [0],       //Optional
+      closeOnSelect: false,       //Optional
+      templateType: 'popup'       //Optional
+  };
+
+  $scope.openPicker = function() {
+    ionicDatePicker.openDatePicker(datePickerObj);
+  }
 
   $scope.$on("$ionicView.enter", function() {
 

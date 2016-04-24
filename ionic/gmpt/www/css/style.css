@@ -4,10 +4,22 @@ a {
     text-decoration: none !important;
 }
 
+#centerlabel{
+    
+    display: block;
+    text-align: center;
+    line-height: 150%;
+}
+
 .navbar {
     background-color: #303F9F !important;
     color: white !important;
 }
+
+/*
+Add Box Shadows for Materialize Design found @
+http://codepen.io/sdthornton/pen/wBZdXq
+*/
 
 .card-1:hover {
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
