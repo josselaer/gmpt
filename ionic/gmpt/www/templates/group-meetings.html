@@ -1,0 +1,48 @@
+
+<ion-view view-title="Meetings">
+    
+     <ion-nav-buttons side="left">
+            
+          <button ui-sref="groups" class="button button-icon icon" id="makewhite">Groups</button>
+       </ion-nav-buttons>
+    
+     <ion-nav-buttons side="right">
+            
+        
+        <a class="button icon ion-android-add" href="#/addmeeting" ng-click="newMeeting()" id="gmptbtn"> New Meeting</a>
+        
+    </ion-nav-buttons>
+
+  <ion-content>
+  <!--
+  	<div class="row has-header">
+  		<div class="col col-90"></div>
+  		<div class="col col-10">
+
+  		</div>
+    -->
+	
+	<ion-list>
+	<ion-item ng-repeat="meeting in meetings" href="#/meeting-details" ng-click="meetingDetails($index)">
+  <!--<label>{{meeting.GroupName}}</label>-->
+		<div class="row">
+    	<div class="col col-50">
+        <div class="h4">{{meeting.MeetingDescription}}</div>
+        At {{meeting.LocationName}} on {{meeting.MeetingDate | date:'shortDate'}}<br/>
+        from {{meeting.StartTime | date:'shortTime'}} to {{meeting.EndTime | date:'shortTime'}}
+
+    		
+   		</div>
+      <div class="col col-50 right">
+        <span class="pull-right"><a class="button button-icon icon ion-edit" href="#/editmeeting" ng-click="editMeeting($index)"></a></span><br/>
+      </div>
+   		</div>
+	</ion-item>
+        
+	</ion-list>
+
+  </ion-content>
+</ion-view>
+
+    
+    

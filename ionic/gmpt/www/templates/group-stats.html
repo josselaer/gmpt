@@ -1,0 +1,58 @@
+<ion-view view-title="Stats">
+
+    <ion-nav-buttons side="left">
+        <button ui-sref="groups" class="button button-icon icon" id="makewhite">Groups</button>
+    </ion-nav-buttons>
+
+    <ion-content class="padding">
+        <div class="row">
+            <div class="col center">
+                <div class="stats-badge">
+                    <div class="stats-text">23</div>
+                </div>
+            </div>
+            <!--
+  		<div class="col center">
+    		<div class="stats-badge"><div class="stats-text">{{stats.totalNumOfMeetings}}</div></div>
+    	</div>
+-->
+            <!--
+    	<div class="col center">
+    		<div class="stats-badge"><div class="stats-text">{{stats.totalNumOfChatMessages}}</div></div>
+    	</div>
+-->
+            <div class="col center">
+                <div class="stats-badge">
+                    <div class="stats-text">69</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="h3 text-center">Team Meetings</div>
+            </div>
+            <div class="col">
+                <div class="h3 text-center">Team Messages</div>
+            </div>
+        </div>
+
+        <div class="bar gmptMainColor">
+
+            <input type="text" placeholder="   Team Member" id="statSearchByTeamMember">
+
+            <div>
+                <i class="fa fa-sort-desc" aria-hidden="true" id="makewhite"></i>
+
+                <i class="fa fa-sort-asc" aria-hidden="true" id="makewhite"></i>
+            </div>
+
+            <select class="pull-right">
+                <option value="SentMsgs">Messages Sent</option>
+                <option value="Attendance">Meetings Attended</option>
+            </select>
+
+        </div>
+
+
+    </ion-content>
+</ion-view>

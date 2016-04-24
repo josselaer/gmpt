@@ -1,0 +1,52 @@
+<ion-view view-title="Meeting">
+<ion-content>
+<p></p>
+
+<label>Description</label>
+<div class="item item-input">
+<textarea name="comment" ng-model="meetingDescription">
+</textarea>
+</div>
+<p></p>
+
+<label>Date</label>
+<div class="item item-button">
+  <button class="button button-primary" ng-model="meetingDate" ng-click="openPicker()">Date</button> {{meetingDate | date:'shortDate'}}
+</div>
+<p></p>
+<label>Start Time</label>
+
+<div class="item item-input">
+  <input ng-model="startTime" type="text">
+</div>
+<p></p>
+
+<label>End Time</label>
+<div class="item item-input">
+  <input ng-model="endTime" type="text">
+</div>
+
+<label>Location Name</label>
+<div class="item item-input">
+  <input ng-model="locationName" type="text">
+</div>
+<p></p>
+
+<div class="row">
+  <a class="button button-full button-positive" ng-click="confirmMeeting()" href="#/group/meetings/">
+    Confirm Meeting
+    <ion-nav-view name="tab-dash"></ion-nav-view>
+  </a>  
+   
+    </div>
+    
+    <div class="row">
+
+        <button class="button button-secondary" ui-sref="group.meetings">
+            Cancel
+        </button>
+        
+    </div>
+</ion-content>
+
+</ion-view>

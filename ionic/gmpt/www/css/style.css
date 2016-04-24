@@ -1,0 +1,209 @@
+/* Empty. Add your own CSS if you like */
+.gmptMainColor{  
+        background-color: #303F9F !important;
+}
+
+
+a {
+    text-decoration: none !important;
+}
+
+#centerlabel{
+    display: block;
+    text-align: center;
+    line-height: 150%;
+}
+
+#statSearchByTeamMember{   
+    
+/*    margin-left: 1rem;*/
+    width:8em;
+}
+
+/*
+Add Box Shadows for Materialize Design found @
+http://codepen.io/sdthornton/pen/wBZdXq
+*/
+
+.card-1:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.card-2 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.card-3 {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.card-4 {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.card-5 {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+#makewhite {
+    color: white !important;
+}
+
+.title {
+    color: white !important;
+}
+
+#workicon {
+    font-size: 10rem;
+    color: white;
+}
+
+#inputscreen {
+    background-color: #303F9F;
+}
+
+#gmptbtn {
+    background-color: #FF5252;
+    color: white;
+}
+
+#gmptMessage {
+    font-size: 2rem;
+    color: white;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+#registerbtn {
+    color: white;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#logo {
+    max-width: 100%;
+    height: 10em;
+}
+
+#message-input {
+    position: relative;
+    width: 75%;
+    padding: 0px;
+    padding-left: 10px;
+}
+
+#chat-anon {
+    margin: 0px;
+}
+
+.checkbox-text-small {
+    font-size: 80%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.pull-right {
+    position: absolute;
+    right: 10px;
+}
+
+
+/* allows the bar-footer to be elastic /*
+/* optionally set a max-height */
+
+
+/* maxlength on the textarea will prevent /*
+/* it from getting too large also */
+
+.bar-footer {
+    overflow: visible !important;
+}
+
+.bar-footer textarea {
+    resize: none;
+    height: 25px;
+}
+
+
+/* fixes an ios bug bear */
+
+button.ion-android-send {
+    padding-top: 2px;
+}
+
+
+/* add this to keep your footer buttons down 
+at the bottom as the textarea resizes */
+
+.footer-btn-wrap {
+    position: relative;
+    height: 100%;
+    width: 50px;
+    top: 7px;
+}
+
+.footer-btn {
+    position: absolute !important;
+    bottom: 0;
+}
+
+img.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 10px;
+}
+
+img.profile-pic.left {
+    left: 10px;
+}
+
+img.profile-pic.right {
+    right: 10px;
+}
+
+.ion-email {
+    float: right;
+    font-size: 32px;
+    vertical-align: middle;
+}
+
+.bar.item-input-inset .item-input-wrapper input {
+    position: relative;
+    width: 100% !important;
+}
+
+.report:hover {
+    color: red;
+}
+
+.stats-text {
+    
+    text-align:center;
+    vertical-align: center;
+    color: lightblue !important;
+    font-size:4rem;
+
+}
+.stats-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #303F9F;
+    width: 8rem;
+    text-align: center !important;
+    height: 8rem;
+    border-radius:4rem;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
