@@ -33,26 +33,14 @@ $app->get('/statistics/totals/{project_id}', function($request, $response,$args)
 $app->get('/statistics/{project_id}', function($request,$response,$args) {
 	$db=$this->GMPT;
 	$projectID = $args['project_id'];
-	$returnArray = array();
 	
-	$query = $db->prepare("CALL GetAttendanceRate(?)");
+	$query = $db->prepare("CALL GetStatistics(?)");
 	$query->bindParam(1,$projectID, PDO::PARAM_INT);
 	$result = $query->execute();
 	if ($result) {
 		$data = $query->fetchAll();
-		$returnArray['attendanceRate'] = $data;
+		$response = $response->getBody()->write(json_encode(array("statistics"=>$data)));
 	}
-	unset($query);	
-	$projectID = $args['project_id'];
-	
-	$query = $db->prepare("CALL GetNumMessages(?)");
-	$query->bindParam(1,$projectID, PDO::PARAM_INT);
-	$result = $query->execute();
-	if ($result) {
-		$data = $query->fetchAll();
-		$returnArray['numOfMessages'] = $data;
-	}
-	$response = $response->getBody()->write(json_encode(array("statistics"=>$returnArray)));
 	unset($query);	
 	return $response;
 }
