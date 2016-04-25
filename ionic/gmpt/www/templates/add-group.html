@@ -1,36 +1,52 @@
-<ion-view view-title="Add Group">
-<ion-content class="padding">
-<label>Group Name</label>
+<ion-view view-title="Add Group" hide-nav-bar="true">
+    <ion-content class="padding" id="inputscreen">
+
+        <div class='col text-center' id="gmptMessage">Create Group</div>
+
+        <!--
 <p></p>
 <label class="item item-input">
     <input ng-model="group.groupName" type="text">
 </label>
 <p></p>
+-->
 
+        <div class="item item-input card card-5">
+            <span class="input-label">Group Name</span>
+            <input type="text" ng-model="group.groupName" required>
+        </div>
+        
+        <!--
 
 <label>Description</label>
 <div class="item item-input">
 <textarea ng-model="group.groupDesc">
 </textarea>
 </div>
-<!--
-<label>Description</label>
-<textarea name="comment" ng-model="group.groupDesc">
-</textarea>
-  <input class="item item-input" ng-model="group.groupDesc"></input>
 -->
-<p></p>
-  <!--<div class="container">-->
-<form name="frm" ng-submit="addMember()">>
-  <label>Add Team Member</label>
-  <div class = "row">
-    <div class = "col col-80">
-      <div class = "card">
-      <label class="item item-input">
-        <label class="item-input-wrapper">
-            <input type="text" name="email" id="email_input" placeholder="Email" ng-change="autoCompleteMeetingUpdate(email)" ng-model="email" required>
-        </label>
-        <span style="padding-left:20px">
+
+        <div class="item item-input card card-5">
+            <textarea ng-model="group.groupDesc" placeholder="Description">
+            </textarea>
+        </div>
+
+
+
+      
+<!--        <div class="container">-->
+        <form name="frm" ng-submit="addMember()">>
+            <label>Add Team Member</label>
+            <div class="row">
+                
+                <div class="col col-80">
+                   
+                    <div class="card">
+                        <label class="item item-input">
+                            <label class="item-input-wrapper">
+                                <input type="text" name="email" id="email_input" placeholder="Email" ng-change="autoCompleteMeetingUpdate(email)" ng-model="email" required>
+                            </label>
+                            <span style="padding-left:20px"></span>
+<!--above closing span wasn't there-->
       </label>
       <div class="list" ng-show="show_suggestions" id="autocomplete_list">
         <li class="button item assertive" ng-repeat="i_suggestion in input_suggestions | limitTo:10" ng-click="selectEmail(i_suggestion)" id="$index">{{i_suggestion.suggestion}}
@@ -38,17 +54,20 @@
       </div>
   <ion-checkbox ng-model="isProfessor">Add as Professor</ion-checkbox>
 </div>
+                    
 </div>
+                
   <div class = "col col-35">
     <p></p>
-    <button class="button button-assertive" ng-disabled="frm.$invalid">
-    + Add<p></p>
+    <button class="button button-assertive" id="gmptbtn" ng-disabled="frm.$invalid">
+    + Add
   </button>
   </form>
+                
   <p></p>
 </div>
 </div>
-</div>
+<!--</div>-->
 <ul>
     <li ng-repeat="member in members">
       <div class = "item item-stable">
