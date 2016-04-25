@@ -598,7 +598,7 @@ $scope.newMeeting = function()
   $scope.groups = Groups.all();
 })
 
-.controller('AddGroupCtrl', function ($scope, $ionicConfig, $state, $http, UserInfo, Debug) {
+.controller('AddGroupCtrl', function ($scope, $ionicConfig, $state, $http, UserInfo, Debug, $ionicPopup) {
 
   $scope.show_suggestions = false;
   $scope.group = {};
@@ -616,9 +616,10 @@ $scope.newMeeting = function()
         'email': document.getElementById('email_input').value,
         'isProfessor': this.isProfessor
       });
-      $scope.email = ' ';
+        
+      $scope.email = "";
       $scope.isProfessor = false;
-      //document.getElementById('email_input').value = "";
+      document.getElementById('email_input').value = "";
       this.show_suggestions = false;
       //document.getElementById('autocomplete_list').style.visibility = "hidden";
     }
@@ -719,6 +720,24 @@ $scope.newMeeting = function()
     document.getElementById('email_input').value = selected_email.suggestion;
     $scope.email = selected_email.suggestion;
   }
+  
+   // When button is clicked, the popup will be shown...
+   $scope.showConfirm = function() {
+	
+      var confirmPopup = $ionicPopup.confirm({
+         title: 'Professor',
+         template: 'A professor is able to view the group activities, including anonymous chats. However, they cannot interact with the group.'
+      });
+
+      confirmPopup.then(function(res) {
+         if(res) {
+            console.log('Sure!');
+         } else {
+            console.log('Not sure!');
+         }
+      });
+		
+   };
 })
 
 
