@@ -46,6 +46,22 @@ $app->get('/statistics/attendanceRate/{project_id}', function($request,$response
 }
 )->add($validateSession);
 
+$app->get('/statistics/messages/{project_id}', function($request,$response,$args) {
+	$db=$this->GMPT;
+	$projectID = $args['project_id'];
+	
+	$query = $db->prepare("CALL GetNumMessages(?)");
+	$query->bindParam(1,$projectID, PDO::PARAM_INT);
+	$result = $query->execute();
+	if ($result) {
+		$data = $query->fetchAll();
+		$response = $response->getBody()->write(json_encode(array("numOfMessages"=>$data)));
+	}
+	unset($query);	
+	return $response;
+}
+)->add($validateSession);
+
 
 ?>
 
