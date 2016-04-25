@@ -4,11 +4,15 @@
         <button ui-sref="groups" class="button button-icon icon" id="makewhite">Groups</button>
     </ion-nav-buttons>
 
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon" id="makewhite" ng-if="isProf == true">Professor View</button>
+    </ion-nav-buttons>
+
     <ion-content class="padding">
         <div class="row">
             <div class="col center">
                 <div class="stats-badge">
-                    <div class="stats-text">23</div>
+                    <div class="stats-text">{{stats.totalNumOfMeetings}}</div>
                 </div>
             </div>
             <!--
@@ -23,10 +27,11 @@
 -->
             <div class="col center">
                 <div class="stats-badge">
-                    <div class="stats-text">69</div>
+                    <div class="stats-text">{{stats.totalNumOfChatMessages}}</div>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col">
                 <div class="h3 text-center">Team Meetings</div>
@@ -36,23 +41,70 @@
             </div>
         </div>
 
-        <div class="bar gmptMainColor">
+        <div class="bar gmptMainColor" id="statBar">
 
             <input type="text" placeholder="   Team Member" id="statSearchByTeamMember">
 
             <div>
-                <i class="fa fa-sort-desc" aria-hidden="true" id="makewhite"></i>
 
-                <i class="fa fa-sort-asc" aria-hidden="true" id="makewhite"></i>
+                <i class="fa fa-sort-desc" aria-hidden="true" id="statDesc"></i>
+
             </div>
 
-            <select class="pull-right">
-                <option value="SentMsgs">Messages Sent</option>
-                <option value="Attendance">Meetings Attended</option>
-            </select>
+            <div>
+
+                <i class="fa fa-sort-asc" aria-hidden="true" id="statAsc"></i>
+
+            </div>
+
+            <div>
+
+                <select class="pull-right">
+                    <option value="SentMsgs">Messages Sent</option>
+                    <option value="Attendance">Meetings Attended</option>
+                </select>
+
+            </div>
 
         </div>
 
+        <div>
+
+            <div ng-if="showMemberStats == false">Your group has not had any meetings.</div>
+            <ion-list id="teamList">
+
+                <ion-item ng-repeat="member in stats.attRate">
+                    <div class="row">
+                        
+                        <div class="col col-30">{{member.username}}</div>
+                       
+                        <div class="col col-30">
+                            <div class="stats-text-small stats-badge-small center">{{member.attendanceRate}}%</div>
+                            
+                            </div>
+                        
+                        <div class=" col col-30">
+                            <div class="stats-text-small stats-badge-small center">55</div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col col-30">
+                        Team Member
+                            </div>
+                         <div class="col col-30">
+                       Attendance Rate
+                            </div>
+                         <div class="col col-30">
+                        Messages Sent
+                            </div>
+                    </div>
+                </ion-item>
+
+            </ion-list>
+
+        </div>
 
     </ion-content>
 </ion-view>

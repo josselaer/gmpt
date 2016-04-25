@@ -197,25 +197,27 @@ $app->post('/projects/add',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$form_data = $request->getParsedBody();	
-		$GroupName = $form_data['ProjectID'];
+		$ProjectID = $form_data['ProjectID'];
 		//get user id by email
-		$users = $form_data['users'];
-		$userIDs = [];
-		$userRoles = [];
-		foreach ($users as $user) {
+		$user = $form_data['user'];
+		//foreach ($users as $user) {
+		print_r ($user);
 			$email = $user['email'];
+
 			$isProfessor = $user['isProfessor'];
-			if($isProfessor == true) {
+			if($isProfessor == True) {
 				$role = "Teacher";
 			}
 			else {
 				$role = "Student";
 			}
+			echo "ROLE", $role;
 			$query2 = $db->prepare("CALL GetUserIDByEmail(?)");
 			$query2->bindParam(1,$email,PDO::PARAM_STR);
 			$query2->execute();
 			$q2result = $query2->fetchAll();
 			$userID=0;
+			
 			if($query2->rowCount()==0){
 				unset($query2);
 				$userID=sendEmailInvite($SenderEmail,$email,$db);
@@ -224,21 +226,28 @@ $app->post('/projects/add',
 				$userID = $q2result[0]["UserID"];
 				unset($query2);
 			}
-			array_push($userIDs,(int)$userID);
-			array_push($userRoles,$role);	
-		}
+			echo "UserID ";
+			echo $userID;
+
+			//array_push($userIDs,(int)$userID);
+			//array_push($userRoles,$role);	
+		//}
 		//add user to project
-		$counter = 0;		
-		foreach($userIDs as $uID) {
+		//$counter = 0;		
+		//foreach($userIDs as $uID) {
 			$query3 = $db->prepare("CALL AddUserToProject(?,?,?)");
-			$query3->bindParam(1,$ProjID, PDO::PARAM_INT);
-			$query3->bindParam(2,$uID, PDO::PARAM_INT);
-			$query3->bindParam(3,$userRoles[$counter], PDO::PARAM_STR);
-			$query3->execute();
+			$query3->bindParam(1,$ProjectID, PDO::PARAM_INT);
+			$query3->bindParam(2,$userID, PDO::PARAM_INT);
+			$query3->bindParam(3,$role, PDO::PARAM_STR);
+			$result = $query3->execute();
+			//echo  "DID QUERY EXECUTE???: ", $result;
+			//print_r($query3->errorInfo());
+			//echo "<br>";
 			unset($query3);
-			$counter = $counter + 1;
-		}
+			//$counter = $counter + 1;
 		
+		
+		//echo $ProjectID;
 		//$response = array("worked"=>true);
 		return $response;
 
@@ -400,7 +409,7 @@ $app->get('/logout', function ($request, $response, $args) {
 })->add($validateSession);
 
 //Edit a user WHEN HE registers: PUT @ /user endpoint
-$app->put('/user', 
+$app->post('/update/user', 
 	function($request, $response,$args){
 		$form_data = $request->getParsedBody();
 		$username = $form_data['username'];
@@ -516,7 +525,26 @@ $app->delete('/users/project/{project_id}', function($request,$response, $args) 
 
 })->add($validateSession);
 
+$app->delete('/meetings/{meetingID}', function($request,$response, $args) {
+	$db = $this->GMPT;
+	$form_data = $request->getParsedBody();
+	
+	$MeetingID = (int)$request->getAttribute('meetingID');
+	
+	$query = $db->prepare("CALL DeleteMeeting(?)");
+	$query->bindParam(1,$MeetingID, PDO::PARAM_INT);
+	$result = $query->execute();
+	if ($result) {
+		$response = $response->withStatus(200);
+	}
+	else {
+		$response = $response->withStatus(400);
+		$response = $response->getBody()->write(json_encode($query->errorInfo()));
+	}
+	echo $response;
 
+
+})->add($validateSession);
 
 /*
 //test json_encode

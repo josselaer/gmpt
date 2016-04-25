@@ -9,7 +9,9 @@
      <ion-nav-buttons side="right">
             
         
-        <a class="button icon ion-android-add" href="#/addmeeting" ng-click="newMeeting()" id="gmptbtn"> New Meeting</a>
+        <a class="button icon ion-android-add" ng-if="isProf == false" href="#/addmeeting" ng-click="newMeeting()" id="gmptbtn"> New Meeting</a>
+        
+        <button class="button button-icon icon" id="makewhite" ng-if="isProf == true">Professor View</button>
         
     </ion-nav-buttons>
 

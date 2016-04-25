@@ -24,7 +24,7 @@
         </div>
 
         <ion-list>
-            <ion-item class="item" ng-repeat="group in groups" type="item-text-wrap" ui-sref="group.chat({groupID:group.ProjectID})" ng-click="setGroup(group.ProjectID)">
+            <ion-item class="item" ng-repeat="group in groups" type="item-text-wrap" ui-sref="group.chat({groupID:group.ProjectID})" ng-click="setGroup(group.ProjectID, group.RoleName)">
                 <h2>{{group.GroupName}}</h2>
 
                 <div ng-switch on="group.NextMeetingDate">

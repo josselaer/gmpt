@@ -38,3 +38,10 @@ BEGIN
 	SELECT MeetingID, UserID, AttendanceIndicator FROM Attendance 
 	WHERE UserID = UserIDVal AND MeetingID=MeetingIDVal;
 END //
+
+CREATE DEFINER=`gmpt_master_user`@`%` PROCEDURE `DeleteMeeting`(IN MeetingIDVal INT)
+BEGIN
+	DELETE FROM Attendance WHERE MeetingID = MeetingIDVal;
+	DELETE FROM Meeting WHERE MeetingID = MeetingIDVal;
+
+END //
