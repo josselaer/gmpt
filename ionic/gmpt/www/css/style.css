@@ -126,7 +126,7 @@ http://codepen.io/sdthornton/pen/wBZdXq
 }
 
 #statAsc {
-    position:absolute;
+    /*position:absolute;*/
     color: #FF5252;
     font-size: 4em;
     margin-left: 2em;
@@ -134,7 +134,7 @@ http://codepen.io/sdthornton/pen/wBZdXq
 
 #statDesc {
     
-    position: absolute;
+    /*position: absolute;*/
     color: #FF5252;
     font-size: 4em;
     margin-left: 2em;
@@ -237,9 +237,9 @@ img.profile-pic.right {
     align-items: center;
     background-color: #303F9F;
     text-align: center !important;
-    height: 2rem;
-    width: 2em;
-    border-radius: 4rem;
+    height: 3rem;
+    width: 3em;
+    border-radius: 1.5rem;
 }
 
 .stats-text-small {
