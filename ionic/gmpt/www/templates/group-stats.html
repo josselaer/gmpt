@@ -43,25 +43,12 @@
 
         <div class="bar gmptMainColor" id="statBar">
 
-            <input type="text" placeholder="   Team Member" id="statSearchByTeamMember">
-
-            <!--<div>
-
-                <i class="fa fa-sort-desc text-center" aria-hidden="true" id="statDesc"></i>
-
-            </div>
+            <button class="button sortOrderButton" id="gmptbtn" ng-click="toggleSort()">{{sort}}</button>
 
             <div>
 
-                <i class="fa fa-sort-asc text-center" aria-hidden="true" id="statAsc"></i>
-
-            </div>-->
-            <button class="button" id="gmptbtn" ng-click="toggleSort()">{{sort}}</button>
-
-            <div>
-
-                <select ng-model="sortby" class="pull-right">
-                    <option value="messagesSent">Messages Sent</option>
+                <select class="pull-right" ng-model="sortby" ng-change="filterChange(sortby)" default="numOfMessages">
+                    <option value="numOfMessages">Messages Sent</option>
                     <option value="attendanceRate">Attendence Rate</option>
                 </select>
 
@@ -74,7 +61,7 @@
             <div ng-if="showMemberStats == false">Your group has not had any meetings.</div>
             <ion-list id="teamList">
 
-                <ion-item ng-repeat="member in stats.attRate">
+                <ion-item ng-repeat="member in stats.members">
                     <div class="row">
                         <div class="col h3">{{member.username}}</div>
                     </div>
@@ -86,7 +73,7 @@
                             </div>
                         
                         <div class=" col col-50">
-                            <div class="stats-text-small stats-badge-small center">55</div>
+                            <div class="stats-text-small stats-badge-small center">{{member.numOfMessages}}</div>
                         </div>
 
                     </div>

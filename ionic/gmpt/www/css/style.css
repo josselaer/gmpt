@@ -10,6 +10,9 @@
     
 }
 
+.sortOrderButton {
+    height: 100%;
+}
 
 a {
     text-decoration: none !important;
@@ -33,8 +36,8 @@ a {
 
 #statBar{
     
-position:relative;
-margin-bottom: 1em;
+    position:relative;
+    margin-bottom: 1em;
     padding-bottom: 4em;
     
 }
