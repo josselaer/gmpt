@@ -14,10 +14,9 @@ $app->get('/meetings/{ProjectID}',
 		$db=$this->GMPT;
 		$ProjectID = (int)$request->getAttribute('ProjectID');
 		//$ProjectID = 58;
-		$UserID = (int)$request->getAttribute('UserID');
-		$query = $db->prepare("CALL GetMeetings(?,?)");
+
+		$query = $db->prepare("CALL GetMeetings(?)");
 		$query->bindParam(1,$ProjectID, PDO::PARAM_INT);
-		$query->bindParam(2,$UserID, PDO::PARAM_INT);
 		$result=$query->execute();
 		//$response->write(json_encode(getMeetings($query)));
 		$response = getMeetings($query);
