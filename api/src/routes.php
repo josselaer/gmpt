@@ -113,7 +113,7 @@ $app->get('/projects',
 		$query = $db->prepare("CALL GetProjects(?)");
 		$query->bindParam(1,$UserID, PDO::PARAM_INT);
 		$result=$query->execute();
-		$response->write(json_encode(getProjects($query,$db)));
+		$response->write(json_encode(getProjects($query,$db, $UserID)));
 		//$response = getProjects($query);
 		unset($query);	
 		//echo json_encode($response);

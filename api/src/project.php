@@ -1,6 +1,6 @@
 <?php
 
-	function getProjects($query,$db) {
+	function getProjects($query,$db, $userID) {
 		$results = [];
 		$row = $query->fetchAll();
 		unset($query);
@@ -14,7 +14,7 @@
 			
 			//unset($query);
 			$lastMeeting=array();
-			$getLastMeetingQuery = $db->query("CALL GetLastMeeting($ProjectID)");
+			$getLastMeetingQuery = $db->query("CALL GetLastMeeting($ProjectID, $userID)");
 			foreach ($getLastMeetingQuery as $r1){
 				$lastMeeting['NextMeetingDate']=$r1['MeetingDate'];
 				$lastMeeting['StartTime']= $r1['StartTime'];
