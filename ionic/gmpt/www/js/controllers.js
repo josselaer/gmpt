@@ -675,26 +675,32 @@ var datePickerObj = {
         console.log(start_time);
         console.log(end_time);
 
-        var url_string = "/meetings";
+        var saved_index = TempEditStorage.getMeetingIndex();
+        var url_string = "/meetings/";
+        console.log("SAVED INDEX: (index of meeting being changed: ");
+        console.log(saved_index);
         var new_meeting = 
         {
-          ProjectID : GroupID.get(),
-          MeetingDate : $scope.meetingDate,
-          LocationName : $scope.locationName,
+          MeetingDate : this.meetingDate,
+          LocationName : this.locationName,
           EndTime : end_time,
           StartTime : start_time,
-          MeetingDescription : $scope.meetingDescription,
-          MeetingID : Meetings.get(Meetings.getCurr()).MeetingID
+          MeetingDescription : this.meetingDescription,
         }
-        var saved_index = TempEditStorage.getMeetingIndex();
+        console.log("OBJECT BEING PASSED TO UPDATE: ");
+        console.log(new_meeting);
+        
+        /*
         console.log("AT POINT CONFIRM MEETING:");
         console.log("v getCurr()");
         console.log(Meetings.get(Meetings.getCurr()));
         console.log("v TempEditStorage getMeetingIndex");
         console.log(TempEditStorage.getMeetingIndex());
-        $scope.meetings[saved_index].MeetingDate = $scope.meetingDate;
+        */
+
+        $scope.meetings[saved_index].MeetingDate = this.meetingDate;
         $scope.meetings[saved_index].StartTime = start_time;
-        $scope.meetings[saved_index].MeetingDescription = $scope.meetingDescription;
+        $scope.meetings[saved_index].MeetingDescription = this.meetingDescription;
         $scope.meetings[saved_index].EndTime = end_time;
         Meetings.set($scope.meetings);
         url_string = "/meetings/";
