@@ -126,6 +126,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   .state('group.settings', {
       url: '/settings/:groupID',
+      cache: false,
       views: {
         'group-settings': {
           templateUrl: 'templates/group-settings.html',
