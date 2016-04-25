@@ -16,6 +16,13 @@
     margin-top: .3em;
 }
 
+.attPos { 
+    color: lightgreen;
+}
+
+.attNeg {
+    color: red;
+}
 
 .sortOrderButton {
     height: 100%;

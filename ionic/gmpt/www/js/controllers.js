@@ -476,6 +476,25 @@ $scope.meetingDetails = function(index)
   Meetings.setCurr(index);
 }
 
+$scope.getAttendances = function() {
+
+  var attendances = Meetings.get(Meetings.getCurr()).Attendances;
+  console.log("Attendances before for loop");
+  console.log(attendances);
+
+  for (var i = 0; i < attendances.length; i++) {
+
+    if (attendances[i].CheckInTime == null) {
+      attendances[i].CheckedIn = false;
+    }
+    else {
+      attendances[i].CheckedIn = true;
+    }
+  }
+
+  return attendances;
+}
+
 $scope.currentMeeting = function()
 {
   return Meetings.get(Meetings.getCurr());
@@ -554,7 +573,7 @@ $scope.currentMeeting = function()
         }
         else
         {
-          temp_id = Meetings.get(Meeting.getCurr()).MeetingID;
+          temp_id = Meetings.get(Meetings.getCurr()).MeetingID;
         }
         var new_meeting = 
         {
