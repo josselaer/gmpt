@@ -109,7 +109,6 @@ $app->get('/projects',
 	function($request,$response,$args) {
 		$db=$this->GMPT;
 		$UserID = (int)$request->getAttribute('UserID');
-		
 		$query = $db->prepare("CALL GetProjects(?)");
 		$query->bindParam(1,$UserID, PDO::PARAM_INT);
 		$result=$query->execute();

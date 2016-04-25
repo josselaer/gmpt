@@ -4,6 +4,8 @@
 		$results = [];
 		$row = $query->fetchAll();
 		unset($query);
+		$getLastMeetingQuery = $db->query("CALL GetLastMeeting('$1', '$1');");
+		unset($getLastMeetingQuery);
 		foreach($row as $data) {
 			$ProjectID = $data['ProjectID'];
 			$GroupName = $data['ProjectName'];
@@ -14,7 +16,7 @@
 			
 			//unset($query);
 			$lastMeeting=array();
-			$getLastMeetingQuery = $db->query("CALL GetLastMeeting($ProjectID, $userID)");
+			$getLastMeetingQuery = $db->query("CALL GetLastMeeting('$ProjectID', '$userID');");
 			foreach ($getLastMeetingQuery as $r1){
 				$lastMeeting['NextMeetingDate']=$r1['MeetingDate'];
 				$lastMeeting['StartTime']= $r1['StartTime'];
@@ -22,7 +24,7 @@
 				$lastMeeting['MeetingDescription']=$r1['MeetingDescription'];
 			}
 			unset($getLastMeetingQuery);
-		$project = array("ProjectID"=>$ProjectID, "GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated, "RoleName"=>$RoleName, "Notification"=>$Notification, "NextMeetingDate"=>$lastMeeting['NextMeetingDate'], "NextMeetingTime" => $lastMeeting['StartTime'], "MeetingID"=>$lastMeeting['MeetingID'], "NextMeetingDescription"=>$lastMeeting['MeetingDescription']);
+			$project = array("ProjectID"=>$ProjectID, "GroupName"=>$GroupName, "Description"=>$Description, "DateCreated"=>$DateCreated, "RoleName"=>$RoleName, "Notification"=>$Notification, "NextMeetingDate"=>$lastMeeting['NextMeetingDate'], "NextMeetingTime" => $lastMeeting['StartTime'], "MeetingID"=>$lastMeeting['MeetingID'], "NextMeetingDescription"=>$lastMeeting['MeetingDescription']);
 			array_push($results,$project);
 		}
 		$resultSize =  count($results);
