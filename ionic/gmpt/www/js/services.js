@@ -411,18 +411,18 @@ angular.module('starter.services', [])
       {
         tempString = (hourInt - 12).toString();
       }
+      else if(hourInt == 00)
+      {
+        newHour = 12;
+        tempString = newHour.toString();
+      }
       else
       {
         tempString = hourInt.toString();
       }
       tempString += ":";
       tempString += hourExtension;
-      console.log("temp string after concat: ");
-      console.log(tempString);
       revertedHours = tempString;
-      console.log("REVERTED HOURS: from - to: ");
-      console.log(militaryTime);
-      console.log(revertedHours);
       return revertedHours;
       
     },
@@ -447,11 +447,7 @@ angular.module('starter.services', [])
       {
         revertedCycle = "AM";
       }
-      return revertedCycle;
-      console.log("REVERTED HOURS: from - to: ");
-      console.log(militaryTime);
-      console.log(revertedHours);
-      
+      return revertedCycle;      
     },
   }
 })

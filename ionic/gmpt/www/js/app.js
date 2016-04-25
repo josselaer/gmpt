@@ -85,16 +85,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     })
   
   .state('addmeeting', {
+    cache: false,
     url: '/addmeeting',
     templateUrl: 'templates/new-meeting.html',
-    controller: 'MeetingsCtrl'
+    controller: 'AddMeetingCtrl'
 
   })
 
   .state('editmeeting', {
+    cache: false,
     url: '/editmeeting',
     templateUrl: 'templates/edit-meeting.html',
-    controller: 'MeetingsCtrl'
+    controller: 'EditMeetingCtrl'
 
   })
 
@@ -107,6 +109,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   .state('group.meetings', {
     url: '/meetings/:groupID',
+    cache: false,
     views: {
       'group-meetings': {
         templateUrl: 'templates/group-meetings.html',

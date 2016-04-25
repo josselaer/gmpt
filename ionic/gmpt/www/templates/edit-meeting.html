@@ -4,21 +4,21 @@
 
 <label>Meeting Topic</label>
 <div class="item item-input">
-  <input ng-model="meetingDescription" type="text" id="meeting__meetingDescription">
+  <input ng-model="meetingDescription" type="text" >
 </div>
 <p></p>
 
 <label>Date</label>
 <div class="item item-button">
-  <button class="button button-primary" ng-model="meetingDate" id="meeting__meetingDate" ng-click="openPicker()">Date</button> {{meetingDate | date:'shortDate'}}
+  <button class="button button-primary" ng-model="meetingDate" ng-click="openPicker()">Date</button> {{meetingDate | date:'shortDate'}}
 </div>
 <p></p>
 
 <label>Start Time</label>
 
 <label class="item-input item-select padding-vertical">
-    <select ng-model="startTimeHour" id="meeting__startTimeHour">
-      <option selected>{{RevertTime.getHour(currentMeeting().StartTime)}}<option>
+    <select ng-model="startTimeHour" >
+      <option selected>{{RevertTime.getHour(getCurrentMeeting().StartTime)}}<option>
       <option>12:00</option>
       <option>12:30</option>
       <option>1:00</option>
@@ -46,8 +46,8 @@
     </select>
   </label>
 <label class="item-input item-select padding-vertical">
-    <select ng-model="startTimeCycle" id="meeting__startTimeCycle">
-    <option selected>{{RevertTime.getCycle(currentMeeting().StartTime)}}<option>
+    <select ng-model="startTimeCycle">
+    <option selected>{{RevertTime.getCycle(getCurrentMeeting().StartTime)}}<option>
       <option>AM</option>
       <option>PM</option>
     </select>
@@ -57,8 +57,8 @@
 <label>End Time</label>
 
 <label class="item-input item-select padding-vertical">
-    <select ng-model="endTimeHour" id="meeting__endTimeHour">
-      <option selected>{{RevertTime.getHour(currentMeeting().EndTime)}}<option>
+    <select ng-model="endTimeHour" >
+      <option selected>{{RevertTime.getHour(getCurrentMeeting().EndTime)}}<option>
       <option>12:00</option>
       <option>12:30</option>
       <option>1:00</option>
@@ -86,8 +86,8 @@
     </select>
   </label>
 <label class="item-input item-select padding-vertical">
-    <select ng-model="endTimeCycle" id="meeting__endTimeCycle">
-      <option selected>{{RevertTime.getCycle(currentMeeting().EndTime)}}<option>
+    <select ng-model="endTimeCycle" >
+      <option selected>{{RevertTime.getCycle(getCurrentMeeting().EndTime)}}<option>
       <option>AM</option>
       <option>PM</option>
     </select>
@@ -96,11 +96,11 @@
 
 <label>Location Name</label>
 <div class="item item-input">
-  <input ng-model="locationName" type="text" id="meeting__locationName">
+  <input ng-model="locationName" type="text" >
 </div>
 <p></p>
 
-  <a class="button button-full button-positive" ng-click="confirmMeeting()" href="#/group/meetings/">
+  <a class="button button-full button-positive" ng-click="confirmMeeting()" ui-sref="group.meetings">
     Confirm Meeting
     <ion-nav-view name="tab-dash"></ion-nav-view>
   </a>  
