@@ -162,12 +162,14 @@ angular.module('starter.controllers', [])
   });
 })
 
-
-.controller('StatsCtrl', function ($http, $scope, $stateParams, UserInfo, Debug) {
+.controller('StatsCtrl', function ($http, $scope, $stateParams, $filter, UserInfo, Debug) {
 
   $scope.stats  = {};
   $scope.showMemberStats = false;
-    $scope.isProf = UserInfo.isProf();
+  $scope.isProf = UserInfo.isProf();
+
+  $scope.sort = "Asc";
+  $scope.sortby = "attendanceRate";
 
 
   $scope.$on("$ionicView.enter", function() {
@@ -224,6 +226,17 @@ angular.module('starter.controllers', [])
 
       });
 
+    $scope.toggleSort = function() {
+      if ($scope.sort == "Asc") {
+        $filter('orderBy')($scope.stats.attRate, $scope.sortby, false);
+
+        $scope.sort = "Desc";
+      }
+      else {
+        $filter('orderBy')($scope.stats.attRate, $scope.sortby, true);
+        $scope.sort = "Asc";
+      }
+    };
 
   });
 })
@@ -238,6 +251,8 @@ angular.module('starter.controllers', [])
   $scope.readReceipts = {};
   $scope.isProf = UserInfo.isProf();
   $scope.chatsctrl.anonymous = false;
+
+  $scope.message = {};
 
   var chatRefresh = $interval(function getMessages() {
     
@@ -300,6 +315,7 @@ angular.module('starter.controllers', [])
 
   $scope.chatsctrl.send = function() {
 
+    console.log($scope.message.text);
     var m = { 
       //sender: UserInfo.get().user.userName,
       text: $scope.message.text,
@@ -312,7 +328,7 @@ angular.module('starter.controllers', [])
       }, function(response) {
         console.log("Error");
       });
-      $scope.message.text = "";
+      $scope.chatsctrl.text = "";
     }, function() {
       console.log("Error in sending message");
     });

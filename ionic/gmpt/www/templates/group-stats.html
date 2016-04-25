@@ -45,23 +45,24 @@
 
             <input type="text" placeholder="   Team Member" id="statSearchByTeamMember">
 
-            <div>
+            <!--<div>
 
-                <i class="fa fa-sort-desc" aria-hidden="true" id="statDesc"></i>
-
-            </div>
-
-            <div>
-
-                <i class="fa fa-sort-asc" aria-hidden="true" id="statAsc"></i>
+                <i class="fa fa-sort-desc text-center" aria-hidden="true" id="statDesc"></i>
 
             </div>
 
             <div>
 
-                <select class="pull-right">
-                    <option value="SentMsgs">Messages Sent</option>
-                    <option value="Attendance">Meetings Attended</option>
+                <i class="fa fa-sort-asc text-center" aria-hidden="true" id="statAsc"></i>
+
+            </div>-->
+            <button class="button" id="gmptbtn" ng-click="toggleSort()">{{sort}}</button>
+
+            <div>
+
+                <select ng-model="sortby" class="pull-right">
+                    <option value="messagesSent">Messages Sent</option>
+                    <option value="attendanceRate">Attendence Rate</option>
                 </select>
 
             </div>
@@ -75,30 +76,28 @@
 
                 <ion-item ng-repeat="member in stats.attRate">
                     <div class="row">
-                        
-                        <div class="col col-30">{{member.username}}</div>
+                        <div class="col h3">{{member.username}}</div>
+                    </div>
+                    <div class="row">
                        
-                        <div class="col col-30">
+                        <div class="col col-50">
                             <div class="stats-text-small stats-badge-small center">{{member.attendanceRate}}%</div>
                             
                             </div>
                         
-                        <div class=" col col-30">
+                        <div class=" col col-50">
                             <div class="stats-text-small stats-badge-small center">55</div>
                         </div>
 
                     </div>
                     
                     <div class="row">
-                        <div class="col col-30">
-                        Team Member
-                            </div>
-                         <div class="col col-30">
-                       Attendance Rate
-                            </div>
-                         <div class="col col-30">
-                        Messages Sent
-                            </div>
+                        <div class="col col-50 text-center">
+                            Attendance Rate
+                        </div>
+                        <div class="col col-50 text-center">
+                            Messages Sent
+                        </div>
                     </div>
                 </ion-item>
 
