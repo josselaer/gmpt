@@ -8,9 +8,13 @@
     <ion-content class="padding">
 
 
-        <div class="card text-center"><b>{{currentMeeting().GroupName}} : {{currentMeeting().MeetingDescription}}</b>
-            <p>{{currentMeeting().MeetingDate}}</p>
-            <p>{{currentMeeting().StartTime}}</p>
+        <div class="card padding">
+            <h2>{{currentMeeting().MeetingDescription}}</h2>
+            <ion-list>
+                
+                <div class="item">On: {{currentMeeting().MeetingDate | date:'mediumDate'}}</div>
+                <div class="item">From {{currentMeeting().StartTime | date:'mediumTime'}} to {{currentMeeting().EndTime | date:'shortTime'}}</div>
+            </ion-list>
 
         </div>
 
