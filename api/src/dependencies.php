@@ -25,6 +25,9 @@ $container['GMPT'] = function ($c) {
 	$connString .= ';dbname=' . $settings['dbname'] . ';charset=utf8mb4';
 
 	$db = new PDO($connString, $settings['username'], $settings['password']);
-
+	
+	$updateTimeZone= $db->query("SET time_zone = 'America/Indiana/Indianapolis'");
+	unset ($updateTimeZone);
+	
 	return $db;
 };
