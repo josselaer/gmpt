@@ -16,10 +16,14 @@
 
         <div class="card">
             
-            <label class='text-center' id="centerlabel"><b>Attendance</b></label>
-            <p>{{currentMeeting().MeetingDate}}</p>
-            <p>{{currentMeeting().StartTime}}</p>
-            <p>{{currentMeeting().MeetingDescription}}</p>
+            <label class='text-center h2' id="centerlabel"><b>Attendance</b></label>
+            <ion-list>
+                <div class="item " ng-repeat="member in getAttendances()">
+                    <div ng-switch on="member.CheckedIn">
+                        <div class="h3 icon-item-right"ng-switch-when="true">{{member.UserName}}<i class="icon ion-checkmark pull-right attPos"></i></div>
+                        <div class="h3" ng-switch-when="false">{{member.UserName}}<i class="icon ion-close pull-right attNeg"></i></div>
+                </div>
+            </ion-list>
 
         </div>
 
