@@ -11,24 +11,14 @@
   <ion-content>
     <ion-list>
       <ion-item class="item-remove-animate item-text-wrap" ng-repeat="message in messages | orderBy : message.timeDate : true">
-        <div ng-switch-on="message.anonymous">
-          <div ng-switch="1">
-            <div class="row"><h2>{{message.sender}} <i ng-if="isProf == true" class="icon ion-ios-person-outline "></i>
-:</h2>
-              <span class="pull-right">{{message.timeDate | date:'shortTime'}} {{message.timeDate | date:'shortDate'}}</span>
-            </div>
-            <div class="row">
-              {{message.text}}
-            </div>
-          </div>
-          <div ng-switch-default>
-            <div class="row"><h2>{{message.sender}}:</h2>
-              <span class="pull-right">{{message.timeDate | date:'shortTime'}} {{message.timeDate | date:'shortDate'}}</span>
-            </div>
-            <div class="row">
-              {{message.text}}
-            </div>
-          </div>
+        <div class="row"><h2>{{message.sender}} <i ng-if="message.anonymous == true && isProf == true" class="icon ion-ios-person-outline "></i>:</h2>
+          <span class="pull-right">{{message.timeDate | date:'shortTime'}} {{message.timeDate | date:'shortDate'}}</span>
+        </div>
+        <div class="row">
+          {{message.text}}
+        </div>
+      </div>
+
         </div>
       </ion-item>
     </ion-list>
@@ -44,12 +34,13 @@
         <div ng-switch-when="false">
             <button class="button button-light footer-btn card-3" ng-click="chatsctrl.toggleAnonymous()" id="gmptbtn"><i class="icon ion-ios-person "></i></button>
         </div>
-
       </div>
     </div>
+
     <label class="item-input-wrapper">
         <input class="item-input-wrapper" ng-model="message.text" value="" placeholder="Send a message..." required minlength="1" maxlength="1500" msd-elastic>
     </label>
+
     <div class="footer-btn-wrap">
       <button class="button footer-btn button-small button-positive card-3" ng-click="chatsctrl.send()" id="gmptbtn">Send
       </button>
