@@ -1,34 +1,66 @@
-<ion-view view-title="Group Settings">
+<ion-view view-title="Group Settings" hide-nav-bar="true">
+    <ion-content class="padding" id="inputscreen">
 
-	<ion-nav-buttons side="left">
-        <button ui-sref="groups" class="button button-icon icon" id="makewhite">Groups</button>
-    </ion-nav-buttons>
-	<ion-content class="padding">
+        <div class='col text-center' id="gmptMessage">Group Settings</div>
 
-		<form name="frm" ng-submit="addMember()">
-		  <label class="h3">Add Team Member</label>
-		  <div class = "row">
-		    <div class = "col col-80">
-		      <div class = "card">
-		      <label class="item item-input">
-		        <label class="item-input-wrapper">
-		            <input type="text" name="email" id="email_input" placeholder="Email" ng-change="autoCompleteMeetingUpdate(email)" ng-model="email" required>
-		        </label>
-		        <span style="padding-left:20px">
-		      </label>
-		      <div class="list" ng-show="show_suggestions" id="autocomplete_list">
-		        <li class="button item assertive" ng-repeat="i_suggestion in input_suggestions | limitTo:10" ng-click="selectEmail(i_suggestion)" id="$index">{{i_suggestion.suggestion}}
-		        </li>
-		      </div>
-		  <ion-checkbox ng-model="isProfessor">Add As Professor</ion-checkbox>
-		</div>
-		</div>
-		  <div class = "col col-35">
-		    <p></p>
-		    <button class="button button-assertive" ng-disabled="frm.$invalid">
-		    + Add<p></p>
-		  </button>
-		</form>
+ <p></p>
+<form name="frm" ng-submit="addMember();showAlert()">
+  <div class='card'>
+        
+    <label>Add Team Member</label>
 
-	</ion-content>
+    <div class = "row">
+    <div class = "col col-80">
+      <div class = "card card-3">
+      <label class="item item-input">
+        <label class="item-input-wrapper">
+            <input type="text" name="email" id="email_input" placeholder="Email" ng-change="autoCompleteMeetingUpdate(email)" ng-model="email" required>
+        </label>
+          <span style="padding-left:20px"></span>
+      </label>
+      <div class="list" ng-show="show_suggestions" id="autocomplete_list">
+        <li class="button item assertive" ng-repeat="i_suggestion in input_suggestions | limitTo:10" ng-click="selectEmail(i_suggestion)" id="$index">{{i_suggestion.suggestion}}
+        </li>
+      </div>
+
+          
+<div>
+ <label class="checkbox checkbox-assertive">
+    <div class="row">
+   <input type="checkbox" id="addasprofcheckbtn" ng-model="isProfessor"> 
+        <div id="addasproftext"> Add as Professor  </div>   </div> 
+</label>    
+          <button class="ion-help-circled" ng-click = "showConfirm()" id="profinfobtn"></button>
+         
+</div>
+          
+      
+</div>
+</div>
+  <div class = "col col-35">
+    <p></p>
+    <button class="button button-assertive card-3" ng-disabled="frm.$invalid" id=creategroupaddbtn>+
+  </button>
+  </form>
+  <p></p>
+</div>
+</div>
+</div>
+<ul>
+    <li ng-repeat="member in members">
+      <div class = "item item-stable">
+        <div class="row">
+          <div class ="col col-90">
+          <label>{{member.email}}</label>
+        </div>
+          <div class="col col-20">
+            <button ng-click="removeItem($index)" class="button ion-android-cancel"> </button> 
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+        
+
+</ion-content>
 </ion-view>
