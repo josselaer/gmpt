@@ -167,7 +167,8 @@ angular.module('starter.controllers', [])
   $scope.showMemberStats = false;
   $scope.isProf = UserInfo.isProf();
 
-  $scope.sort = "Asc";
+  $scope.sort = "Ascending";
+  $scope.sortBool = true;
   $scope.sortby = "attendanceRate";
 
 
@@ -197,7 +198,7 @@ angular.module('starter.controllers', [])
 
         $http({
           method: "GET",
-          url : Debug.getURL("/statistics/attendanceRate/" + $stateParams.groupID),
+          url : Debug.getURL("/statistics/" + $stateParams.groupID),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': UserInfo.getAuthToken()
@@ -211,29 +212,40 @@ angular.module('starter.controllers', [])
           //alert("Could not get member statistics");
         }).then(function (response) {
 
-          if (response.attendanceRate.length > 0) {
-            $scope.stats.attRate = response.attendanceRate;
+            $scope.stats.members = response.statistics;
 
-            for (var i = 0; i < $scope.stats.attRate.length; i++) {
-              $scope.stats.attRate[i].attendanceRate = Math.floor($scope.stats.attRate[i].attendanceRate);
+            for (var i = 0; i < $scope.stats.members.length; i++) {
+              $scope.stats.members[i].numOfMessages = parseInt($scope.stats.members[i].numOfMessages);
+              $scope.stats.members[i].attendanceRate = Math.floor($scope.stats.members[i].attendanceRate);
             }
             $scope.showMemberStats = true;
-          }
 
-          console.log($scope.stats.attRate);
+          console.log($scope.stats.members);
         });
 
       });
 
-    $scope.toggleSort = function() {
-      if ($scope.sort == "Asc") {
-        $filter('orderBy')($scope.stats.attRate, $scope.sortby, false);
+    $scope.filterChange = function(f) {
+      $scope.sortby = f;
+      $scope.stats.members = $filter('orderBy')($scope.stats.members, $scope.sortby, false);
 
-        $scope.sort = "Desc";
+    }
+
+    $scope.toggleSort = function() {
+      if ($scope.sort == "Ascending") {
+
+        console.log("Sort by: " + $scope.sortby + " in " + $scope.sort);
+        $scope.stats.members = $filter('orderBy')($scope.stats.members, $scope.sortby, true);
+        console.log($scope.stats.members);
+        $scope.sort = "Descending";
+        $scope.sortBool = true;
       }
       else {
-        $filter('orderBy')($scope.stats.attRate, $scope.sortby, true);
-        $scope.sort = "Asc";
+        console.log("Sort by: " + $scope.sortby + " in " + $scope.sort);
+        $scope.stats.members = $filter('orderBy')($scope.stats.members, $scope.sortby, false);
+        console.log($scope.stats.members);
+        $scope.sort = "Ascending";
+        $scope.sortBool = false;
       }
     };
 
@@ -257,13 +269,8 @@ angular.module('starter.controllers', [])
 
     Chats.getGroupMessages($stateParams.groupID).then(function success(response) {
 
-      $animate.enabled(false);
-      console.log("Messages: ");
-      console.log(response);
       $scope.messages = response.messages;
-      $scope.readReceipts = response.readReceipts;
-
-      $animate.enabled(true);
+ //     $scope.readReceipts = response.readReceipts;
 
     }, function error(response) {
       console.log("Error");
@@ -272,6 +279,9 @@ angular.module('starter.controllers', [])
   }, 3000);
 
   $scope.$on("$ionicView.enter", function() {
+
+     $animate.enabled(false);
+
 
     Chats.getGroupMessages($stateParams.groupID).then(function successCallback(response) {
       console.log(response);
@@ -289,7 +299,7 @@ angular.module('starter.controllers', [])
   });
 
   $scope.$on("$ionicView.leave", function() {
-
+    $animate.enabled(true);
     console.log("canceling");
     $interval.cancel(chatRefresh);
 
@@ -323,7 +333,7 @@ angular.module('starter.controllers', [])
 
     Chats.sendMessage(JSON.stringify(m), $stateParams.groupID).then( function() {
       Chats.getGroupMessages($stateParams.groupID).then( function(response) {
-        $scope.messages = response;
+        $scope.messages = response.messages;
       }, function(response) {
         console.log("Error");
       });
@@ -372,14 +382,8 @@ angular.module('starter.controllers', [])
 .controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, TempEditStorage, Meetings, GroupID, RevertTime, Debug, ionicDatePicker, CalculateTime) {
 
   $scope.RevertTime = RevertTime;
-
-
-
   $scope.meetings = [];
   $scope.isProf = UserInfo.isProf();
-
-
-
 
   var datePickerObj = {
       callback: function (val) {  //Mandatory
