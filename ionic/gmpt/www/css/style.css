@@ -10,6 +10,12 @@
     
 }
 
+#timeselectors{
+    
+    position: relative;
+    margin-top: .3em;
+}
+
 
 a {
     text-decoration: none !important;
@@ -37,6 +43,13 @@ position:relative;
 margin-bottom: 1em;
     padding-bottom: 4em;
     
+}
+
+#newmeetingdatetext{
+    
+    position:relative;
+    margin-top: .8em;
+    margin-left: 3em;
 }
 
 #profinfobtn{
