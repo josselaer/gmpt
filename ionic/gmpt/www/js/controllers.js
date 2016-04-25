@@ -126,6 +126,7 @@ angular.module('starter.controllers', [])
 
     $scope.groupID = 0;
     $scope.groupID = UserInfo.getActiveGroup();
+    $scope.isProf = false;
     $scope.notifications = {};
 
     $http({
@@ -166,6 +167,8 @@ angular.module('starter.controllers', [])
 
   $scope.stats  = {};
   $scope.showMemberStats = false;
+    $scope.isProf = UserInfo.isProf();
+
 
   $scope.$on("$ionicView.enter", function() {
 
@@ -233,7 +236,7 @@ angular.module('starter.controllers', [])
   $scope.chatsctrl = {};
   $scope.messages = [];
   $scope.readReceipts = {};
- 
+  $scope.isProf = UserInfo.isProf();
   $scope.chatsctrl.anonymous = false;
 
   var chatRefresh = $interval(function getMessages() {
@@ -354,6 +357,7 @@ angular.module('starter.controllers', [])
                                       UserInfo, Meetings, GroupID, Debug) {
 
   $scope.meetings = [];
+  $scope.isProf = UserInfo.isProf();
 
   var datePickerObj = {
       callback: function (val) {  //Mandatory
@@ -580,9 +584,19 @@ $scope.newMeeting = function()
 
   }); 
 
-    $scope.setGroup = function(id) {
+    $scope.setGroup = function(id, role) {
       console.log("Setting group ID: " + id);
-    UserInfo.setActiveGroup(id);
+      UserInfo.setActiveGroup(id);
+
+      if (role == "Student") {
+        UserInfo.setProf(false);
+      }
+      else if (role == "Teacher") {
+        UserInfo.setProf(true);
+      }
+      else {
+        UserInfo.setProf(null);
+      }
 
   }
 

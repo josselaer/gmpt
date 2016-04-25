@@ -4,6 +4,10 @@
         <button ui-sref="groups" class="button button-icon icon" id="makewhite">Groups</button>
     </ion-nav-buttons>
 
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon" id="makewhite" ng-if="isProf == true">Professor View</button>
+    </ion-nav-buttons>
+
     <ion-content class="padding">
         <div class="row">
             <div class="col center">

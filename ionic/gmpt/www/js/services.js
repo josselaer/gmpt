@@ -74,6 +74,7 @@ angular.module('starter.services', [])
     "userid": 0
   }
 
+  isProfInGroup = false;
   activeGroup = null;
 
   return {
@@ -116,6 +117,12 @@ angular.module('starter.services', [])
     },
     getActiveGroup: function() {
         return activeGroup;
+    },
+    setProf: function(p) {
+      isProfInGroup = p;
+    },
+    isProf: function() {
+      return isProfInGroup;
     }
 
   }
