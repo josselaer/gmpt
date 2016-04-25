@@ -543,6 +543,15 @@ $scope.currentMeeting = function()
         Meetings.set($scope.meetings);
         */
         url_string = "/meetings";
+        temp_id = null;
+        if(Meetings.getCurr() == 999)
+        {
+          console.log("FIRST MEETING");
+        }
+        else
+        {
+          temp_id = Meetings.get(Meeting.getCurr()).MeetingID;
+        }
         var new_meeting = 
         {
           ProjectID : GroupID.get(),
@@ -551,7 +560,7 @@ $scope.currentMeeting = function()
           EndTime : end_time,
           StartTime : start_time,
           MeetingDescription : this.meetingDescription,
-          MeetingID : Meetings.get(Meetings.getCurr()).MeetingID
+          MeetingID : temp_id
         }
         $scope.meetingDate = "";
         $scope.startTime = "";

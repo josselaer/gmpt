@@ -243,7 +243,7 @@ angular.module('starter.services', [])
   */
 
   editing = false;
-  currInd = 0;
+  currInd = 999;
   //console.log("[1]currInd = ", currInd);
   return {
     all: function() {
