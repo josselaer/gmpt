@@ -17,7 +17,6 @@ angular.module('starter.controllers', [])
     };
 
     console.log(payload);
-
     $http({
       method: "POST",
       url: Debug.getURL("/projects/add"),
@@ -614,6 +613,7 @@ $scope.currentMeeting = function()
     //$scope.currentMeeting = Meetings.get(Meetings.getCurr());
     //TempEditStorage.setMeetingIndex(Meetings.getCurr());
     this.meetingDescription = $scope.getCurrentMeeting().MeetingDescription;
+    this.locationName = $scope.getCurrentMeeting().locationName;
     console.log("current meeting index v, current meeting at index");
     console.log(Meetings.getCurr());
     console.log(Meetings.get(Meetings.getCurr()));
@@ -689,6 +689,7 @@ var datePickerObj = {
         }
         console.log("OBJECT BEING PASSED TO UPDATE: ");
         console.log(new_meeting);
+
         
         /*
         console.log("AT POINT CONFIRM MEETING:");
@@ -707,13 +708,12 @@ var datePickerObj = {
         url_string += $scope.meetings[saved_index].MeetingID;
         new_meeting = 
         {
-          ProjectID : GroupID.get(),
-          MeetingDate : $scope.meetings[saved_index].MeetingDate,
-          LocationName : $scope.meetings[saved_index].LocationName,
+          MeetingDate : this.meetingDate,//$scope.meetings[saved_index].MeetingDate,
+          LocationName : this.locationName,//$scope.meetings[saved_index].LocationName,
           EndTime : end_time,
           StartTime : start_time,
-          MeetingDescription : $scope.meetings[saved_index].MeetingDescription,
-          MeetingID : $scope.meetings[saved_index].MeetingID
+          MeetingDescription : this.meetingDescription//$scope.meetings[saved_index].MeetingDescription,
+          //MeetingID : $scope.meetings[saved_index].MeetingID
         }
         console.log("next is meeting object: ");
         console.log(new_meeting);
