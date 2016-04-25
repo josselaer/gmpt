@@ -10,9 +10,17 @@
     
 }
 
+#timeselectors{
+    
+    position: relative;
+    margin-top: .3em;
+}
+
+
 .sortOrderButton {
     height: 100%;
 }
+
 
 a {
     text-decoration: none !important;
@@ -40,6 +48,13 @@ a {
     margin-bottom: 1em;
     padding-bottom: 4em;
     
+}
+
+#newmeetingdatetext{
+    
+    position:relative;
+    margin-top: .8em;
+    margin-left: 3em;
 }
 
 #profinfobtn{
