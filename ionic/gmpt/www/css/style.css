@@ -1,13 +1,43 @@
 /* Empty. Add your own CSS if you like */
+.gmptMainColor{  
+        background-color: #303F9F !important;
+}
+
+#teamList{
+    
+    padding-bottom: 30em;
+    margin-bottom: 30em;
+    
+}
+
 
 a {
     text-decoration: none !important;
 }
 
-.navbar {
-    background-color: #303F9F !important;
-    color: white !important;
+#centerlabel{
+    display: block;
+    text-align: center;
+    line-height: 150%;
 }
+
+#statSearchByTeamMember{   
+    
+    width:8em;
+}
+
+#statBar{
+    
+position:relative;
+margin-bottom: 1em;
+    padding-bottom: 4em;
+    
+}
+
+/*
+Add Box Shadows for Materialize Design found @
+http://codepen.io/sdthornton/pen/wBZdXq
+*/
 
 .card-1:hover {
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
@@ -95,6 +125,22 @@ a {
     right: 10px;
 }
 
+#statAsc {
+    position:absolute;
+    color: #FF5252;
+    font-size: 4em;
+    margin-left: 2em;
+}
+
+#statDesc {
+    
+    position: absolute;
+    color: #FF5252;
+    font-size: 4em;
+    margin-left: 2em;
+    margin-bottom: 60px;
+}
+
 
 /* allows the bar-footer to be elastic /*
 /* optionally set a max-height */
@@ -166,7 +212,6 @@ img.profile-pic.right {
     color: red;
 }
 
-
 .stats-text {
     
     text-align:center;
@@ -183,8 +228,27 @@ img.profile-pic.right {
     width: 8rem;
     text-align: center !important;
     height: 8rem;
-
     border-radius:4rem;
+}
+
+.stats-badge-small {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #303F9F;
+    text-align: center !important;
+    height: 2rem;
+    width: 2em;
+    border-radius: 4rem;
+}
+
+.stats-text-small {
+    
+    text-align:center;
+    vertical-align: center;
+    color: lightblue !important;
+    font-size: 1rem;
+
 }
 
 .center {

@@ -1,15 +1,28 @@
 <ion-view view-title="Meeting Details">
-    
+
     <ion-nav-buttons side="left">
-             <a ui-sref="group.meetings" class="button button-icon icon" id="makewhite">Meetings</a>
-       </ion-nav-buttons>
-  <ion-content class="padding">
-    <p></p>
-    <label><b>{{currentMeeting().GroupName}}</b></label>
-    <div class="card">
-    <p>{{currentMeeting().MeetingDate}}</p>
-    <p>{{currentMeeting().StartTime}}</p>
-    <p>{{currentMeeting().MeetingDescription}}</p>
-	</div>
-  </ion-content>
+        <a ui-sref="group.meetings" class="button button-icon icon" id="makewhite">Meetings</a>
+    </ion-nav-buttons>
+
+
+    <ion-content class="padding">
+
+
+        <div class="card text-center"><b>{{currentMeeting().GroupName}} : {{currentMeeting().MeetingDescription}}</b>
+            <p>{{currentMeeting().MeetingDate}}</p>
+            <p>{{currentMeeting().StartTime}}</p>
+
+        </div>
+
+        <div class="card">
+            
+            <label class='text-center' id="centerlabel"><b>Attendance</b></label>
+            <p>{{currentMeeting().MeetingDate}}</p>
+            <p>{{currentMeeting().StartTime}}</p>
+            <p>{{currentMeeting().MeetingDescription}}</p>
+
+        </div>
+
+    </ion-content>
+
 </ion-view>

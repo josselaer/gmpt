@@ -2,25 +2,32 @@
     
       <ion-nav-buttons side="left">
           <button ui-sref="groups" class="button button-icon icon" id="makewhite">Groups</button>
-       </ion-nav-buttons>
+      </ion-nav-buttons>
+
+      <ion-nav-buttons side="right">
+          <button class="button button-icon icon" ng-if="isProf == true" id="makewhite">Professor View</button>
+      </ion-nav-buttons>
   
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-icon-right item-text-wrap" ng-repeat="message in messages | orderBy : message.timeDate : true">
-        <div ng-switch on="message.anonymous">
-          <div ng-switch-when="true">
-            <h2>Anonymous Message:</h2> {{message.text}}
-            <p class="timestamp">{{message.timeDate | date:'short'}}</p>
-          </div>
-          <div ng-switch-default>
-            <div class="row"><h2>{{message.sender}}:</h2>
-              <span class="pull-right">{{message.timeDate | date:'shortTime'}}
-                <br/>{{message.timeDate | date:'shortDate'}}</span>
+      <ion-item class="item-remove-animate item-text-wrap" ng-repeat="message in messages | orderBy : message.timeDate : true">
+        <div ng-switch-on="message.anonymous">
+          <div ng-switch="1">
+            <div class="row"><h2>{{message.sender}} <i ng-if="isProf == true" class="icon ion-ios-person-outline "></i>
+:</h2>
+              <span class="pull-right">{{message.timeDate | date:'shortTime'}} {{message.timeDate | date:'shortDate'}}</span>
             </div>
             <div class="row">
               {{message.text}}
             </div>
-           
+          </div>
+          <div ng-switch-default>
+            <div class="row"><h2>{{message.sender}}:</h2>
+              <span class="pull-right">{{message.timeDate | date:'shortTime'}} {{message.timeDate | date:'shortDate'}}</span>
+            </div>
+            <div class="row">
+              {{message.text}}
+            </div>
           </div>
         </div>
       </ion-item>
@@ -28,7 +35,7 @@
   </ion-content>
 
  
-  <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
+  <ion-footer-bar ng-if="isProf == false" class="bar-stable item-input-inset message-footer" keyboard-attach>
     <div class="footer-btn-wrap">
       <div ng-switch on="chatsctrl.anonymous">
         <div ng-switch-when="true">
