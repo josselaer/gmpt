@@ -17,7 +17,6 @@ angular.module('starter.controllers', [])
     };
 
     console.log(payload);
-
     $http({
       method: "POST",
       url: Debug.getURL("/projects/add"),
@@ -618,6 +617,7 @@ $scope.currentMeeting = function()
     //$scope.currentMeeting = Meetings.get(Meetings.getCurr());
     //TempEditStorage.setMeetingIndex(Meetings.getCurr());
     this.meetingDescription = $scope.getCurrentMeeting().MeetingDescription;
+    this.locationName = $scope.getCurrentMeeting().locationName;
     console.log("current meeting index v, current meeting at index");
     console.log(Meetings.getCurr());
     console.log(Meetings.get(Meetings.getCurr()));
@@ -679,39 +679,45 @@ var datePickerObj = {
         console.log(start_time);
         console.log(end_time);
 
-        var url_string = "/meetings";
+        var saved_index = TempEditStorage.getMeetingIndex();
+        var url_string = "/meetings/";
+        console.log("SAVED INDEX: (index of meeting being changed: ");
+        console.log(saved_index);
         var new_meeting = 
         {
-          ProjectID : GroupID.get(),
-          MeetingDate : $scope.meetingDate,
-          LocationName : $scope.locationName,
+          MeetingDate : this.meetingDate,
+          LocationName : this.locationName,
           EndTime : end_time,
           StartTime : start_time,
-          MeetingDescription : $scope.meetingDescription,
-          MeetingID : Meetings.get(Meetings.getCurr()).MeetingID
+          MeetingDescription : this.meetingDescription,
         }
-        var saved_index = TempEditStorage.getMeetingIndex();
+        console.log("OBJECT BEING PASSED TO UPDATE: ");
+        console.log(new_meeting);
+
+        
+        /*
         console.log("AT POINT CONFIRM MEETING:");
         console.log("v getCurr()");
         console.log(Meetings.get(Meetings.getCurr()));
         console.log("v TempEditStorage getMeetingIndex");
         console.log(TempEditStorage.getMeetingIndex());
-        $scope.meetings[saved_index].MeetingDate = $scope.meetingDate;
+        */
+
+        $scope.meetings[saved_index].MeetingDate = this.meetingDate;
         $scope.meetings[saved_index].StartTime = start_time;
-        $scope.meetings[saved_index].MeetingDescription = $scope.meetingDescription;
+        $scope.meetings[saved_index].MeetingDescription = this.meetingDescription;
         $scope.meetings[saved_index].EndTime = end_time;
         Meetings.set($scope.meetings);
         url_string = "/meetings/";
         url_string += $scope.meetings[saved_index].MeetingID;
         new_meeting = 
         {
-          ProjectID : GroupID.get(),
-          MeetingDate : $scope.meetings[saved_index].MeetingDate,
-          LocationName : $scope.meetings[saved_index].LocationName,
+          MeetingDate : this.meetingDate,//$scope.meetings[saved_index].MeetingDate,
+          LocationName : this.locationName,//$scope.meetings[saved_index].LocationName,
           EndTime : end_time,
           StartTime : start_time,
-          MeetingDescription : $scope.meetings[saved_index].MeetingDescription,
-          MeetingID : $scope.meetings[saved_index].MeetingID
+          MeetingDescription : this.meetingDescription//$scope.meetings[saved_index].MeetingDescription,
+          //MeetingID : $scope.meetings[saved_index].MeetingID
         }
         console.log("next is meeting object: ");
         console.log(new_meeting);
