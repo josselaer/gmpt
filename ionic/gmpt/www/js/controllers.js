@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('SettingsCtrl', function($scope, $state, $stateParams, $http, UserInfo, Debug) {
+.controller('SettingsCtrl', function($scope, $state, $stateParams, $http, UserInfo, Debug, $ionicPopup) {
 
   $scope.isProfessor = false;
   $scope.email = "";
@@ -96,7 +96,38 @@ angular.module('starter.controllers', [])
     document.getElementById('email_input').value = selected_email.suggestion;
     $scope.email = selected_email.suggestion;
   }
+  
+     // When button is clicked, the popup will be shown...
+   $scope.showConfirm = function() {
+	
+      var confirmPopup = $ionicPopup.confirm({
+         title: 'Professor',
+         template: 'A professor is able to view the group activities, including anonymous chats. However, they cannot interact with the group.'
+      });
 
+      confirmPopup.then(function(res) {
+         if(res) {
+            console.log('Sure!');
+         } else {
+            console.log('Not sure!');
+         }
+      });
+		
+   };
+    
+    $scope.showAlert = function() {
+	
+      var alertPopup = $ionicPopup.alert({
+         title: 'User added.',
+         template: 'Welcome your new group member!'
+      });
+
+      alertPopup.then(function(res) {
+         console.log("User added.")
+      });
+   };
+    
+   
 })
 
 .controller('AccountCtrl', function($scope, $state, $http, UserInfo, Debug) {
