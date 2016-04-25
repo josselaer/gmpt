@@ -576,7 +576,8 @@ $scope.currentMeeting = function()
     $scope.confirmMeeting = function()
     {  
       console.log("confirmMeeting Called");
-      if ($scope.meetingDate != "" && $scope.meetingDescription != "")
+      if (this.meetingDate != "" && this.meetingDescription != "" && this.startTimeHour != "" && this.startTimeCycle != ""
+        && this.endTimeHour != "" && this.endTimeCycle != "" && this.locationName)
       {
         var start_time = CalculateTime.calcNewTime(this.startTimeHour,this.startTimeCycle);
         var end_time = CalculateTime.calcNewTime(this.endTimeHour,this.endTimeCycle);
@@ -719,7 +720,8 @@ var datePickerObj = {
     $scope.confirmMeeting = function()
     {  
       console.log("confirmMeeting Called");
-      if ($scope.meetingDate != "" && $scope.meetingDescription != "")
+      if (this.meetingDate != "" && this.meetingDescription != "" && this.startTimeHour != "" && this.startTimeCycle != ""
+        && this.endTimeHour != "" && this.endTimeCycle != "" && this.locationName)
       {
         console.log("v startTimeHour, vv startTimeCycle");
         console.log(this.startTimeHour);
