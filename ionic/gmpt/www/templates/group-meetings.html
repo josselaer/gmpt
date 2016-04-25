@@ -9,7 +9,7 @@
      <ion-nav-buttons side="right">
             
         
-        <a class="button icon ion-android-add" ng-if="isProf == false" href="#/addmeeting" ng-click="newMeeting()" id="gmptbtn"> New Meeting</a>
+        <a class="button icon ion-android-add" ng-if="isProf == false" ui-sref="addmeeting" id="gmptbtn"> New Meeting</a>
         
         <button class="button button-icon icon" id="makewhite" ng-if="isProf == true">Professor View</button>
         
@@ -28,15 +28,15 @@
 	<ion-item ng-repeat="meeting in meetings" href="#/meeting-details" ng-click="meetingDetails($index)">
   <!--<label>{{meeting.GroupName}}</label>-->
 		<div class="row">
-    	<div class="col col-50">
+    	<div class="col col-80">
         <div class="h4">{{meeting.MeetingDescription}}</div>
         At {{meeting.LocationName}} on {{meeting.MeetingDate | date:'shortDate'}}<br/>
-        from {{meeting.StartTime | date:'shortTime'}} to {{meeting.EndTime | date:'shortTime'}}
+        from {{RevertTime.getHour(meeting.StartTime)}} {{RevertTime.getCycle(meeting.StartTime)}} to {{RevertTime.getHour(meeting.EndTime)}} {{RevertTime.getCycle(meeting.EndTime)}}
 
     		
    		</div>
       <div class="col col-50 right">
-        <span class="pull-right"><a class="button button-icon icon ion-edit" href="#/editmeeting" ng-click="editMeeting($index)"></a></span><br/>
+        <span class="pull-right"><a class="button button-icon icon ion-edit" ng-click="setEdit($index)"></a></span><br/>
       </div>
    		</div>
 	</ion-item>

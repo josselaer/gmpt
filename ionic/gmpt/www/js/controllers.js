@@ -106,7 +106,7 @@ angular.module('starter.controllers', [])
     $http({
       method: "GET",
       url:Debug.getURL("/logout"),
-   headers: {
+      headers: {
         "Content-Type": "application/json",
         "Authorization": UserInfo.getAuthToken()
       }    
@@ -115,7 +115,7 @@ angular.module('starter.controllers', [])
       $state.go("login");
     }, function errorCallback(response) {
       alert.log("Can't logout. You can never leave!");
-        console.error;
+      console.error;
     });
   };
 })
@@ -175,24 +175,24 @@ angular.module('starter.controllers', [])
   $scope.$on("$ionicView.enter", function() {
 
     $http({
-        method: "GET",
-        url: Debug.getURL("/statistics/totals/" + $stateParams.groupID),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': UserInfo.getAuthToken()
-        }
-      }).then(function successCallback(response) {
+      method: "GET",
+      url: Debug.getURL("/statistics/totals/" + $stateParams.groupID),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': UserInfo.getAuthToken()
+      }
+    }).then(function successCallback(response) {
 
-        return response.data;
+      return response.data;
 
-      }, function failureCallback(response) {
+    }, function failureCallback(response) {
 
-        console.log("Failed to get statistics.");
-        console.log(response);
+      console.log("Failed to get statistics.");
+      console.log(response);
 
-      }).then(function(response) {
+    }).then(function(response) {
 
-        $scope.stats = response.Totals;
+      $scope.stats = response.Totals;
 
         console.log($scope.stats);
 
@@ -243,7 +243,7 @@ angular.module('starter.controllers', [])
 
 
 .controller('ChatsCtrl', function ($scope, $http, $stateParams, $interval, $animate, 
-                                    UserInfo, Chats, GroupID, Debug) {
+  UserInfo, Chats, GroupID, Debug) {
 
   GroupID.set($stateParams.groupID);
   $scope.chatsctrl = {};
@@ -255,27 +255,27 @@ angular.module('starter.controllers', [])
   $scope.message = {};
 
   var chatRefresh = $interval(function getMessages() {
-    
+
     Chats.getGroupMessages($stateParams.groupID).then(function success(response) {
 
-        $animate.enabled(false);
-        console.log("Messages: ");
-        console.log(response);
-        $scope.messages = response.messages;
-        $scope.readReceipts = response.readReceipts;
+      $animate.enabled(false);
+      console.log("Messages: ");
+      console.log(response);
+      $scope.messages = response.messages;
+      $scope.readReceipts = response.readReceipts;
 
-        $animate.enabled(true);
+      $animate.enabled(true);
 
-      }, function error(response) {
-        console.log("Error");
-      });
+    }, function error(response) {
+      console.log("Error");
+    });
 
   }, 3000);
 
   $scope.$on("$ionicView.enter", function() {
 
-      Chats.getGroupMessages($stateParams.groupID).then(function successCallback(response) {
-        console.log(response);
+    Chats.getGroupMessages($stateParams.groupID).then(function successCallback(response) {
+      console.log(response);
       $scope.messages = response.messages;
       $scope.readReceipts = response.readReceipts;
       
@@ -364,16 +364,23 @@ angular.module('starter.controllers', [])
     });
 
   }
-   $scope.go = function (path) {
+  $scope.go = function (path) {
     $location.path(path);
   };
 })
 
-.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, ionicDatePicker, 
-                                      UserInfo, Meetings, GroupID, Debug) {
+
+.controller('MeetingsCtrl', function($scope, $state, $http, $stateParams, UserInfo, TempEditStorage, Meetings, GroupID, RevertTime, Debug, ionicDatePicker, CalculateTime) {
+
+  $scope.RevertTime = RevertTime;
+
+
 
   $scope.meetings = [];
   $scope.isProf = UserInfo.isProf();
+
+
+
 
   var datePickerObj = {
       callback: function (val) {  //Mandatory
@@ -386,140 +393,194 @@ angular.module('starter.controllers', [])
       mondayFirst: false,          //Optional
       closeOnSelect: false,       //Optional
       templateType: 'popup'       //Optional
-  };
+    };
 
-  $scope.openPicker = function() {
-    ionicDatePicker.openDatePicker(datePickerObj);
-  }
+    $scope.openPicker = function() {
 
-  $scope.$on("$ionicView.enter", function() {
+      ionicDatePicker.openDatePicker(datePickerObj);
+    }
 
-    $http({
+    $scope.$on("$ionicView.enter", function() {
+      console.log("YOOOOOOOOOOŒ");
+      Meetings.setEdit(false);
+      $http({
 
-      method: "GET",
-      url: Debug.getURL("/meetings/" + GroupID.get()),
-      responseType: "json",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": UserInfo.getAuthToken()
-      }
-    }).then(function successCallback(response) {
+        method: "GET",
+        url: Debug.getURL("/meetings/" + GroupID.get()),
+        responseType: "json",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": UserInfo.getAuthToken()
+        }
+      }).then(function successCallback(response) {
 
-      console.log("Meetings for group " + GroupID.get() +": ");
-      console.log(response.data);
+        console.log("Meetings for group " + GroupID.get() +": ");
+        console.log(response.data);
 
-      return response.data;
+        return response.data;
 
-    }, function errorCallback(response) {
+      }, function errorCallback(response) {
 
-      console.log("ERROR CALLBACK");
-      console.log(Debug.getURL("/meetings"));
-      console.log(response);
+        //console.log("ERROR CALLBACK");
+        //console.log(Debug.getURL("/meetings"));
+        //console.log(response);
 
-      alert("Failed to load groups, please try again.");
+        alert("Failed to load groups, please try again.");
 
-    }).then(function(response) {
+      }).then(function(response) {
 
-      Meetings.set(response);
+        Meetings.set(response);
+        $scope.meetings = Meetings.all();
+        console.log("THIS IS THE RESPONSE DATA WHEN GROUP MEETINGS STATE IS INITIATED: ");
+        console.log(response);
+      });
+
+      $http({
+        method: "PUT",
+        url: Debug.getURL("/notifications/" + GroupID.get() + "/Meeting"),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": UserInfo.getAuthToken()
+        }
+      }).then(function successCallback(response) {
+
+        console.log("Updated Meetings notifications.");
+        console.log(response);
+
+      }, function errorCallback(response) {
+
+        console.log("Failed to update Meetings notifications.");
+        console.log(response);
+
+      });
+
       $scope.meetings = Meetings.all();
-      //this.meetings = Meetings.all();
 
     });
 
-    $http({
-      method: "PUT",
-      url: Debug.getURL("/notifications/" + GroupID.get() + "/Meeting"),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": UserInfo.getAuthToken()
-      }
-    }).then(function successCallback(response) {
+$scope.setEdit = function(indexToSave)
+{
+  Meetings.setCurr(indexToSave);
+  console.log("index of meeting to edit from group.meetings setEdit function v, getCurr() vv");
+  console.log(indexToSave);
+  console.log(Meetings.getCurr());
+  TempEditStorage.setMeetingIndex(indexToSave);
+  $state.go("editmeeting");
+}
 
-      console.log("Updated Meetings notifications.");
-      console.log(response);
+$scope.meetingDetails = function(index)
+{
+  Meetings.setCurr(index);
+}
 
-    }, function errorCallback(response) {
+$scope.currentMeeting = function()
+{
+  return Meetings.get(Meetings.getCurr());
+}
 
-      console.log("Failed to update Meetings notifications.");
-      console.log(response);
+})
 
-    });
+/*************************************************/
+/*************************************************/
 
-    $scope.meetings = Meetings.all();
+.controller('AddMeetingCtrl', function($scope, $state, $http, $stateParams, UserInfo, TempEditStorage, Meetings, GroupID, RevertTime, Debug, ionicDatePicker, CalculateTime) {
 
-  });
+  $scope.RevertTime = RevertTime;
+  $scope.meetings = [];
 
-  $scope.meetingDetails = function(index)
+
+  $scope.$on("$ionicView.enter", function() 
   {
-
-    Meetings.setCurr(index);
-    $scope.current_Meeting = Meetings.get(Meetings.getCurr());
-  }
+    Meetings.setEdit(false);
+    console.log("Scope on init of AddGroupCtrl:");
+    console.log($scope);
+    //$scope.meetings = Meetings.all();
+  })
 
   $scope.currentMeeting = function()
   {
     return Meetings.get(Meetings.getCurr());
   }
 
-  $scope.confirmMeeting = function()
-  {  
-    console.log("confirmMeeting Called");
-    if ($scope.meetingDate != "" && $scope.meetingDescription != "" && $scope.startTime != "" && $scope.endTime != "")
-    {
-      if(Meetings.getEdit() == false)
+  var datePickerObj = {
+      callback: function (val) {  //Mandatory
+        console.log('Return value from the datepicker popup is : ' + val, new Date(val));
+        $scope.meetingDate = new Date(val);
+      },
+      from: new Date(2016, 1, 1), //Optional
+      to: new Date(2020, 10, 30), //Optional
+      inputDate: new Date(),      //Optional
+      mondayFirst: true,          //Optional
+      disableWeekdays: [0],       //Optional
+      closeOnSelect: false,       //Optional
+      templateType: 'popup'       //Optional
+    };
+
+    $scope.openPicker = function() {
+      ionicDatePicker.openDatePicker(datePickerObj);
+    }
+
+    $scope.confirmMeeting = function()
+    {  
+      console.log("confirmMeeting Called");
+      if ($scope.meetingDate != "" && $scope.meetingDescription != "")
       {
+        var start_time = CalculateTime.calcNewTime(this.startTimeHour,this.startTimeCycle);
+        var end_time = CalculateTime.calcNewTime(this.endTimeHour,this.endTimeCycle);
+        $scope.startTime = start_time;
+        this.startTime = start_time;
+        $scope.endTime = end_time;
+        this.endTime = end_time;
+
+        var url_string = "/meetings";
         console.log("$scope.meetings: ");
         console.log($scope.meetings);
         console.log("Meetings: ");
         console.log(Meetings.all());
+        /*
         $scope.meetings.push({'MeetingDate':$scope.meetingDate,
-          'StartTime':$scope.startTime,'MeetingDescription':$scope.meetingDescription,
-          'ProjectID':GroupID.get(), 'EndTime': $scope.endTime, 'LocationName': $scope.locationName});
+          'StartTime':start_time,'MeetingDescription':$scope.meetingDescription,
+          'ProjectID':GroupID.get(), 'EndTime': end_time, 'LocationName': $scope.locationName});
         Meetings.set($scope.meetings);
-
-      }
-      
-      else if(Meetings.getEdit() == true)
-      {
-        $scope.meetings[Meetings.getCurr()].MeetingDate = $scope.meetingDate;
-        $scope.meetings[Meetings.getCurr()].StartTime = $scope.startTime;
-        $scope.meetings[Meetings.getCurr()].MeetingDescription = $scope.meetingDescription;
-        $scope.meetings[Meetings.getCurr()].EndTime = $scope.endTime;
-        Meetings.set($scope.meetings);
-      }
-      
-      console.log("at this point in time, weve clicked confirm meeting, lets see the scope variables: ");
-      console.log("meetingDate v");
-      console.log(this.meetingDate);
-      console.log("startTime v");
-      console.log(this.startTime);
-      console.log("endTime v");
-      console.log(this.endTime);
-      console.log("locationName v");
-      console.log(this.locationName);
-      var new_meeting = 
+        */
+        url_string = "/meetings";
+        var new_meeting = 
         {
           ProjectID : GroupID.get(),
           MeetingDate : this.meetingDate,
           LocationName : this.locationName,
-          EndTime : this.endTime,
-          StartTime : this.startTime,
-          MeetingDescription : this.meetingDescription
+          EndTime : end_time,
+          StartTime : start_time,
+          MeetingDescription : this.meetingDescription,
+          MeetingID : Meetings.get(Meetings.getCurr()).MeetingID
         }
+        $scope.meetingDate = "";
+        $scope.startTime = "";
+        $scope.startTimeHour = "";
+        $scope.startTimeCycle = "";
+        $scope.startTimeCycle = "";
+        $scope.endTime = "";
+        $scope.endTimeHour = "";
+        $scope.endTimeCycle = "";
+        $scope.meetingDescription = "";
+        $scope.locationName = "";
+        
+        end_time = "";
+        start_time = "";
         console.log("next is meeting object: ");
         console.log(new_meeting);
         $http({
-      method: "POST",
-      url: Debug.getURL("/meetings"),
-      data: new_meeting,
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": UserInfo.getAuthToken()
-      }
-    }).then(function successCallback(response) {
+          method: "POST",
+          url: Debug.getURL(url_string),
+          data: new_meeting,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": UserInfo.getAuthToken()
+          }
+        }).then(function successCallback(response) {
 
-      return response;
-    }, function errorCallback(response) {
+          return response;
+        }, function errorCallback(response) {
       //console.log("Add meeting 'fail': ");
       //console.log(response);
       alert("Failed to add meeting");
@@ -527,34 +588,165 @@ angular.module('starter.controllers', [])
     }).then(function redirect(response) {
       console.log("redirecting RESPONSE:...");
       console.log(response);
-
-      $state.go("group.meetings(UserInfo.getActiveGroup())");
-    });
-      $scope.meetingDate = "";
-      $scope.startTime = "";
-      $scope.endTime = "";
-      $scope.meetingDescription = "";
-      $scope.locationName = "";
-}
+      Meetings.set($scope.meetings);
+      $state.go("group.meetings");
+      //$state.go("group.meetings(UserInfo.getActiveGroup())");
+    });  
+  }
 }
 
-$scope.editMeeting = function(index)
-{
-  Meetings.setEdit(true);
-  Meetings.setCurr(index);
-  $scope.currentMeeting = Meetings.get(Meetings.getCurr());
-}
-
-$scope.newMeeting = function()
-{
-  Meetings.setEdit(false);
-  //Meetings.setCurr(1);
-}
 
 })
 
-.controller('AddMeetingCtrl', function($scope, $state, $http, Debug) 
+/*************************************************/
+/*************************************************/
+
+
+.controller('EditMeetingCtrl', function($scope, $state, $http, $stateParams, UserInfo, TempEditStorage, Meetings, GroupID, RevertTime, Debug, ionicDatePicker, CalculateTime) {
+
+  //$scope.Meetings = Meetings;
+
+  //TempEditStorage.setMeetingIndex(Meetings.getCurr());
+
+  $scope.$on("$ionicView.enter", function() 
+  {
+    Meetings.setEdit(true);
+    //$scope.currentMeeting = Meetings.get(Meetings.getCurr());
+    //TempEditStorage.setMeetingIndex(Meetings.getCurr());
+    this.meetingDescription = $scope.getCurrentMeeting().MeetingDescription;
+    console.log("current meeting index v, current meeting at index");
+    console.log(Meetings.getCurr());
+    console.log(Meetings.get(Meetings.getCurr()));
+
+    $scope.meetings = [];
+    $scope.RevertTime = RevertTime;
+    $scope.meetingDescription = Meetings.get(Meetings.getCurr()).MeetingDescription;
+    $scope.meetingDate = Meetings.get(Meetings.getCurr()).MeetingDate;
+    $scope.locationName = Meetings.get(Meetings.getCurr()).LocationName;
+    $scope.startTimeHour = RevertTime.getHour(Meetings.get(Meetings.getCurr()).StartTime);
+    $scope.startTimeCycle = RevertTime.getCycle(Meetings.get(Meetings.getCurr()).StartTime);
+    $scope.endTimeHour = RevertTime.getHour(Meetings.get(Meetings.getCurr()).EndTime);
+    $scope.endTimeCycle = RevertTime.getCycle(Meetings.get(Meetings.getCurr()).EndTime);
+    $scope.meetings = Meetings.all();
+  })
+
+$scope.getCurrentMeeting = function()
 {
+  return Meetings.get(Meetings.getCurr());
+}
+
+var datePickerObj = {
+      callback: function (val) {  //Mandatory
+        console.log('Return value from the datepicker popup is : ' + val, new Date(val));
+        $scope.meetingDate = new Date(val);
+      },
+      from: new Date(2016, 1, 1), //Optional
+      to: new Date(2020, 10, 30), //Optional
+      inputDate: new Date(),      //Optional
+      mondayFirst: true,          //Optional
+      disableWeekdays: [0],       //Optional
+      closeOnSelect: false,       //Optional
+      templateType: 'popup'       //Optional
+    };
+
+    $scope.openPicker = function() {
+      ionicDatePicker.openDatePicker(datePickerObj);
+    }
+
+    $scope.confirmMeeting = function()
+    {  
+      console.log("confirmMeeting Called");
+      if ($scope.meetingDate != "" && $scope.meetingDescription != "")
+      {
+        console.log("v startTimeHour, vv startTimeCycle");
+        console.log(this.startTimeHour);
+        console.log(this.startTimeCycle);
+        console.log("v endTimeHour, vv endTimeCycle");
+        console.log(this.endTimeHour);
+        console.log(this.endTimeCycle);
+
+        var start_time = CalculateTime.calcNewTime(this.startTimeHour,this.startTimeCycle);
+        var end_time = CalculateTime.calcNewTime(this.endTimeHour,this.endTimeCycle);
+        console.log("v start_time, vv end_time");
+        $scope.startTime = start_time;
+        this.startTime = start_time;
+        $scope.endTime = end_time;
+        this.endTime = end_time;
+        console.log(start_time);
+        console.log(end_time);
+
+        var url_string = "/meetings";
+        var new_meeting = 
+        {
+          ProjectID : GroupID.get(),
+          MeetingDate : $scope.meetingDate,
+          LocationName : $scope.locationName,
+          EndTime : end_time,
+          StartTime : start_time,
+          MeetingDescription : $scope.meetingDescription,
+          MeetingID : Meetings.get(Meetings.getCurr()).MeetingID
+        }
+        var saved_index = TempEditStorage.getMeetingIndex();
+        console.log("AT POINT CONFIRM MEETING:");
+        console.log("v getCurr()");
+        console.log(Meetings.get(Meetings.getCurr()));
+        console.log("v TempEditStorage getMeetingIndex");
+        console.log(TempEditStorage.getMeetingIndex());
+        $scope.meetings[saved_index].MeetingDate = $scope.meetingDate;
+        $scope.meetings[saved_index].StartTime = start_time;
+        $scope.meetings[saved_index].MeetingDescription = $scope.meetingDescription;
+        $scope.meetings[saved_index].EndTime = end_time;
+        Meetings.set($scope.meetings);
+        url_string = "/meetings/";
+        url_string += $scope.meetings[saved_index].MeetingID;
+        new_meeting = 
+        {
+          ProjectID : GroupID.get(),
+          MeetingDate : $scope.meetings[saved_index].MeetingDate,
+          LocationName : $scope.meetings[saved_index].LocationName,
+          EndTime : end_time,
+          StartTime : start_time,
+          MeetingDescription : $scope.meetings[saved_index].MeetingDescription,
+          MeetingID : $scope.meetings[saved_index].MeetingID
+        }
+        console.log("next is meeting object: ");
+        console.log(new_meeting);
+        $http({
+          method: "POST",
+          url: Debug.getURL(url_string),
+          data: new_meeting,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": UserInfo.getAuthToken()
+          }
+        }).then(function successCallback(response) {
+          console.log("success passing this v");
+          console.log(response);
+          return response;
+        }, function errorCallback(response) {
+
+          alert("Failed to add meeting");
+          return null;
+        }).then(function redirect(response) {
+          //console.log("redirecting RESPONSE:...");
+          //console.log(response);
+          console.log("redirecting to go to group/meetings/groupID");
+          $state.go("group.meetings");
+          //$state.go("group.meetings(UserInfo.getActiveGroup())");
+        });
+    /*
+    $scope.meetingDate = "";
+    $scope.startTime = "";
+    $scope.endTime = "";
+    $scope.meetingDescription = "";
+    $scope.locationName = "";
+    */
+    //Meetings.set($scope.meetings);
+    //$state.go("meetings");
+    
+  }
+}
+
 
 })
 
@@ -570,35 +762,35 @@ $scope.newMeeting = function()
     
     $http({
 
-        method: "GET",
-        url: Debug.getURL("/projects"),
+      method: "GET",
+      url: Debug.getURL("/projects"),
     //    responseType: "json",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": UserInfo.getAuthToken()
-        }
-      }).then(function successCallback(response) {
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": UserInfo.getAuthToken()
+    }
+  }).then(function successCallback(response) {
 
-        console.log("Get projects with auth: " + UserInfo.getAuthToken());
-        console.log(response.data);
+    console.log("Get projects with auth: " + UserInfo.getAuthToken());
+    console.log(response.data);
 
-        Groups.set(response.data.projects);
-        $scope.groups = response.data.projects;
+    Groups.set(response.data.projects);
+    $scope.groups = response.data.projects;
 
-        $scope.activeMeeting = Groups.activeMeeting();
+    $scope.activeMeeting = Groups.activeMeeting();
 
-      }, function errorCallback(response) {
+  }, function errorCallback(response) {
 
-        console.log(Debug.getURL("/projects"));
-        console.log(response);
+    console.log(Debug.getURL("/projects"));
+    console.log(response);
 
-        alert("Failed to load groups, please try again.");
+    alert("Failed to load groups, please try again.");
 
-        return null;
+    return null;
 
-    });
+  });
 
-  }); 
+}); 
 
     $scope.setGroup = function(id, role) {
       console.log("Setting group ID: " + id);
@@ -814,7 +1006,7 @@ $scope.newMeeting = function()
     $http({
       method: "GET",
       url:Debug.getURL("/logout"),
-   headers: {
+      headers: {
         "Content-Type": "application/json",
         "Authorization": UserInfo.getAuthToken()
       }    
