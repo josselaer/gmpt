@@ -368,9 +368,11 @@ angular.module('starter.controllers', [])
       }, function(response) {
         console.log("Error");
       });
-      $scope.chatsctrl.text = "";
+      $scope.message.text = "";
     }, function() {
       console.log("Error in sending message");
+//              $scope.message.text = "";
+
     });
   };
 })
