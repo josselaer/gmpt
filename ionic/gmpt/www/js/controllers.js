@@ -823,7 +823,9 @@ var datePickerObj = {
 
 })
 
-.controller('GroupsCtrl', function ($scope, $http, UserInfo, Groups, Debug) {
+.controller('GroupsCtrl', function ($scope, $http, UserInfo, Groups, Debug, RevertTime) {
+
+  $scope.RevertTime = RevertTime;
 
   $scope.userName = UserInfo.get().userName;
 
