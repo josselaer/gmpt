@@ -1047,7 +1047,7 @@ var datePickerObj = {
 })
 
 
-.controller('RegisterCtrl', function ($scope, $state, $http, Debug) {
+.controller('RegisterCtrl', function ($scope, $state, $http, Debug, $ionicPopup) {
 
   $scope.regInfo = {};
 
@@ -1068,6 +1068,18 @@ var datePickerObj = {
 
     }
   }
+  
+  $scope.showAlert = function() {
+	
+      var alertPopup = $ionicPopup.alert({
+         title: 'User added.',
+         template: 'Registration Successful. Welcome to GMPT!'
+      });
+
+      alertPopup.then(function(res) {
+      });
+   };
+  
 })
 
 
