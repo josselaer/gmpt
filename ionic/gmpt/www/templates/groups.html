@@ -33,7 +33,7 @@
                         <h4 class="item-text-right">No upcoming meetings.</h4>
                     </div>
                     <div ng-switch-default>
-                        <h4 class=" item-text-right">Meeting on {{group.NextMeetingDate | date:'shortDate'}} at {{group.NextMeetingDate | date:'shortTime'}}</h4>
+                        <h4 class=" item-text-right">Meeting on {{group.NextMeetingDate | date:'shortDate'}} at {{group.NextMeetingTime | date:'shortTime'}}</h4>
                     </div>
 
                     <div ng-switch on="group.Notification">
